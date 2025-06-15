@@ -37,6 +37,10 @@ const EDUCATION_SUBTOOLS = [
   {
     label: "Guide Diversification Alimentaire",
     link: "/enfant/guide-diversification"
+  },
+  {
+    label: "Tracker Développement Moteur 0-3 ans",
+    link: "/enfant/developpement-moteur"
   }
 ];
 
