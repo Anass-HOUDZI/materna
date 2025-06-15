@@ -1,7 +1,8 @@
+
 import React, { useState } from "react";
 import AppSidebar from "@/components/app-sidebar";
 import { Input } from "@/components/ui/input";
-import { Search, Calendar, CalendarDays, Activity, BarChart3, BookText, PiggyBank, Tooth, Baby, TrendingUp, Utensils, Move3D, Walk, Apple, EmojiFrown, Droplet, Search, ClipboardList, HelpCircle, Star, LineChart } from "lucide-react";
+import { Search, Activity, BarChart3, TrendingUp } from "lucide-react";
 import Footer from "@/components/ui/Footer";
 import FamilyIllustration from "@/components/home/FamilyIllustration";
 import FavoriteButton from "@/components/home/FavoriteButton";
@@ -9,96 +10,103 @@ import { useFavorites } from "@/hooks/useFavorites";
 import UserTourModal from "@/components/home/UserTourModal";
 import UserFeedbackModal from "@/components/home/UserFeedbackModal";
 
-// Ordre de popularité proposé : Date d'accouchement, Contractions, Prise de poids, Calendrier, Tracker mouvements bébé, etc.
+// Distribution la plus variée possible des icônes autorisées par outil.
+const ICONS = [
+  <Activity className="text-blue-500" size={38} />,      // 0
+  <BarChart3 className="text-pink-500" size={38} />,     // 1
+  <TrendingUp className="text-green-500" size={38} />,   // 2
+  <Search className="text-violet-500" size={38} />,      // 3
+];
+
 const TOOLS = [
   {
     label: "Calculateur de date d'accouchement",
     link: "/grossesse/calculateur-terme",
-    icon: <Calendar className="text-blue-500" size={38} />,
+    icon: ICONS[0],
     color: "bg-gradient-to-br from-blue-50 to-blue-100",
   },
   {
     label: "Tracker Contractions",
     link: "/grossesse/tracker-contractions",
-    icon: <Activity className="text-pink-500" size={38} />,
+    icon: ICONS[1],
     color: "bg-gradient-to-br from-pink-50 to-pink-100",
   },
   {
     label: "Calculateur Prise de Poids",
     link: "/grossesse/calculateur-poids",
-    icon: <BarChart3 className="text-green-500" size={38} />,
+    icon: ICONS[2],
     color: "bg-gradient-to-br from-green-50 to-green-100",
   },
   {
     label: "Calendrier Grossesse Semaine/Semaine",
     link: "/grossesse/calendrier-semaine",
-    icon: <CalendarDays className="text-violet-500" size={38} />,
+    icon: ICONS[3],
     color: "bg-gradient-to-br from-violet-50 to-violet-100",
   },
   {
     label: "Tracker Mouvements Bébé",
     link: "/grossesse/tracker-mouvements-bebe",
-    icon: <Move3D className="text-rose-400" size={34} />,
+    icon: ICONS[1],
     color: "bg-gradient-to-br from-rose-50 to-pink-100",
   },
   {
     label: "Journal Symptômes",
     link: "/grossesse/journal-symptomes",
-    icon: <BookText className="text-yellow-400" size={34} />,
+    icon: ICONS[2],
     color: "bg-gradient-to-br from-yellow-50 to-orange-50",
   },
   {
     label: "Calculateur Sexe Bébé (fun)",
     link: "/grossesse/calculateur-sexe-bebe",
-    icon: <Baby className="text-fuchsia-500" size={34} />,
+    icon: ICONS[3],
     color: "bg-gradient-to-br from-fuchsia-50 to-pink-100",
   },
   {
     label: "Simulateur Budget Bébé Année 1",
     link: "/grossesse/simulateur-budget-bebe",
-    icon: <PiggyBank className="text-sky-500" size={34} />,
+    icon: ICONS[0],
     color: "bg-gradient-to-br from-sky-50 to-blue-100",
   },
   {
     label: "Calculateur Poussées Dentaires",
     link: "/grossesse/calculateur-dents",
-    icon: <Tooth className="text-emerald-400" size={34} />,
+    icon: ICONS[2],
     color: "bg-gradient-to-br from-emerald-50 to-green-100",
   },
   {
     label: "Courbes Croissance OMS",
     link: "/enfant/courbes-croissance",
-    icon: <TrendingUp className="text-blue-500" size={34} />,
+    icon: ICONS[0],
     color: "bg-gradient-to-br from-blue-50 to-indigo-50",
   },
   {
     label: "Guide Diversification Alimentaire",
     link: "/enfant/guide-diversification",
-    icon: <Utensils className="text-lime-500" size={34} />,
+    icon: ICONS[3],
     color: "bg-gradient-to-br from-lime-50 to-lime-100",
   },
   {
     label: "Tracker Développement Moteur 0-3 ans",
     link: "/enfant/developpement-moteur",
-    icon: <Walk className="text-orange-400" size={34} />,
+    icon: ICONS[1],
     color: "bg-gradient-to-br from-orange-50 to-yellow-50",
   },
   {
     label: "Calculateur Besoins Nutritionnels Enfant",
     link: "/enfant/besoins-nutritionnels",
-    icon: <Apple className="text-teal-500" size={34} />,
+    icon: ICONS[2],
     color: "bg-gradient-to-br from-teal-50 to-blue-50",
   },
   {
     label: "Tracker Pleurs & Humeur Bébé",
     link: "/enfant/tracker-pleurs-humeur",
-    icon: <EmojiFrown className="text-purple-500" size={34} />,
+    icon: ICONS[0],
     color: "bg-gradient-to-br from-purple-50 to-indigo-50",
   },
   {
     label: "Guide Allaitement Complet",
     link: "/sante/guide-allaitement",
-    icon: <Droplet className="text-pink-400" size={34} />,
+    icon: ICONS[3],
     color: "bg-gradient-to-br from-pink-50 to-pink-100",
   },
 ];
