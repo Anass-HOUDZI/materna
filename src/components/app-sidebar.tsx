@@ -24,6 +24,7 @@ const SUBTOOLS = [
   { label: "Calculateur Prise de Poids", link: "/grossesse/calculateur-poids" },
   { label: "Calendrier Grossesse Semaine/Semaine", link: "/grossesse/calendrier-semaine" },
   { label: "Tracker Mouvements Bébé", link: "/grossesse/tracker-mouvements-bebe" },
+  { label: "Journal Symptômes", link: "/grossesse/journal-symptomes" },
 ];
 
 export default function AppSidebar() {

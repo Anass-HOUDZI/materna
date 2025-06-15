@@ -12,6 +12,7 @@ import ContractionTracker from "./pages/ContractionTracker";
 import PregnancyWeightGainCalculator from "./pages/PregnancyWeightGainCalculator";
 import PregnancyWeeklyCalendar from "./pages/PregnancyWeeklyCalendar";
 import BabyMovementTracker from "./pages/BabyMovementTracker";
+import PregnancySymptomJournal from "./pages/PregnancySymptomJournal";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
               <Route path="/grossesse/calculateur-poids" element={<PregnancyWeightGainCalculator />} />
               <Route path="/grossesse/calendrier-semaine" element={<PregnancyWeeklyCalendar />} />
               <Route path="/grossesse/tracker-mouvements-bebe" element={<BabyMovementTracker />} />
+              <Route path="/grossesse/journal-symptomes" element={<PregnancySymptomJournal />} />
               {/* [TODO] ADD CUSTOM ROUTES FOR EACH TOOL AS DEVELOPED */}
               <Route path="*" element={<NotFound />} />
             </Routes>

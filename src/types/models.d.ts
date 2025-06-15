@@ -1,4 +1,3 @@
-
 /**
  * Types partagés pour MomTech Suite
  */
@@ -22,4 +21,14 @@ export interface PregnancyProfile {
   dueDate?: string;
   notes?: string;
   // Ajoutez d'autres champs nécessaires…
+}
+
+/**
+ * Entrée du journal des symptômes grossesse
+ */
+export interface SymptomEntry {
+  date: string;  // AAAA-MM-JJ
+  type: string;
+  intensity: number;
+  note?: string;
 }
