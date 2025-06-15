@@ -7,7 +7,8 @@ import FamilyIllustration from "@/components/home/FamilyIllustration";
 import FavoriteButton from "@/components/home/FavoriteButton";
 import { useFavorites } from "@/hooks/useFavorites";
 import UserTourModal from "@/components/home/UserTourModal";
-import { HelpCircle } from "lucide-react";
+import UserFeedbackModal from "@/components/home/UserFeedbackModal";
+import { HelpCircle, Star } from "lucide-react";
 
 // Ordre de popularité proposé : Date d'accouchement, Contractions, Prise de poids, Calendrier, Tracker mouvements bébé, etc.
 const TOOLS = [
@@ -114,6 +115,7 @@ const Index = () => {
   const [showTour, setShowTour] = useState(
     () => window.localStorage.getItem("momtech-user-tour-done") !== "yes"
   );
+  const [showFeedback, setShowFeedback] = useState(false);
 
   function openTour() {
     setShowTour(true);
@@ -135,6 +137,20 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-tr from-pink-50 via-white to-blue-50">
       <UserTourModal open={showTour} onClose={closeTour} />
+      {/* MODAL FEEDBACK UTILISATEUR */}
+      <UserFeedbackModal open={showFeedback} onClose={() => setShowFeedback(false)} />
+
+      {/* BOUTON FEEDBACK flottant */}
+      <button
+        onClick={() => setShowFeedback(true)}
+        className="fixed z-40 bottom-5 left-5 bg-white/90 rounded-full shadow-lg border border-yellow-200 transition hover:bg-yellow-50 hover:scale-105 px-4 py-2 flex items-center gap-2 text-yellow-600 font-semibold"
+        style={{ boxShadow: "0 2px 12px 0 #fef08a90" }}
+        aria-label="Donner un avis"
+        title="Donner un avis sur MomTech Suite"
+      >
+        <Star className="mr-1" size={22} />
+        Avis
+      </button>
 
       {/* Bouton d’aide/visite guidée flottant en bas à droite */}
       <button
