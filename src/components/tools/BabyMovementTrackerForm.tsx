@@ -16,6 +16,7 @@ const METHODS = [
   { value: "Sadovsky", label: "Méthode Sadovsky (4 mouvements / 1h)" },
 ];
 
+// Local data for this tool
 type MovementEntryRaw = {
   timestamp: number;
   date: string; // YYYY-MM-DD
@@ -24,7 +25,7 @@ type MovementEntryRaw = {
   method: TrackingMethod;
   note?: string;
 };
-// This is the local type for history entries used here
+
 type MovementEntry = {
   id?: number;
   category: ToolCategory;
@@ -61,16 +62,13 @@ export function BabyMovementTrackerForm() {
       .sortBy("timestamp")
       .then(all =>
         isMounted
-          // If entry.data looks like MovementEntryRaw, we can use it
           ? setHistory(
               all
+                // Here: expect e.data to be already MovementEntryRaw, not encrypted!
                 .filter(e => e.data && (e.data as MovementEntryRaw).method && (e.data as MovementEntryRaw).date)
                 .map((e: any) => ({
                   ...e,
-                  data: {
-                    ...(e.data as MovementEntryRaw),
-                    method: (e.data as MovementEntryRaw).method as TrackingMethod,
-                  },
+                  data: e.data as MovementEntryRaw,
                 }))
             )
           : undefined
@@ -291,3 +289,4 @@ export function BabyMovementTrackerForm() {
 }
 
 // -- End of file --
+
