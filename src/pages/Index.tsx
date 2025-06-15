@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import AppSidebar from "@/components/app-sidebar";
-import { Input } from "@/components/ui/input";
 import { Search, Calendar, Baby, LineChart, ClipboardList } from "lucide-react";
 import Footer from "@/components/ui/Footer";
-import FamilyIllustration from "@/components/home/FamilyIllustration";
 import FavoriteButton from "@/components/home/FavoriteButton";
 import { useFavorites } from "@/hooks/useFavorites";
 import UserTourModal from "@/components/home/UserTourModal";
 import UserFeedbackModal from "@/components/home/UserFeedbackModal";
 import { HelpCircle, Star } from "lucide-react";
+
+// Hero image/logo utilisé (remplace toutes illustrations famille)
+const HERO_LOGO_SRC = "/lovable-uploads/user-logo.png";
 
 // Ordre de popularité proposé : Date d'accouchement, Contractions, Prise de poids, Calendrier, Tracker mouvements bébé, etc.
 const TOOLS = [
@@ -163,20 +164,29 @@ const Index = () => {
         Aide
       </button>
 
-      <main className="flex-1 flex flex-col items-center px-3 pt-10 pb-10">
-        {/* Animation fade-in sur l'illustration */}
-        <FamilyIllustration className="animate-fade-in" />
-        <div className="w-full max-w-2xl mx-auto flex flex-col gap-4 items-center mt-0 mb-12">
-          <div className="flex flex-col items-center gap-2 w-full">
-            <h1 className="font-playfair text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow leading-tight animate-fade-in text-center tracking-tight mb-0">
+      {/* HERO ZONE personnalisée */}
+      <main className="flex-1 flex flex-col items-center px-3 pt-6 pb-8">
+        <section className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center gap-0 mb-12 rounded-[2.5rem] bg-gradient-to-br from-blue-200/35 via-white/75 to-pink-100/50 shadow-xl border border-blue-100 backdrop-blur-lg py-10 px-5 mt-0 animate-fade-in min-h-[300px]">
+          {/* LOGO visuel centré */}
+          <div className="flex flex-col items-center justify-center w-full">
+            <img
+              src={HERO_LOGO_SRC}
+              alt="Logo MomTech"
+              className="h-28 w-28 md:h-32 md:w-32 rounded-full shadow-lg border-4 border-white object-cover bg-white mb-4 animate-scale-in"
+              draggable={false}
+              aria-hidden="true"
+              style={{ marginBottom: 18, marginTop: 6 }}
+            />
+            <h1 className="font-playfair text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow leading-tight tracking-tight text-center mb-2">
               {WELCOME[0]}
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-medium animate-fade-in text-center">
               {WELCOME[1]}
             </p>
           </div>
-        </div>
+        </section>
 
+        {/* Grille d’outils */}
         <div className="grid gap-8 md:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">
           {sorted.map(({ label, link, icon, color }) => (
             <a
