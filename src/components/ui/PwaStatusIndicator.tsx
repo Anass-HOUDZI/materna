@@ -7,15 +7,22 @@ export default function PwaStatusIndicator() {
   const { isOnline, updateAvailable } = usePwaStatus();
 
   // Couleurs
-  const baseCls = 'mx-auto rounded-full border shadow px-3 py-1 text-xs font-medium flex items-center gap-2 transition-all duration-200';
-  const visible = 'block opacity-100 pointer-events-auto';
-  const invisible = 'hidden opacity-0 pointer-events-none';
+  const baseCls =
+    'mx-auto rounded-full border shadow px-3 py-1 text-xs font-medium flex items-center gap-2 transition-all duration-200';
 
-  // Carte online, fallback
+  // La carte est centrée, largeur limitée, marges latérales auto pour tous les statuts
+  const CardWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <div className="w-full flex justify-center items-end mt-auto">
+      <div className="mb-2 w-full max-w-xs sm:max-w-sm px-3">
+        {children}
+      </div>
+    </div>
+  );
+
   if (isOnline && !updateAvailable) {
     return (
-      <div className="w-full flex justify-center items-end mt-auto">
-        <div className={`${baseCls} bg-green-50 border-green-100 text-green-700 mb-2`}>
+      <CardWrapper>
+        <div className={`${baseCls} bg-green-50 border-green-100 text-green-700 w-full`}>
           <span className="flex items-center gap-1">
             <span className="relative flex h-2 w-2">
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400 mr-1"></span>
@@ -23,14 +30,13 @@ export default function PwaStatusIndicator() {
             En ligne&nbsp;: <span className="font-semibold">toutes fonctionnalités disponibles</span>
           </span>
         </div>
-      </div>
+      </CardWrapper>
     );
   }
 
-  // Statuts offline/update plus visibles
   return (
-    <div className="w-full flex justify-center items-end mt-auto">
-      <div className={`${baseCls} mb-2 bg-background/90 backdrop-blur-[2px] border`}>
+    <CardWrapper>
+      <div className={`${baseCls} bg-background/90 backdrop-blur-[2px] border w-full`}>
         {!isOnline && (
           <div className="flex items-center gap-1 text-yellow-700 font-semibold">
             <span className="relative flex h-2 w-2 mr-1">
@@ -51,6 +57,6 @@ export default function PwaStatusIndicator() {
           </TouchOptimized>
         )}
       </div>
-    </div>
+    </CardWrapper>
   );
 }
