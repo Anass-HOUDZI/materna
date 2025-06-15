@@ -175,24 +175,8 @@ const Index = () => {
               {WELCOME[1]}
             </p>
           </div>
-
-          {/* Accordéon interactif affiché sous l’intro */}
-          <div className="w-full mt-2 animate-fade-in">
-            <div className="rounded-2xl bg-white/90 border border-blue-100 shadow-sm overflow-hidden max-w-xl mx-auto">
-              <Accordion>
-                <AccordionItem title="Comment fonctionne la suite ?">
-                  50 outils entièrement offline, gratuits, permettant de gérer santé, grossesse et parentalité.
-                </AccordionItem>
-                <AccordionItem title="Mes données sont-elles privées ?">
-                  Oui, tout est traité en local, aucune donnée transmise ni stockée à l’extérieur.
-                </AccordionItem>
-                <AccordionItem title="Comment ajouter aux favoris ?">
-                  Cliquez sur l’étoile jaune en haut à droite de chaque outil pour le retrouver en priorité.
-                </AccordionItem>
-              </Accordion>
-            </div>
-          </div>
         </div>
+
         <div className="grid gap-8 md:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">
           {sorted.map(({ label, link, icon, color }) => (
             <a
@@ -219,6 +203,28 @@ const Index = () => {
               </span>
             </a>
           ))}
+        </div>
+
+        {/* Bloc Accordéon FAQ positionné en bas de page après les outils */}
+        <div className="w-full flex justify-center mt-14 mb-1 animate-fade-in">
+          <div className="rounded-2xl bg-gradient-to-br from-blue-50/40 to-blue-100/30 border border-blue-100 shadow-sm overflow-hidden max-w-xl w-full mx-auto"
+            style={{
+              boxShadow: "0 1.5px 15px 0 #dbeafe1A",
+              background: "linear-gradient(135deg, #f0f7ff 60%, #e2eaff 100%)"
+            }}
+          >
+            <Accordion>
+              <AccordionItem title="Comment fonctionne la suite ?">
+                50 outils entièrement offline, gratuits, permettant de gérer santé, grossesse et parentalité.
+              </AccordionItem>
+              <AccordionItem title="Mes données sont-elles privées ?">
+                Oui, tout est traité en local, aucune donnée transmise ni stockée à l’extérieur.
+              </AccordionItem>
+              <AccordionItem title="Comment ajouter aux favoris ?">
+                Cliquez sur l’étoile jaune en haut à droite de chaque outil pour le retrouver en priorité.
+              </AccordionItem>
+            </Accordion>
+          </div>
         </div>
       </main>
       <Footer />
