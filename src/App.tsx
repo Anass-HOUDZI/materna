@@ -21,6 +21,7 @@ import MotorDevelopmentTracker from "./pages/MotorDevelopmentTracker";
 import ChildNutritionCalculator from "./pages/ChildNutritionCalculator";
 import BreastfeedingGuide from "./pages/BreastfeedingGuide";
 import TeethingCalculator from "./pages/TeethingCalculator";
+import CryingMoodTracker from "./pages/CryingMoodTracker";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
               <Route path="/enfant/besoins-nutritionnels" element={<ChildNutritionCalculator />} />
               <Route path="/sante/guide-allaitement" element={<BreastfeedingGuide />} />
               <Route path="/grossesse/calculateur-dents" element={<TeethingCalculator />} />
+              <Route path="/enfant/tracker-pleurs-humeur" element={<CryingMoodTracker />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

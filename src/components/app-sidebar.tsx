@@ -46,6 +46,10 @@ const EDUCATION_SUBTOOLS = [
   {
     label: "Calculateur Besoins Nutritionnels Enfant",
     link: "/enfant/besoins-nutritionnels"
+  },
+  {
+    label: "Tracker Pleurs & Humeur Bébé",
+    link: "/enfant/tracker-pleurs-humeur"
   }
 ];
 
