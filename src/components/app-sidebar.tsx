@@ -1,3 +1,4 @@
+
 import {
   Sidebar,
   SidebarContent,
@@ -20,7 +21,7 @@ const CATEGORIES = [
 
 const SUBTOOLS = [
   { label: "Calculateur de date d’accouchement", link: "/grossesse/calculateur-terme" },
-  // On pourra ajouter d'autres sous-outils grossesse ici rapidement
+  { label: "Tracker Contractions", link: "/grossesse/tracker-contractions" },
 ];
 
 export default function AppSidebar() {
