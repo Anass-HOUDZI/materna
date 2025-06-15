@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import AppSidebar from "@/components/app-sidebar";
 import { Input } from "@/components/ui/input";
@@ -10,7 +11,9 @@ import UserTourModal from "@/components/home/UserTourModal";
 import UserFeedbackModal from "@/components/home/UserFeedbackModal";
 import ToolsGrid from "@/components/home/ToolsGrid";
 import { AccordionSimple, AccordionSimpleItem } from "@/components/ui/accordion-simple";
-import { Star, HelpCircle } from "lucide-react";
+
+// Ligne supprimée :
+// import { Star, HelpCircle } from "lucide-react";
 
 const WELCOME = [
   "Bienvenue sur MomTech Suite 👶",
