@@ -1,12 +1,16 @@
-
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ContractionTrackerForm } from "@/components/tools/ContractionTrackerForm";
 import { Search } from "lucide-react";
 import Footer from "@/components/ui/Footer";
+import PageHeader from "@/components/ui/PageHeader";
 
 export default function ContractionTracker() {
   return (
     <div className="min-h-screen flex flex-col">
+      <PageHeader crumbs={[
+        { href: "/grossesse", label: "Grossesse" },
+        { label: "Tracker Contractions Intelligent" },
+      ]} />
       <div className="flex flex-1 justify-center items-center bg-gradient-to-br from-pink-50 via-white to-fuchsia-50 py-8 animate-fade-in">
         <Card className="w-full max-w-2xl shadow-xl rounded-2xl border-pink-100 bg-white/90">
           <CardHeader>

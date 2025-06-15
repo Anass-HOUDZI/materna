@@ -1,13 +1,17 @@
-
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import BreastfeedingTabs from "@/components/tools/BreastfeedingTabs";
 import { Search } from "lucide-react";
 import Footer from "@/components/ui/Footer";
+import PageHeader from "@/components/ui/PageHeader";
 
 export default function BreastfeedingGuide() {
   return (
     <div className="min-h-screen flex flex-col">
+      <PageHeader crumbs={[
+        { href: "/sante", label: "Santé" },
+        { label: "Guide Allaitement Complet" },
+      ]} />
       <div className="flex-1 flex justify-center items-center bg-gradient-to-br from-fuchsia-50 via-white to-pink-100 py-10 px-2 animate-fade-in">
         <Card className="w-full max-w-2xl shadow-xl rounded-2xl border-fuchsia-100 bg-white/90">
           <CardHeader>

@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Baby } from "lucide-react";
 import Footer from "@/components/ui/Footer";
+import PageHeader from "@/components/ui/PageHeader";
 
 const explanations = [
   "Résultat basé sur des traditions populaires !",
@@ -19,6 +20,10 @@ export default function SexPredictionCalculator() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <PageHeader crumbs={[
+        { href: "/grossesse", label: "Grossesse" },
+        { label: "Calculateur Probabilité Sexe Bébé" },
+      ]} />
       <div className="flex-1 flex flex-col justify-center items-center px-3 pb-10 pt-8 bg-gradient-to-b from-accent to-background">
         <section className="w-full flex flex-col justify-center items-center mb-12 max-w-2xl">
           <div className="flex flex-col items-center gap-6">

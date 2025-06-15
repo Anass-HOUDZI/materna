@@ -1,12 +1,16 @@
-
 import { BabyMovementTrackerForm } from "@/components/tools/BabyMovementTrackerForm";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Footer from "@/components/ui/Footer";
 import { Baby } from "lucide-react";
+import PageHeader from "@/components/ui/PageHeader";
 
 export default function BabyMovementTracker() {
   return (
     <div className="min-h-screen flex flex-col">
+      <PageHeader crumbs={[
+        { href: "/grossesse", label: "Grossesse" },
+        { label: "Tracker Mouvements Bébé" },
+      ]} />
       <div className="flex flex-1 justify-center items-center bg-gradient-to-br from-sky-50 via-white to-fuchsia-50 py-10 px-2 animate-fade-in">
         <Card className="w-full max-w-2xl shadow-xl rounded-2xl border-fuchsia-100 bg-white/90">
           <CardHeader>

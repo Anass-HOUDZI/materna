@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ToolSectionCard from "@/components/tools/ToolSectionCard";
 import WeekIllustrationPlaceholder from "@/components/tools/WeekIllustrationPlaceholder";
 import Footer from "@/components/ui/Footer";
+import PageHeader from "@/components/ui/PageHeader";
 
 // Example: data ici, à remplacer plus tard par une vraie source.
 const pregnancyWeeks = [
@@ -26,6 +27,12 @@ export default function PregnancyWeeklyCalendar() {
   const atLast = current === pregnancyWeeks.length - 1;
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-pink-50">
+      <PageHeader
+        crumbs={[
+          { href: "/grossesse", label: "Grossesse" },
+          { label: "Calendrier Grossesse Semaine/Semaine" },
+        ]}
+      />
       <main className="flex-1 flex flex-col justify-center items-center py-10 px-2 animate-fade-in">
         <div className="w-full max-w-2xl mx-auto flex flex-col gap-6">
           <WeekIllustrationPlaceholder week={weekData.week} />

@@ -1,12 +1,16 @@
-
 import { Baby, FileBarChart2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Footer from "@/components/ui/Footer";
+import PageHeader from "@/components/ui/PageHeader";
 
 export default function BabyBudgetSimulator() {
   return (
     <div className="min-h-screen flex flex-col">
+      <PageHeader crumbs={[
+        { href: "/grossesse", label: "Grossesse" },
+        { label: "Simulateur Budget Bébé Année 1" },
+      ]} />
       <div className="flex-1 w-full min-h-[80vh] flex flex-col justify-center items-center bg-gradient-to-b from-orange-50 to-background py-10 px-2 animate-fade-in">
         <Card className="w-full max-w-2xl shadow-xl rounded-2xl border-orange-100 bg-white/90">
           <CardHeader>
