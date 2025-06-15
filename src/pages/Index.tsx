@@ -6,6 +6,8 @@ import Footer from "@/components/ui/Footer";
 import FamilyIllustration from "@/components/home/FamilyIllustration";
 import FavoriteButton from "@/components/home/FavoriteButton";
 import { useFavorites } from "@/hooks/useFavorites";
+import UserTourModal from "@/components/home/UserTourModal";
+import { HelpCircle } from "lucide-react";
 
 // Ordre de popularité proposé : Date d'accouchement, Contractions, Prise de poids, Calendrier, Tracker mouvements bébé, etc.
 const TOOLS = [
@@ -109,6 +111,18 @@ const WELCOME = [
 const Index = () => {
   const [search, setSearch] = useState("");
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
+  const [showTour, setShowTour] = useState(
+    () => window.localStorage.getItem("momtech-user-tour-done") !== "yes"
+  );
+
+  function openTour() {
+    setShowTour(true);
+    window.localStorage.setItem("momtech-user-tour-done", "no");
+  }
+  function closeTour() {
+    setShowTour(false);
+    window.localStorage.setItem("momtech-user-tour-done", "yes");
+  }
 
   const filtered = TOOLS; // recherche désactivée pour l’instant
 
@@ -120,6 +134,19 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-tr from-pink-50 via-white to-blue-50">
+      <UserTourModal open={showTour} onClose={closeTour} />
+
+      {/* Bouton d’aide/visite guidée flottant en bas à droite */}
+      <button
+        onClick={openTour}
+        className="fixed z-40 bottom-5 right-5 bg-white/90 rounded-full shadow-lg border border-blue-200 transition hover:bg-blue-50 hover:scale-105 px-4 py-2 flex items-center gap-2 text-blue-600 font-semibold"
+        style={{ boxShadow: "0 2px 12px 0 #dbeafe90" }}
+        aria-label="Guide utilisateur"
+      >
+        <HelpCircle className="mr-1" size={22} />
+        Aide
+      </button>
+
       <main className="flex-1 flex flex-col items-center px-3 pt-10 pb-10">
         <FamilyIllustration />
         <div className="w-full max-w-2xl mx-auto flex flex-col gap-4 items-center mt-0 mb-12">
