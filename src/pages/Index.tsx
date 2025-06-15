@@ -105,28 +105,19 @@ const WELCOME = [
 
 const Index = () => {
   const [search, setSearch] = useState("");
-  const filtered = TOOLS.filter((tool) =>
-    tool.label.toLowerCase().includes(search.toLowerCase())
-  );
+  // On enlève le filtrage lié à la recherche
+  // const filtered = TOOLS.filter((tool) =>
+  //   tool.label.toLowerCase().includes(search.toLowerCase())
+  // );
+  // À la place, on garde l'intégralité :
+  const filtered = TOOLS;
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-tr from-pink-50 via-white to-blue-50">
       <main className="flex-1 flex flex-col items-center px-2 pt-8 pb-10">
         {/* Section d’accueil modernisée */}
         <div className="w-full max-w-2xl mx-auto flex flex-col gap-4 items-center mt-6 mb-10">
-          <div className="relative w-full">
-            <Input
-              type="text"
-              placeholder="🔎 Rechercher un outil…"
-              className="pl-12 py-3 text-lg bg-white/95 rounded-2xl shadow-md border-2 border-blue-100 focus:ring-2 focus:ring-blue-300 font-medium transition-all"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              aria-label="Rechercher un outil"
-            />
-            <span className="absolute left-4 top-3 text-blue-400">
-              <Search size={24} />
-            </span>
-          </div>
+          {/* Recherche supprimée */}
           <div className="flex flex-col items-center gap-2">
             <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow leading-tight mb-0 animate-fade-in text-center">
               {WELCOME[0]}
@@ -156,11 +147,7 @@ const Index = () => {
               </span>
             </a>
           ))}
-          {filtered.length === 0 && (
-            <div className="col-span-full text-muted-foreground py-10 text-xl">
-              Aucun outil ne correspond à votre recherche.
-            </div>
-          )}
+          {/* Message si rien ne correspond à la recherche supprimé aussi */}
         </div>
       </main>
       <Footer />
