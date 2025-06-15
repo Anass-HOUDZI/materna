@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,8 +6,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import AppSidebar from "@/components/app-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+// Suppression de la sidebar
+// import AppSidebar from "@/components/app-sidebar";
+// import { SidebarProvider } from "@/components/ui/sidebar";
 import PregnancyDueDateCalculator from "./pages/PregnancyDueDateCalculator";
 import ContractionTracker from "./pages/ContractionTracker";
 import PregnancyWeightGainCalculator from "./pages/PregnancyWeightGainCalculator";
@@ -31,33 +33,32 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <SidebarProvider>
-          <div className="min-h-screen flex w-full">
-            <AppSidebar />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/grossesse/calculateur-terme" element={<PregnancyDueDateCalculator />} />
-              <Route path="/grossesse/tracker-contractions" element={<ContractionTracker />} />
-              <Route path="/grossesse/calculateur-poids" element={<PregnancyWeightGainCalculator />} />
-              <Route path="/grossesse/calendrier-semaine" element={<PregnancyWeeklyCalendar />} />
-              <Route path="/grossesse/tracker-mouvements-bebe" element={<BabyMovementTracker />} />
-              <Route path="/grossesse/journal-symptomes" element={<PregnancySymptomJournal />} />
-              <Route path="/grossesse/calculateur-sexe-bebe" element={<SexPredictionCalculator />} />
-              <Route path="/grossesse/simulateur-budget-bebe" element={<BabyBudgetSimulator />} />
-              <Route path="/enfant/courbes-croissance" element={<GrowthCurves />} />
-              <Route path="/enfant/guide-diversification" element={<FoodDiversificationGuide />} />
-              <Route path="/enfant/developpement-moteur" element={<MotorDevelopmentTracker />} />
-              <Route path="/enfant/besoins-nutritionnels" element={<ChildNutritionCalculator />} />
-              <Route path="/sante/guide-allaitement" element={<BreastfeedingGuide />} />
-              <Route path="/grossesse/calculateur-dents" element={<TeethingCalculator />} />
-              <Route path="/enfant/tracker-pleurs-humeur" element={<CryingMoodTracker />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-        </SidebarProvider>
+        {/* Suppression du SidebarProvider et de AppSidebar */}
+        <div className="min-h-screen flex w-full flex-col">
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/grossesse/calculateur-terme" element={<PregnancyDueDateCalculator />} />
+            <Route path="/grossesse/tracker-contractions" element={<ContractionTracker />} />
+            <Route path="/grossesse/calculateur-poids" element={<PregnancyWeightGainCalculator />} />
+            <Route path="/grossesse/calendrier-semaine" element={<PregnancyWeeklyCalendar />} />
+            <Route path="/grossesse/tracker-mouvements-bebe" element={<BabyMovementTracker />} />
+            <Route path="/grossesse/journal-symptomes" element={<PregnancySymptomJournal />} />
+            <Route path="/grossesse/calculateur-sexe-bebe" element={<SexPredictionCalculator />} />
+            <Route path="/grossesse/simulateur-budget-bebe" element={<BabyBudgetSimulator />} />
+            <Route path="/enfant/courbes-croissance" element={<GrowthCurves />} />
+            <Route path="/enfant/guide-diversification" element={<FoodDiversificationGuide />} />
+            <Route path="/enfant/developpement-moteur" element={<MotorDevelopmentTracker />} />
+            <Route path="/enfant/besoins-nutritionnels" element={<ChildNutritionCalculator />} />
+            <Route path="/sante/guide-allaitement" element={<BreastfeedingGuide />} />
+            <Route path="/grossesse/calculateur-dents" element={<TeethingCalculator />} />
+            <Route path="/enfant/tracker-pleurs-humeur" element={<CryingMoodTracker />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
 
 export default App;
+
