@@ -2,6 +2,7 @@
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import BreastfeedingTabs from "@/components/tools/BreastfeedingTabs";
+import { Search } from "lucide-react";
 
 export default function BreastfeedingGuide() {
   return (
@@ -25,3 +26,4 @@ export default function BreastfeedingGuide() {
     </div>
   );
 }
+
