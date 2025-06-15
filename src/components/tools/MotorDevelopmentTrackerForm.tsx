@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Form, FormItem, FormLabel, FormControl, FormMessage, FormField } from "@/components/ui/form";
+import { FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -48,54 +48,52 @@ export default function MotorDevelopmentTrackerForm() {
 
   return (
     <div>
-      <Form>
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <FormItem>
-            <FormLabel>Âge de l’enfant (mois)</FormLabel>
-            <FormControl>
-              <Input
-                type="number"
-                min={1}
-                max={36}
-                value={age}
-                onChange={e => {
-                  const val = e.target.value === "" ? "" : Number(e.target.value);
-                  setAge(val);
-                  setChecked({});
-                  setResult(null);
-                }}
-                placeholder="ex : 16"
-              />
-            </FormControl>
-            <FormMessage/>
-          </FormItem>
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        <FormItem>
+          <FormLabel>Âge de l’enfant (mois)</FormLabel>
+          <FormControl>
+            <Input
+              type="number"
+              min={1}
+              max={36}
+              value={age}
+              onChange={e => {
+                const val = e.target.value === "" ? "" : Number(e.target.value);
+                setAge(val);
+                setChecked({});
+                setResult(null);
+              }}
+              placeholder="ex : 16"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
 
-          {typeof age === "number" && !isNaN(age) && (
-            <div className="space-y-2">
-              <div className="font-semibold mb-1">Étapes motrices typiques à cet âge :</div>
-              {currentMilestones.length === 0 && (
-                <div className="text-muted-foreground text-sm">Aucune étape classique pour cet âge.</div>
-              )}
-              {currentMilestones.map(ms => (
-                <FormItem key={ms.label} className="flex items-center gap-2">
-                  <FormControl>
-                    <Checkbox
-                      checked={!!checked[ms.label]}
-                      onCheckedChange={val => handleCheck(ms.label, !!val)}
-                      id={ms.label}
-                    />
-                  </FormControl>
-                  <FormLabel htmlFor={ms.label} className="cursor-pointer">{ms.label}</FormLabel>
-                </FormItem>
-              ))}
-            </div>
-          )}
+        {typeof age === "number" && !isNaN(age) && (
+          <div className="space-y-2">
+            <div className="font-semibold mb-1">Étapes motrices typiques à cet âge :</div>
+            {currentMilestones.length === 0 && (
+              <div className="text-muted-foreground text-sm">Aucune étape classique pour cet âge.</div>
+            )}
+            {currentMilestones.map(ms => (
+              <FormItem key={ms.label} className="flex items-center gap-2">
+                <FormControl>
+                  <Checkbox
+                    checked={!!checked[ms.label]}
+                    onCheckedChange={val => handleCheck(ms.label, !!val)}
+                    id={ms.label}
+                  />
+                </FormControl>
+                <FormLabel htmlFor={ms.label} className="cursor-pointer">{ms.label}</FormLabel>
+              </FormItem>
+            ))}
+          </div>
+        )}
 
-          {typeof age === "number" && currentMilestones.length > 0 && (
-            <Button type="submit" className="w-full mt-2">Évaluer</Button>
-          )}
-        </form>
-      </Form>
+        {typeof age === "number" && currentMilestones.length > 0 && (
+          <Button type="submit" className="w-full mt-2">Évaluer</Button>
+        )}
+      </form>
 
       {result && (
         <div className="mt-6 p-4 bg-accent/20 rounded-lg border text-center">
