@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceArea } from "recharts";
 import Dexie from "dexie";
+import { TooltipInfo } from "@/components/ui/TooltipInfo";
 
 const IOM_RECOMMENDATIONS = [
   { imcMin: 0, imcMax: 18.5, totalMin: 12.5, totalMax: 18 },
@@ -53,6 +53,31 @@ export function PregnancyWeightGainCalculatorForm() {
   const [week, setWeek] = useState<number | "">("");
   // Historique local
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+
+  // Ajout validation + feedback champ par champ
+  const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
+
+  function getError(field: string): string | null {
+    switch (field) {
+      case "preWeight":
+        if (touched.preWeight && (!preWeight || Number(preWeight) < 30))
+          return "Poids requis (minimum 30 kg)";
+        break;
+      case "preHeight":
+        if (touched.preHeight && (!preHeight || Number(preHeight) < 120))
+          return "Taille requise (minimum 120 cm)";
+        break;
+      case "currentWeight":
+        if (touched.currentWeight && (!currentWeight || Number(currentWeight) < 30))
+          return "Poids actuel requis (minimum 30 kg)";
+        break;
+      case "week":
+        if (touched.week && (!week || Number(week) < 4))
+          return "Semaine grossesse requise (min. 4)";
+        break;
+    }
+    return null;
+  }
 
   // Calculs
   const imc =
@@ -173,28 +198,56 @@ export function PregnancyWeightGainCalculatorForm() {
         >
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label>Poids avant grossesse (kg)</Label>
+              <div className="flex items-center gap-1">
+                <Label>Poids avant grossesse (kg)</Label>
+                <TooltipInfo label="Poids réel avant le début de la grossesse. À mesurer idéalement sans vêtement et avec une balance fiable (le plus récent possible)." />
+              </div>
               <Input
                 type="number"
                 step="0.1"
                 value={preWeight}
                 min="30"
                 max="200"
-                onChange={e => setPreWeight(e.target.value ? Number(e.target.value) : "")}
+                onChange={e => {
+                  setPreWeight(e.target.value ? Number(e.target.value) : "");
+                  setTouched(t => ({ ...t, preWeight: true }));
+                }}
+                onBlur={() => setTouched(t => ({ ...t, preWeight: true }))}
                 required
+                aria-describedby="form-preweight-message"
+                aria-invalid={!!getError("preWeight")}
               />
+              <div className="transition-all duration-300 min-h-[1.6em] text-xs" id="form-preweight-message">
+                <span className={getError("preWeight") ? "text-destructive" : "text-muted-foreground"}>
+                  {getError("preWeight") || "Exemple : 58.5 (en kg, sans vêtement si possible)."}
+                </span>
+              </div>
             </div>
             <div>
-              <Label>Taille (cm)</Label>
+              <div className="flex items-center gap-1">
+                <Label>Taille (cm)</Label>
+                <TooltipInfo label="Taille réelle (en centimètres) mesurée debout, sans chaussures. Permet de calculer l’IMC précis et d’adapter les recommandations." />
+              </div>
               <Input
                 type="number"
                 step="1"
                 value={preHeight}
                 min="120"
                 max="220"
-                onChange={e => setPreHeight(e.target.value ? Number(e.target.value) : "")}
+                onChange={e => {
+                  setPreHeight(e.target.value ? Number(e.target.value) : "");
+                  setTouched(t => ({ ...t, preHeight: true }));
+                }}
+                onBlur={() => setTouched(t => ({ ...t, preHeight: true }))}
                 required
+                aria-describedby="form-preheight-message"
+                aria-invalid={!!getError("preHeight")}
               />
+              <div className="transition-all duration-300 min-h-[1.6em] text-xs" id="form-preheight-message">
+                <span className={getError("preHeight") ? "text-destructive" : "text-muted-foreground"}>
+                  {getError("preHeight") || "Exemple : 165 (en cm, sans chaussures)."}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -217,28 +270,56 @@ export function PregnancyWeightGainCalculatorForm() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label>Poids actuel (kg)</Label>
+              <div className="flex items-center gap-1">
+                <Label>Poids actuel (kg)</Label>
+                <TooltipInfo label="Votre poids au jour de la saisie, mesuré exactement comme le poids d’avant grossesse (mêmes conditions, même balance)." />
+              </div>
               <Input
                 type="number"
                 step="0.1"
                 value={currentWeight}
                 min="30"
                 max="220"
-                onChange={e => setCurrentWeight(e.target.value ? Number(e.target.value) : "")}
+                onChange={e => {
+                  setCurrentWeight(e.target.value ? Number(e.target.value) : "");
+                  setTouched(t => ({ ...t, currentWeight: true }));
+                }}
+                onBlur={() => setTouched(t => ({ ...t, currentWeight: true }))}
                 required
+                aria-describedby="form-currentweight-message"
+                aria-invalid={!!getError("currentWeight")}
               />
+              <div className="transition-all duration-300 min-h-[1.6em] text-xs" id="form-currentweight-message">
+                <span className={getError("currentWeight") ? "text-destructive" : "text-muted-foreground"}>
+                  {getError("currentWeight") || "Dernière pesée (ex : 64.7 kg)."}
+                </span>
+              </div>
             </div>
             <div>
-              <Label>Semaine grossesse</Label>
+              <div className="flex items-center gap-1">
+                <Label>Semaine grossesse</Label>
+                <TooltipInfo label="Semaine d’aménorrhée au moment de la pesée (comptez chaque semaine entamée : 20 SA = début 5ème mois)." />
+              </div>
               <Input
                 type="number"
                 step="1"
                 value={week}
                 min="4"
                 max="42"
-                onChange={e => setWeek(e.target.value ? Number(e.target.value) : "")}
+                onChange={e => {
+                  setWeek(e.target.value ? Number(e.target.value) : "");
+                  setTouched(t => ({ ...t, week: true }));
+                }}
+                onBlur={() => setTouched(t => ({ ...t, week: true }))}
                 required
+                aria-describedby="form-week-message"
+                aria-invalid={!!getError("week")}
               />
+              <div className="transition-all duration-300 min-h-[1.6em] text-xs" id="form-week-message">
+                <span className={getError("week") ? "text-destructive" : "text-muted-foreground"}>
+                  {getError("week") || "Saisie : 12 (en semaines complètes, mini 4)."}
+                </span>
+              </div>
             </div>
           </div>
           {delta !== null && (
