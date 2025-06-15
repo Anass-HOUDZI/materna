@@ -1,14 +1,17 @@
+
 /**
  * Types partagés pour MomTech Suite
  */
 
 export type ToolCategory = "pregnancy" | "security" | "health" | "education" | "reports";
 
+// PATCH: On permet que .data soit un objet chiffré OU une donnée métier en clair pour dev local
 export interface EncryptedToolData {
   id?: number;
   category: ToolCategory;
-  toolKey: string;         // ex: due-date-calculator
-  data: { iv: number[], data: number[] }; // données chiffrées AES-GCM
+  toolKey: string;         
+  // Donnée : en prod = {iv, data}, en dev/clair = type métier
+  data: { iv: number[]; data: number[] } | any;
 }
 
 /**
@@ -32,3 +35,4 @@ export interface SymptomEntry {
   intensity: number;
   note?: string;
 }
+

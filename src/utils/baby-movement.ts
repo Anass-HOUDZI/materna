@@ -2,35 +2,43 @@
 import type { BabyMovementEntry } from "@/types/movement-entry";
 import type { EncryptedToolData } from "@/types/models";
 
-// Pour l'instant, la donnée n'est pas chiffrée, donc accès direct
-// (en 'prod', intégrer crypto ici)
-
+// Teste si un objet EncryptedToolData correspond aux mouvements bébé
 export function isBabyMovementTool(entry: EncryptedToolData): boolean {
-  // Ajout de garde type toolKey et présence attributs mouvements
-  const d = entry.data as any; // à remplacer par déchiffrage si besoin
-  return (
+  // En mode dev: données en clair (objet BabyMovementEntry)
+  if (
     entry.toolKey === "baby-movement-tracker" &&
-    d &&
-    typeof d.method === "string" &&
-    typeof d.date === "string" &&
-    typeof d.movements === "number"
-  );
-}
-
-export function getBabyMovementData(entry: EncryptedToolData): BabyMovementEntry | null {
-  try {
-    // SANS chiffrement: la data est stockée en JSON brut
-    return entry.data as BabyMovementEntry;
-  } catch {
-    return null;
+    entry.data &&
+    typeof entry.data.method === "string" &&
+    typeof entry.data.date === "string" &&
+    typeof entry.data.movements === "number"
+  ) {
+    return true;
   }
+  // (Plus tard : tester données chiffrées)
+  return false;
 }
 
+// Récupère les données movements bébé en mode DEV (pas de déchiffrement)
+export function getBabyMovementData(entry: EncryptedToolData): BabyMovementEntry | null {
+  if (
+    entry &&
+    entry.data &&
+    typeof entry.data.method === "string" &&
+    typeof entry.data.date === "string" &&
+    typeof entry.data.movements === "number"
+  ) {
+    return entry.data as BabyMovementEntry;
+  }
+  // (Plus tard : gestion du déchiffrement)
+  return null;
+}
+
+// Wrappe une donnée BabyMovementEntry en EncryptedToolData (en clair/dev)
 export function wrapBabyMovementEntry(entry: BabyMovementEntry): EncryptedToolData {
-  // Ici stockage en clair, normalisé pour Dexie
   return {
     toolKey: "baby-movement-tracker",
     category: "pregnancy",
     data: entry,
   };
 }
+
