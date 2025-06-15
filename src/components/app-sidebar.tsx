@@ -48,6 +48,13 @@ const EDUCATION_SUBTOOLS = [
   }
 ];
 
+const HEALTH_SUBTOOLS = [
+  {
+    label: "Guide Allaitement Complet",
+    link: "/sante/guide-allaitement"
+  }
+];
+
 export default function AppSidebar() {
   return (
     <Sidebar>
@@ -67,6 +74,19 @@ export default function AppSidebar() {
                   {key === "pregnancy" && (
                     <div className="ml-6 mt-2 space-y-1">
                       {SUBTOOLS.map(sub => (
+                        <SidebarMenuItem key={sub.link}>
+                          <SidebarMenuButton asChild>
+                            <a href={sub.link} className="text-sm">
+                              {sub.label}
+                            </a>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </div>
+                  )}
+                  {key === "health" && (
+                    <div className="ml-6 mt-2 space-y-1">
+                      {HEALTH_SUBTOOLS.map(sub => (
                         <SidebarMenuItem key={sub.link}>
                           <SidebarMenuButton asChild>
                             <a href={sub.link} className="text-sm">

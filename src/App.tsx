@@ -19,6 +19,7 @@ import GrowthCurves from "./pages/GrowthCurves";
 import FoodDiversificationGuide from "./pages/FoodDiversificationGuide";
 import MotorDevelopmentTracker from "./pages/MotorDevelopmentTracker";
 import ChildNutritionCalculator from "./pages/ChildNutritionCalculator";
+import BreastfeedingGuide from "./pages/BreastfeedingGuide";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
               <Route path="/enfant/guide-diversification" element={<FoodDiversificationGuide />} />
               <Route path="/enfant/developpement-moteur" element={<MotorDevelopmentTracker />} />
               <Route path="/enfant/besoins-nutritionnels" element={<ChildNutritionCalculator />} />
+              <Route path="/sante/guide-allaitement" element={<BreastfeedingGuide />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
