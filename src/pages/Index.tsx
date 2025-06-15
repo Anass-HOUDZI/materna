@@ -1,80 +1,158 @@
+
 import React, { useState } from "react";
 import AppSidebar from "@/components/app-sidebar";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Calendar, Baby, LineChart, ClipboardList } from "lucide-react";
 import Footer from "@/components/ui/Footer";
 
+// Ordre de popularité proposé : Date d'accouchement, Contractions, Prise de poids, Calendrier, Tracker mouvements bébé, etc.
 const TOOLS = [
-  { label: "Calculateur de date d'accouchement", link: "/grossesse/calculateur-terme", icon: <Search size={38} className="text-blue-600" /> },
-  { label: "Tracker Contractions", link: "/grossesse/tracker-contractions", icon: <Search size={38} className="text-pink-500" /> },
-  { label: "Calculateur Prise de Poids", link: "/grossesse/calculateur-poids", icon: <Search size={38} className="text-green-500" /> },
-  { label: "Calendrier Grossesse Semaine/Semaine", link: "/grossesse/calendrier-semaine", icon: <Search size={38} className="text-violet-500" /> },
-  { label: "Tracker Mouvements Bébé", link: "/grossesse/tracker-mouvements-bebe", icon: <Search size={38} className="text-rose-400" /> },
-  { label: "Journal Symptômes", link: "/grossesse/journal-symptomes", icon: <Search size={38} className="text-yellow-400" /> },
-  { label: "Calculateur Sexe Bébé (fun)", link: "/grossesse/calculateur-sexe-bebe", icon: <Search size={38} className="text-fuchsia-500" /> },
-  { label: "Simulateur Budget Bébé Année 1", link: "/grossesse/simulateur-budget-bebe", icon: <Search size={38} className="text-sky-500" /> },
-  { label: "Calculateur Poussées Dentaires", link: "/grossesse/calculateur-dents", icon: <Search size={38} className="text-emerald-400" /> },
-  { label: "Courbes Croissance OMS", link: "/enfant/courbes-croissance", icon: <Search size={38} className="text-blue-500" /> },
-  { label: "Guide Diversification Alimentaire", link: "/enfant/guide-diversification", icon: <Search size={38} className="text-lime-500" /> },
-  { label: "Tracker Développement Moteur 0-3 ans", link: "/enfant/developpement-moteur", icon: <Search size={38} className="text-orange-400" /> },
-  { label: "Calculateur Besoins Nutritionnels Enfant", link: "/enfant/besoins-nutritionnels", icon: <Search size={38} className="text-teal-500" /> },
-  { label: "Tracker Pleurs & Humeur Bébé", link: "/enfant/tracker-pleurs-humeur", icon: <Search size={38} className="text-purple-500" /> },
-  { label: "Guide Allaitement Complet", link: "/sante/guide-allaitement", icon: <Search size={38} className="text-pink-400" /> },
+  {
+    label: "Calculateur de date d'accouchement",
+    link: "/grossesse/calculateur-terme",
+    icon: <Calendar className="text-blue-500" size={40} />,
+    color: "bg-gradient-to-br from-blue-50 to-blue-100",
+  },
+  {
+    label: "Tracker Contractions",
+    link: "/grossesse/tracker-contractions",
+    icon: <LineChart className="text-pink-500" size={40} />,
+    color: "bg-gradient-to-br from-pink-50 to-pink-100",
+  },
+  {
+    label: "Calculateur Prise de Poids",
+    link: "/grossesse/calculateur-poids",
+    icon: <LineChart className="text-green-500" size={40} />,
+    color: "bg-gradient-to-br from-green-50 to-green-100",
+  },
+  {
+    label: "Calendrier Grossesse Semaine/Semaine",
+    link: "/grossesse/calendrier-semaine",
+    icon: <Calendar className="text-violet-500" size={40} />,
+    color: "bg-gradient-to-br from-violet-50 to-violet-100",
+  },
+  {
+    label: "Tracker Mouvements Bébé",
+    link: "/grossesse/tracker-mouvements-bebe",
+    icon: <Baby className="text-rose-400" size={38} />,
+    color: "bg-gradient-to-br from-rose-50 to-pink-100",
+  },
+  {
+    label: "Journal Symptômes",
+    link: "/grossesse/journal-symptomes",
+    icon: <ClipboardList className="text-yellow-400" size={38} />,
+    color: "bg-gradient-to-br from-yellow-50 to-orange-50",
+  },
+  {
+    label: "Calculateur Sexe Bébé (fun)",
+    link: "/grossesse/calculateur-sexe-bebe",
+    icon: <Search className="text-fuchsia-500" size={38} />,
+    color: "bg-gradient-to-br from-fuchsia-50 to-pink-100",
+  },
+  {
+    label: "Simulateur Budget Bébé Année 1",
+    link: "/grossesse/simulateur-budget-bebe",
+    icon: <LineChart className="text-sky-500" size={38} />,
+    color: "bg-gradient-to-br from-sky-50 to-blue-100",
+  },
+  {
+    label: "Calculateur Poussées Dentaires",
+    link: "/grossesse/calculateur-dents",
+    icon: <LineChart className="text-emerald-400" size={38} />,
+    color: "bg-gradient-to-br from-emerald-50 to-green-100",
+  },
+  {
+    label: "Courbes Croissance OMS",
+    link: "/enfant/courbes-croissance",
+    icon: <LineChart className="text-blue-500" size={38} />,
+    color: "bg-gradient-to-br from-blue-50 to-indigo-50",
+  },
+  {
+    label: "Guide Diversification Alimentaire",
+    link: "/enfant/guide-diversification",
+    icon: <ClipboardList className="text-lime-500" size={38} />,
+    color: "bg-gradient-to-br from-lime-50 to-lime-100",
+  },
+  {
+    label: "Tracker Développement Moteur 0-3 ans",
+    link: "/enfant/developpement-moteur",
+    icon: <LineChart className="text-orange-400" size={38} />,
+    color: "bg-gradient-to-br from-orange-50 to-yellow-50",
+  },
+  {
+    label: "Calculateur Besoins Nutritionnels Enfant",
+    link: "/enfant/besoins-nutritionnels",
+    icon: <LineChart className="text-teal-500" size={38} />,
+    color: "bg-gradient-to-br from-teal-50 to-blue-50",
+  },
+  {
+    label: "Tracker Pleurs & Humeur Bébé",
+    link: "/enfant/tracker-pleurs-humeur",
+    icon: <LineChart className="text-purple-500" size={38} />,
+    color: "bg-gradient-to-br from-purple-50 to-indigo-50",
+  },
+  {
+    label: "Guide Allaitement Complet",
+    link: "/sante/guide-allaitement",
+    icon: <ClipboardList className="text-pink-400" size={38} />,
+    color: "bg-gradient-to-br from-pink-50 to-pink-100",
+  },
 ];
 
 const WELCOME = [
   "Bienvenue sur MomTech Suite 👶",
-  "50 outils santé, grossesse, bébé, sécurité et parentalité 100% offline, gratuits, privacy-first."
+  "50 outils santé, grossesse, bébé, sécurité et parentalité 100% offline, gratuits, privacy-first.",
 ];
 
 const Index = () => {
   const [search, setSearch] = useState("");
-  const filtered = TOOLS.filter(
-    tool =>
-      tool.label.toLowerCase().includes(search.toLowerCase())
+  const filtered = TOOLS.filter((tool) =>
+    tool.label.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-pink-50">
       <div className="flex flex-1">
         <AppSidebar />
-        <main className="flex-1 flex flex-col items-center py-12 px-2 bg-gradient-to-br from-blue-50 via-white to-pink-50">
-          <div className="w-full max-w-2xl mx-auto text-center space-y-5 mb-8">
-            <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow leading-tight mb-1 animate-fade-in">
+        <main className="flex-1 flex flex-col items-center py-12 px-2">
+          {/* Barre de recherche bien visible */}
+          <div className="w-full max-w-2xl mx-auto flex flex-col gap-2 items-center mt-2 mb-8">
+            <div className="relative w-full">
+              <Input
+                type="text"
+                placeholder="🔎 Rechercher un outil…"
+                className="pl-12 py-3 text-lg bg-white/95 rounded-2xl shadow-md border-2 border-blue-100 focus:ring-2 focus:ring-blue-300 font-medium transition-all"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                aria-label="Rechercher un outil"
+              />
+              <span className="absolute left-4 top-3 text-blue-400">
+                <Search size={24} />
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow leading-tight mb-2 animate-fade-in text-center">
               {WELCOME[0]}
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto font-medium animate-fade-in">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto font-medium animate-fade-in text-center">
               {WELCOME[1]}
             </p>
-            <div className="flex items-center gap-2 mt-6 justify-center animate-fade-in">
-              <div className="relative w-full max-w-sm">
-                <span className="absolute left-3 top-2.5 text-gray-400">
-                  <Search size={24} />
-                </span>
-                <Input
-                  type="text"
-                  placeholder="Rechercher un outil…"
-                  className="pl-10 py-2 text-base bg-white/80 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-300 transition-all"
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                />
-              </div>
-            </div>
           </div>
-          <div
-            className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl animate-fade-in"
-          >
-            {filtered.map(({ label, link, icon }) => (
+          {/* Outils en cartes modernes */}
+          <div className="grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl animate-fade-in mb-4">
+            {filtered.map(({ label, link, icon, color }) => (
               <a
                 key={link}
                 href={link}
-                className="group rounded-xl shadow-lg bg-white/90 border border-blue-50 hover:shadow-2xl transition-all hover:-translate-y-1 hover:scale-105 hover:bg-blue-50/90 px-6 py-6 flex flex-col items-center gap-3 story-link"
-                style={{ minHeight: 168 }}
+                className="group rounded-3xl shadow-xl border border-blue-100 bg-white/90 hover:shadow-2xl transition-all hover:-translate-y-1 hover:scale-105 px-6 py-6 flex flex-col items-center gap-3 relative overflow-hidden story-link"
+                style={{ minHeight: 172 }}
+                aria-label={label}
               >
-                <div className="mb-1 group-hover:animate-pulse transition-transform">
+                {/* En-tête coloré */}
+                <div className={`absolute top-0 left-0 w-full h-20 rounded-t-3xl z-0 ${color}`} />
+                <div className="z-10 relative flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-xl mt-2 mb-1">
                   {icon}
                 </div>
-                <span className="text-lg md:text-xl font-semibold text-blue-900 text-center drop-shadow story-link">
+                <span className="z-10 mt-2 text-lg md:text-xl font-semibold text-blue-900 text-center drop-shadow">
                   {label}
                 </span>
               </a>
