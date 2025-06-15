@@ -1,12 +1,15 @@
 
 /// <reference lib="webworker" />
 
-self.addEventListener("install", (event) => {
-  self.skipWaiting();
+const swSelf = self as unknown as ServiceWorkerGlobalScope;
+
+swSelf.addEventListener("install", (event) => {
+  swSelf.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
-  self.clients.claim();
+swSelf.addEventListener("activate", (event) => {
+  swSelf.clients.claim();
 });
 
 // Placeholder - routes, caching strategies, etc. à compléter selon besoins
+
