@@ -33,6 +33,10 @@ const EDUCATION_SUBTOOLS = [
   {
     label: "Courbes Croissance OMS",
     link: "/enfant/courbes-croissance"
+  },
+  {
+    label: "Guide Diversification Alimentaire",
+    link: "/enfant/guide-diversification"
   }
 ];
 

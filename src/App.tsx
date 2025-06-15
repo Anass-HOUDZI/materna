@@ -16,6 +16,7 @@ import PregnancySymptomJournal from "./pages/PregnancySymptomJournal";
 import SexPredictionCalculator from "./pages/SexPredictionCalculator";
 import BabyBudgetSimulator from "./pages/BabyBudgetSimulator";
 import GrowthCurves from "./pages/GrowthCurves";
+import FoodDiversificationGuide from "./pages/FoodDiversificationGuide";
 
 const queryClient = new QueryClient();
 
@@ -39,7 +40,7 @@ const App = () => (
               <Route path="/grossesse/calculateur-sexe-bebe" element={<SexPredictionCalculator />} />
               <Route path="/grossesse/simulateur-budget-bebe" element={<BabyBudgetSimulator />} />
               <Route path="/enfant/courbes-croissance" element={<GrowthCurves />} />
-              {/* [TODO] ADD CUSTOM ROUTES FOR EACH TOOL AS DEVELOPED */}
+              <Route path="/enfant/guide-diversification" element={<FoodDiversificationGuide />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
