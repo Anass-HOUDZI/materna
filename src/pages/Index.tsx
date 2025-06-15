@@ -1,8 +1,7 @@
-
 import React, { useState } from "react";
 import AppSidebar from "@/components/app-sidebar";
 import { Input } from "@/components/ui/input";
-import { Search, Activity, BarChart3, TrendingUp } from "lucide-react";
+import { Search, Activity, BarChart3, TrendingUp, Star, HelpCircle } from "lucide-react";
 import Footer from "@/components/ui/Footer";
 import FamilyIllustration from "@/components/home/FamilyIllustration";
 import FavoriteButton from "@/components/home/FavoriteButton";
