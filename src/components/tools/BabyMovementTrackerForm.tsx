@@ -4,8 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { db } from "@/storage/db";
-import { format, isToday, isSameDay, subDays } from "date-fns";
+import { format, isToday, subDays } from "date-fns";
 import { Calendar, ListChecks, AlertCircle, CheckCircle2 } from "lucide-react";
+import type { EncryptedToolData } from "@/types/models";
 
 type TrackingMethod = "Cardiff" | "Moore" | "Sadovsky";
 const METHODS = [
@@ -15,7 +16,6 @@ const METHODS = [
 ];
 
 type MovementEntry = {
-  id?: number;
   timestamp: number;
   date: string; // YYYY-MM-DD
   movements: number;
@@ -24,19 +24,19 @@ type MovementEntry = {
   note?: string;
 };
 
-function getInitialTodayMovements(history: MovementEntry[], method: TrackingMethod) {
+function getInitialTodayMovements(history: EncryptedToolData[], method: TrackingMethod) {
   const todayStr = format(new Date(), "yyyy-MM-dd");
   const today = history.filter(
-    e => e.date === todayStr && e.method === method
+    e => e.data?.method === method && e.data?.date === todayStr
   );
   let count = 0;
-  today.forEach(e => { count += e.movements });
+  today.forEach(e => { count += e.data?.movements ?? 0 });
   return count;
 }
 
 export function BabyMovementTrackerForm() {
   const [method, setMethod] = useState<TrackingMethod>("Cardiff");
-  const [history, setHistory] = useState<MovementEntry[]>([]);
+  const [history, setHistory] = useState<EncryptedToolData[]>([]);
   const [timer, setTimer] = useState<number>(0);
   const [isTiming, setIsTiming] = useState(false);
   const [movements, setMovements] = useState(0);
@@ -54,15 +54,7 @@ export function BabyMovementTrackerForm() {
       .then(all =>
         isMounted
           ? setHistory(
-              all
-                .filter(e => e.method && e.date)
-                .map(
-                  (e: any) =>
-                    ({
-                      ...e,
-                      method: e.method as TrackingMethod,
-                    } as MovementEntry)
-                )
+              all.filter(e => e.data?.method && e.data?.date)
             )
           : undefined
       );
@@ -125,8 +117,13 @@ export function BabyMovementTrackerForm() {
       duration: timer,
       note: note.trim() ? note.trim() : undefined,
     };
-    await db.tools.add({ ...entry, toolKey: "baby-movement-tracker", category: "pregnancy" });
-    setHistory([entry, ...history]);
+    // Must wrap into .data, and add toolKey/category for EncryptedToolData
+    await db.tools.add({
+      toolKey: "baby-movement-tracker",
+      category: "pregnancy",
+      data: entry
+    });
+    setHistory([{ toolKey: "baby-movement-tracker", category: "pregnancy", data: entry }, ...history]);
     setMovements(0);
     setTimer(0);
     setNote("");
@@ -139,8 +136,8 @@ export function BabyMovementTrackerForm() {
       const d = subDays(new Date(), i);
       const dateStr = format(d, "yyyy-MM-dd");
       const total = history
-        .filter(h => h.date === dateStr && h.method === method)
-        .reduce((acc, h) => acc + h.movements, 0);
+        .filter(h => h.data?.date === dateStr && h.data?.method === method)
+        .reduce((acc, h) => acc + (h.data?.movements ?? 0), 0);
       days.push({ date: dateStr, total });
     }
     return days;
@@ -256,16 +253,16 @@ export function BabyMovementTrackerForm() {
             <div className="mt-2 max-h-48 overflow-auto">
               <ul className="text-xs space-y-2">
                 {history
-                  .filter(e => e.method === method)
+                  .filter(e => e.data?.method === method)
                   .slice(0, 10)
                   .map(e => (
-                    <li key={e.timestamp} className="border-b pb-1">
-                      <span className="font-mono">{format(new Date(e.timestamp), "dd/MM HH:mm")}</span> – 
-                      <b>{e.movements} mouv.</b> ({Math.floor(e.duration/60)}:{(e.duration%60).toString().padStart(2,"0")}) 
-                      {e.note && <span className="ml-1 italic opacity-60">({e.note})</span>}
+                    <li key={e.data?.timestamp ?? Math.random()} className="border-b pb-1">
+                      <span className="font-mono">{format(new Date(e.data?.timestamp ?? 0), "dd/MM HH:mm")}</span> – 
+                      <b>{e.data?.movements} mouv.</b> ({Math.floor((e.data?.duration ?? 0)/60)}:{((e.data?.duration ?? 0)%60).toString().padStart(2,"0")}) 
+                      {e.data?.note && <span className="ml-1 italic opacity-60">({e.data.note})</span>}
                     </li>
                   ))}
-                {history.filter(e => e.method === method).length === 0 && (
+                {history.filter(e => e.data?.method === method).length === 0 && (
                   <li className="opacity-60">Aucune session enregistrée.</li>
                 )}
               </ul>
