@@ -22,6 +22,7 @@ const SUBTOOLS = [
   { label: "Calculateur de date d'accouchement", link: "/grossesse/calculateur-terme" },
   { label: "Tracker Contractions", link: "/grossesse/tracker-contractions" },
   { label: "Calculateur Prise de Poids", link: "/grossesse/calculateur-poids" },
+  { label: "Calendrier Grossesse Semaine/Semaine", link: "/grossesse/calendrier-semaine" },
 ];
 
 export default function AppSidebar() {

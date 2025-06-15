@@ -10,6 +10,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import PregnancyDueDateCalculator from "./pages/PregnancyDueDateCalculator";
 import ContractionTracker from "./pages/ContractionTracker";
 import PregnancyWeightGainCalculator from "./pages/PregnancyWeightGainCalculator";
+import PregnancyWeeklyCalendar from "./pages/PregnancyWeeklyCalendar";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
               <Route path="/grossesse/calculateur-terme" element={<PregnancyDueDateCalculator />} />
               <Route path="/grossesse/tracker-contractions" element={<ContractionTracker />} />
               <Route path="/grossesse/calculateur-poids" element={<PregnancyWeightGainCalculator />} />
+              <Route path="/grossesse/calendrier-semaine" element={<PregnancyWeeklyCalendar />} />
               {/* [TODO] ADD CUSTOM ROUTES FOR EACH TOOL AS DEVELOPED */}
               <Route path="*" element={<NotFound />} />
             </Routes>
