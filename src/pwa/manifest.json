@@ -1,0 +1,18 @@
+
+{
+  "name": "MomTech Suite",
+  "short_name": "MomTech",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#c7d2fe",
+  "description": "Suite PWA famille : 50 outils santé, grossesse, bébé & sécurité",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+    // Ajouter des tailles plus grandes pour Android/iOS/PWA as needed
+  ]
+}
