@@ -233,10 +233,13 @@ function Accordion({ children }: { children: React.ReactNode }) {
     <div>
       {React.Children.map(children, (child, idx) =>
         React.isValidElement(child)
-          ? React.cloneElement(child, {
-              open: idx === activeIdx,
-              onToggle: () => setActiveIdx(idx === activeIdx ? null : idx),
-            })
+          ? React.cloneElement(
+              child as React.ReactElement<any>, // <-- fix typage ici !
+              {
+                open: idx === activeIdx,
+                onToggle: () => setActiveIdx(idx === activeIdx ? null : idx),
+              }
+            )
           : child
       )}
     </div>
