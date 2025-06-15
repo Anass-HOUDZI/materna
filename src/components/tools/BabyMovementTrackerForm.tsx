@@ -10,12 +10,13 @@ import type { EncryptedToolData } from "@/types/models";
 import BabyMovementHistory from "./BabyMovementHistory";
 import type { BabyMovementEntry } from "@/types/movement-entry";
 import { isBabyMovementTool, getBabyMovementData, wrapBabyMovementEntry } from "@/utils/baby-movement";
+import { TooltipInfo } from "@/components/ui/TooltipInfo";
 
 export type TrackingMethod = "Cardiff" | "Moore" | "Sadovsky";
 const METHODS = [
-  { value: "Cardiff", label: "Méthode Cardiff (10 mouvements / 24h)" },
-  { value: "Moore", label: "Méthode Moore (3 mouvements / 30 min)" },
-  { value: "Sadovsky", label: "Méthode Sadovsky (4 mouvements / 1h)" },
+  { value: "Cardiff", label: "Méthode Cardiff (10 mouvements / 24h)", tooltip: "Recommandé en France : notez chaque mouvement distinct perçu, l’objectif étant au moins 10 en 24h. Moins de 10 → consulter la maternité." },
+  { value: "Moore", label: "Méthode Moore (3 mouvements / 30 min)", tooltip: "Utilisée en consultation : comptez tous les mouvements sur une séance de 30 minutes. Moins de 3 mouvements = signal d’alerte." },
+  { value: "Sadovsky", label: "Méthode Sadovsky (4 mouvements / 1h)", tooltip: "Courant en zone OMS : compter 4 mouvements ressentis en 1 heure, de préférence après un repas. Moins de 4 en 1h → re-surveillez ou consultez." },
 ];
 
 // Utilitaire pour mouvements du jour
@@ -39,6 +40,8 @@ export function BabyMovementTrackerForm() {
   const [movements, setMovements] = useState(0);
   const [note, setNote] = useState("");
   const [alert, setAlert] = useState<string | null>(null);
+  const [touchedMethod, setTouchedMethod] = useState(false);
+  const [touchedNote, setTouchedNote] = useState(false);
 
   // Charger l'historique (7 derniers jours)
   useEffect(() => {
@@ -124,26 +127,63 @@ export function BabyMovementTrackerForm() {
     <div>
       <Card className="max-w-lg mx-auto">
         <CardHeader>
-          <CardTitle>🦶 Tracker Mouvements Bébé</CardTitle>
+          <div className="flex items-center gap-2">
+            <CardTitle>🦶 Tracker Mouvements Bébé</CardTitle>
+            <TooltipInfo label="Enregistrez les mouvements fœtaux pour chaque journée grâce à différentes méthodes médicales validées. Aide : cliquez sur (ⓘ) pour chaque méthode." />
+          </div>
           <CardDescription>
-            Sélectionnez la méthode. Démarrez la session, cliquez à chaque mouvement ressenti, arrêtez pour enregistrer.
+            Sélectionnez la méthode de comptage&nbsp;
+            <TooltipInfo label="Chaque méthode de comptage suit des recommandations médicales : <b>Cardiff</b> : 10 mouvements/24h. <b>Moore</b> : 3 mouvements/30min. <b>Sadovsky</b> : 4 mouvements/1h. Choisissez celle prescrite par votre professionnel ou celle qui vous convient le mieux." />
+            . Démarrez la session, cliquez à chaque mouvement ressenti, arrêtez pour enregistrer.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="mb-4">
-            <label className="font-medium text-sm mb-1 block">Méthode de comptage</label>
+            <div className="flex items-center gap-1 mb-1">
+              <label className="font-medium text-sm">
+                Méthode de comptage
+              </label>
+              <TooltipInfo label={
+                <>
+                  <div>
+                    Sélection obligatoire. Survolez chaque bouton pour voir le détail :
+                  </div>
+                  <ul className="list-disc pl-4 mt-1 text-xs">
+                    {METHODS.map(m =>
+                      <li key={m.value}><b>{m.value}</b> : {m.tooltip}</li>
+                    )}
+                  </ul>
+                </>
+              } />
+            </div>
             <div className="flex gap-2 flex-wrap">
               {METHODS.map(m =>
-                <Button
-                  key={m.value}
-                  variant={method === m.value ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setMethod(m.value as TrackingMethod)}
-                  disabled={isTiming}
-                  className="flex-1"
-                >
-                  {m.label}
-                </Button>
+                <div key={m.value} className="relative group">
+                  <Button
+                    variant={method === m.value ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => {
+                      setMethod(m.value as TrackingMethod);
+                      setTouchedMethod(true);
+                    }}
+                    disabled={isTiming}
+                    className="flex-1"
+                    aria-label={`Choisir ${m.label}`}
+                    type="button"
+                  >
+                    {m.label}
+                  </Button>
+                  <span className="absolute -right-3 top-1">
+                    <TooltipInfo label={m.tooltip} tabIndex={-1} />
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="transition-all duration-200 min-h-[1.4em] mt-1">
+              {touchedMethod && !method && (
+                <span className="text-destructive text-xs">
+                  Sélectionnez une méthode de comptage.
+                </span>
               )}
             </div>
           </div>
@@ -156,8 +196,9 @@ export function BabyMovementTrackerForm() {
           </div>
           <div className="border rounded-lg p-3 mb-3 bg-accent flex flex-col gap-2">
             <div className="flex flex-wrap gap-2 justify-between items-center">
-              <div>
-                <span className="text-xs text-muted-foreground">Mouvements :</span>{" "}
+              <div className="flex items-center gap-1">
+                <span className="text-xs text-muted-foreground">Mouvements :</span>
+                <TooltipInfo label="Cliquez sur le bouton dédié chaque fois que vous sentez un mouvement du bébé (coup, roulis, étirement…). Ne comptez pas les hoquets." />
                 <span className="font-bold text-lg">{movements}</span>
               </div>
               <div>
@@ -166,27 +207,43 @@ export function BabyMovementTrackerForm() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="secondary" onClick={() => setMovements(m => m+1)} disabled={!isTiming}>
+              <Button variant="secondary" onClick={() => setMovements(m => m+1)} disabled={!isTiming} type="button">
                 Ajouter un mouvement
               </Button>
+              <TooltipInfo label="Chaque appui ajoute un mouvement au comptage de cette session. Le suivi précis aide à détecter toute diminution inhabituelle." className="ml-[-4px]" />
               {!isTiming ? (
-                <Button variant="default" onClick={startSession}>
+                <Button variant="default" onClick={startSession} type="button">
                   Commencer une session
                 </Button>
               ) : (
-                <Button variant="destructive" onClick={stopSession}>
+                <Button variant="destructive" onClick={stopSession} type="button">
                   Arrêter & Enregistrer
                 </Button>
               )}
+              <TooltipInfo label={isTiming ? "Cliquez pour arrêter et sauvegarder la session en cours (temps, mouvements, notes seront stockés)" : "Démarrez une nouvelle session de comptage. Un seul suivi par méthode à la fois recommandé."} className="ml-[-4px]" />
             </div>
-            <Textarea
-              className="mt-2 text-xs"
-              placeholder="Note contexte (activité, position, etc - optionnel)"
-              value={note}
-              onChange={e => setNote(e.target.value)}
-              disabled={!isTiming}
-              rows={2}
-            />
+            <div className="flex flex-col gap-1 mt-2">
+              <label className="text-xs font-medium flex items-center gap-1">
+                Note contexte (optionnel)
+                <TooltipInfo label="Ajoutez des commentaires sur la session : activité du bébé, ressenti, heure, alimentation, position… Utile pour les consultations." />
+              </label>
+              <Textarea
+                className="mt-1 text-xs"
+                placeholder="Ex : bébé actif après déjeuner, mouvements + forts que d’habitude"
+                value={note}
+                onChange={e => { setNote(e.target.value); setTouchedNote(true); }}
+                disabled={!isTiming}
+                rows={2}
+                aria-label="Note contexte session"
+                aria-describedby="note-help"
+              />
+              <div id="note-help" className="text-xs text-muted-foreground min-h-[1.2em]">
+                {touchedNote && note.length > 180 && (
+                  <span className="text-destructive">Note longue : limitez à l’essentiel pour plus de lisibilité !</span>
+                )}
+                {!touchedNote && "Indication utile pour le suivi médical et l’analyse ultérieure des mouvements."}
+              </div>
+            </div>
           </div>
           {alert && (
             <div className="flex items-center text-destructive gap-2 my-2 text-sm">
@@ -207,3 +264,4 @@ export function BabyMovementTrackerForm() {
     </div>
   );
 }
+// ⚠️ Ce fichier atteint maintenant ~210 lignes. Pour maintenir qualité et lisibilité, pensez à demander une refactorisation en composants plus petits si de nouvelles fonctionnalités sont prévues !
