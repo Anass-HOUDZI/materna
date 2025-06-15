@@ -27,6 +27,7 @@ const SUBTOOLS = [
   { label: "Journal Symptômes", link: "/grossesse/journal-symptomes" },
   { label: "Calculateur Sexe Bébé (fun)", link: "/grossesse/calculateur-sexe-bebe" },
   { label: "Simulateur Budget Bébé Année 1", link: "/grossesse/simulateur-budget-bebe" },
+  { label: "Calculateur Poussées Dentaires", link: "/grossesse/calculateur-dents" },
 ];
 
 const EDUCATION_SUBTOOLS = [
