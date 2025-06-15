@@ -4,15 +4,65 @@
   "short_name": "MomTech",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#fff",
+  "background_color": "#f0f7ff",
   "theme_color": "#c7d2fe",
-  "description": "Suite PWA famille : 50 outils santé, grossesse, bébé & sécurité",
+  "categories": [
+    "health", "pregnancy", "family", "productivity", "tools"
+  ],
+  "description": "Suite PWA famille : 50 outils santé, grossesse, bébé & sécurité, utilisables 100% hors ligne, privacy-first.",
   "icons": [
     {
       "src": "/favicon.ico",
       "sizes": "48x48",
       "type": "image/x-icon"
+    },
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
-    // Ajouter des tailles plus grandes pour Android/iOS/PWA as needed
+    // Ajoutez d’autres tailles selon vos besoins
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/large-home.png",
+      "sizes": "1024x2048",
+      "type": "image/png"
+    }
   ]
 }

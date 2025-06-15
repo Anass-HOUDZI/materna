@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppSidebar from "@/components/app-sidebar";
 import { Input } from "@/components/ui/input";
 import { Search, Activity, BarChart3, TrendingUp, Star, HelpCircle } from "lucide-react";
@@ -26,6 +25,8 @@ const Index = () => {
     () => window.localStorage.getItem("momtech-user-tour-done") !== "yes"
   );
   const [showFeedback, setShowFeedback] = useState(false);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
 
   function openTour() {
     setShowTour(true);
@@ -35,6 +36,27 @@ const Index = () => {
     setShowTour(false);
     window.localStorage.setItem("momtech-user-tour-done", "yes");
   }
+
+  useEffect(() => {
+    // Écoute online/offline
+    const updateNetwork = () => setIsOnline(navigator.onLine);
+    window.addEventListener("online", updateNetwork);
+    window.addEventListener("offline", updateNetwork);
+
+    // Service Worker update disponible ?
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "UPDATE_AVAILABLE") {
+          setUpdateAvailable(true);
+        }
+      });
+    }
+
+    return () => {
+      window.removeEventListener("online", updateNetwork);
+      window.removeEventListener("offline", updateNetwork);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-tr from-pink-50 via-white to-blue-50">
@@ -65,6 +87,26 @@ const Index = () => {
       </button>
 
       <main className="flex-1 flex flex-col items-center px-3 pt-10 pb-10">
+        {/* Message d’état réseau / mode offline */}
+        <div className="w-full flex items-center justify-center mb-2">
+          {!isOnline ? (
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-yellow-50 border border-yellow-300 text-yellow-700 font-semibold shadow animate-pulse">
+              Mode hors ligne activé : outils offline disponibles, API désactivées.
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-50 border border-green-300 text-green-800 font-semibold shadow">
+              En ligne : toutes fonctionnalités disponibles.
+            </div>
+          )}
+          {updateAvailable && (
+            <button
+              className="ml-4 px-3 py-1 rounded-md bg-blue-600 text-white font-semibold shadow hover:bg-blue-800 transition"
+              onClick={() => window.location.reload()}
+            >
+              Mettre à jour l’application
+            </button>
+          )}
+        </div>
         <FamilyIllustration className="animate-fade-in" />
         <div className="w-full max-w-2xl mx-auto flex flex-col gap-4 items-center mt-0 mb-12">
           <div className="flex flex-col items-center gap-2 w-full">
