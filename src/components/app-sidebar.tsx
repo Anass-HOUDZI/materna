@@ -1,4 +1,3 @@
-
 import {
   Sidebar,
   SidebarContent,
@@ -19,6 +18,11 @@ const CATEGORIES = [
   { label: "Rapports", icon: FileBarChart2, key: "reports" },
 ];
 
+const SUBTOOLS = [
+  { label: "Calculateur de date d’accouchement", link: "/grossesse/calculateur-terme" },
+  // On pourra ajouter d'autres sous-outils grossesse ici rapidement
+];
+
 export default function AppSidebar() {
   return (
     <Sidebar>
@@ -35,6 +39,20 @@ export default function AppSidebar() {
                       <span>{label}</span>
                     </a>
                   </SidebarMenuButton>
+                  {/* Si catégorie = grossesse, affiche sous-menu */}
+                  {key === "pregnancy" && (
+                    <div className="ml-6 mt-2 space-y-1">
+                      {SUBTOOLS.map(sub => (
+                        <SidebarMenuItem key={sub.link}>
+                          <SidebarMenuButton asChild>
+                            <a href={sub.link} className="text-sm">
+                              {sub.label}
+                            </a>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </div>
+                  )}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AppSidebar from "@/components/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import PregnancyDueDateCalculator from "./pages/PregnancyDueDateCalculator";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
             <AppSidebar />
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/grossesse/calculateur-terme" element={<PregnancyDueDateCalculator />} />
               {/* [TODO] ADD CUSTOM ROUTES FOR EACH TOOL AS DEVELOPED */}
               <Route path="*" element={<NotFound />} />
             </Routes>
