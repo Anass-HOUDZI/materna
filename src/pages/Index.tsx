@@ -3,6 +3,7 @@ import AppSidebar from "@/components/app-sidebar";
 import { Input } from "@/components/ui/input";
 import { Search, Calendar, Baby, LineChart, ClipboardList } from "lucide-react";
 import Footer from "@/components/ui/Footer";
+import FamilyIllustration from "@/components/home/FamilyIllustration";
 
 // Ordre de popularité proposé : Date d'accouchement, Contractions, Prise de poids, Calendrier, Tracker mouvements bébé, etc.
 const TOOLS = [
@@ -114,40 +115,40 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-tr from-pink-50 via-white to-blue-50">
-      <main className="flex-1 flex flex-col items-center px-2 pt-8 pb-10">
+      <main className="flex-1 flex flex-col items-center px-3 pt-10 pb-10">
+        {/* Illustration d'accueil */}
+        <FamilyIllustration />
         {/* Section d’accueil modernisée */}
-        <div className="w-full max-w-2xl mx-auto flex flex-col gap-4 items-center mt-6 mb-10">
-          {/* Recherche supprimée */}
-          <div className="flex flex-col items-center gap-2">
-            <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow leading-tight mb-0 animate-fade-in text-center">
+        <div className="w-full max-w-2xl mx-auto flex flex-col gap-4 items-center mt-0 mb-12">
+          <div className="flex flex-col items-center gap-2 w-full">
+            <h1 className="font-playfair text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow leading-tight animate-fade-in text-center tracking-tight mb-0">
               {WELCOME[0]}
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto font-medium animate-fade-in text-center">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-medium animate-fade-in text-center">
               {WELCOME[1]}
             </p>
           </div>
         </div>
-        {/* Outils en cartes modernes */}
-        <div className="grid gap-7 md:gap-9 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl animate-fade-in">
+        {/* Outils en cartes modernisées */}
+        <div className="grid gap-8 md:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">
           {filtered.map(({ label, link, icon, color }) => (
             <a
               key={link}
               href={link}
-              className="group rounded-3xl shadow-xl border border-blue-100 bg-white/90 hover:shadow-2xl transition-all hover:-translate-y-1 hover:scale-105 px-6 py-6 flex flex-col items-center gap-3 relative overflow-hidden story-link"
-              style={{ minHeight: 158 }}
+              className="group rounded-3xl shadow-lg border border-blue-100 bg-white/75 backdrop-blur-xl hover:shadow-2xl transition-all hover:-translate-y-0.5 hover:scale-[1.03] px-7 py-7 flex flex-col items-center gap-4 relative overflow-hidden story-link ring-1 ring-blue-50 hover:ring-blue-200"
+              style={{ minHeight: 170 }}
               aria-label={label}
             >
-              {/* En-tête coloré : occupe le haut et souligne la carte */}
-              <div className={`absolute top-0 left-0 w-full h-20 rounded-t-3xl z-0 ${color}`} />
-              <div className="z-10 relative flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-xl mt-2 mb-1">
+              {/* En-tête coloré pastel */}
+              <div className={`absolute top-0 left-0 w-full h-16 rounded-t-3xl z-0 blur-sm ${color} opacity-40`} />
+              <div className="z-10 relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-white via-blue-50 to-pink-50 shadow border border-blue-100 mb-1 mt-3">
                 {icon}
               </div>
-              <span className="z-10 mt-2 text-lg md:text-xl font-semibold text-blue-900 text-center drop-shadow">
+              <span className="z-10 mt-1 text-base md:text-lg font-semibold text-blue-900 text-center drop-shadow-sm">
                 {label}
               </span>
             </a>
           ))}
-          {/* Message si rien ne correspond à la recherche supprimé aussi */}
         </div>
       </main>
       <Footer />

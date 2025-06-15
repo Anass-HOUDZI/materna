@@ -98,6 +98,12 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Ajout fonte Playfair Display pour le brand */
+  .font-playfair {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.5px;
   }
 }
