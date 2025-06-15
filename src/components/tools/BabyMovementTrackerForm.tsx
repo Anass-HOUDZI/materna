@@ -8,6 +8,7 @@ import { format, isToday, subDays } from "date-fns";
 import { Calendar, ListChecks, AlertCircle, CheckCircle2 } from "lucide-react";
 import type { ToolCategory } from "@/types/models";
 
+// -- Types & Methods
 type TrackingMethod = "Cardiff" | "Moore" | "Sadovsky";
 const METHODS = [
   { value: "Cardiff", label: "Méthode Cardiff (10 mouvements / 24h)" },
@@ -15,7 +16,6 @@ const METHODS = [
   { value: "Sadovsky", label: "Méthode Sadovsky (4 mouvements / 1h)" },
 ];
 
-// Type d'entrée claire (stockée dans EncryptedToolData.data)
 type MovementEntryRaw = {
   timestamp: number;
   date: string; // YYYY-MM-DD
@@ -24,15 +24,15 @@ type MovementEntryRaw = {
   method: TrackingMethod;
   note?: string;
 };
-
-type HistoryEntry = {
+// This is the local type for history entries used here
+type MovementEntry = {
   id?: number;
   category: ToolCategory;
   toolKey: string;
   data: MovementEntryRaw;
 };
 
-function getInitialTodayMovements(history: HistoryEntry[], method: TrackingMethod) {
+function getInitialTodayMovements(history: MovementEntry[], method: TrackingMethod) {
   const todayStr = format(new Date(), "yyyy-MM-dd");
   const today = history.filter(
     e => e.data.date === todayStr && e.data.method === method
@@ -44,7 +44,7 @@ function getInitialTodayMovements(history: HistoryEntry[], method: TrackingMetho
 
 export function BabyMovementTrackerForm() {
   const [method, setMethod] = useState<TrackingMethod>("Cardiff");
-  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [history, setHistory] = useState<MovementEntry[]>([]);
   const [timer, setTimer] = useState<number>(0);
   const [isTiming, setIsTiming] = useState(false);
   const [movements, setMovements] = useState(0);
@@ -61,14 +61,15 @@ export function BabyMovementTrackerForm() {
       .sortBy("timestamp")
       .then(all =>
         isMounted
+          // If entry.data looks like MovementEntryRaw, we can use it
           ? setHistory(
               all
-                .filter(e => e.data && e.data.method && e.data.date)
+                .filter(e => e.data && (e.data as MovementEntryRaw).method && (e.data as MovementEntryRaw).date)
                 .map((e: any) => ({
                   ...e,
                   data: {
-                    ...e.data,
-                    method: e.data.method as TrackingMethod,
+                    ...(e.data as MovementEntryRaw),
+                    method: (e.data as MovementEntryRaw).method as TrackingMethod,
                   },
                 }))
             )
@@ -129,6 +130,7 @@ export function BabyMovementTrackerForm() {
       duration: timer,
       note: note.trim() ? note.trim() : undefined,
     };
+    // Save using { data: MovementEntryRaw, ... }
     await db.tools.add({
       toolKey: "baby-movement-tracker",
       category: "pregnancy",
@@ -287,3 +289,5 @@ export function BabyMovementTrackerForm() {
     </div>
   );
 }
+
+// -- End of file --
