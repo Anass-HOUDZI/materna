@@ -8,107 +8,9 @@ import FavoriteButton from "@/components/home/FavoriteButton";
 import { useFavorites } from "@/hooks/useFavorites";
 import UserTourModal from "@/components/home/UserTourModal";
 import UserFeedbackModal from "@/components/home/UserFeedbackModal";
-
-// Distribution la plus variée possible des icônes autorisées par outil.
-const ICONS = [
-  <Activity className="text-blue-500" size={38} />,      // 0
-  <BarChart3 className="text-pink-500" size={38} />,     // 1
-  <TrendingUp className="text-green-500" size={38} />,   // 2
-  <Search className="text-violet-500" size={38} />,      // 3
-];
-
-const TOOLS = [
-  {
-    label: "Calculateur de date d'accouchement",
-    link: "/grossesse/calculateur-terme",
-    icon: ICONS[0],
-    color: "bg-gradient-to-br from-blue-50 to-blue-100",
-  },
-  {
-    label: "Tracker Contractions",
-    link: "/grossesse/tracker-contractions",
-    icon: ICONS[1],
-    color: "bg-gradient-to-br from-pink-50 to-pink-100",
-  },
-  {
-    label: "Calculateur Prise de Poids",
-    link: "/grossesse/calculateur-poids",
-    icon: ICONS[2],
-    color: "bg-gradient-to-br from-green-50 to-green-100",
-  },
-  {
-    label: "Calendrier Grossesse Semaine/Semaine",
-    link: "/grossesse/calendrier-semaine",
-    icon: ICONS[3],
-    color: "bg-gradient-to-br from-violet-50 to-violet-100",
-  },
-  {
-    label: "Tracker Mouvements Bébé",
-    link: "/grossesse/tracker-mouvements-bebe",
-    icon: ICONS[1],
-    color: "bg-gradient-to-br from-rose-50 to-pink-100",
-  },
-  {
-    label: "Journal Symptômes",
-    link: "/grossesse/journal-symptomes",
-    icon: ICONS[2],
-    color: "bg-gradient-to-br from-yellow-50 to-orange-50",
-  },
-  {
-    label: "Calculateur Sexe Bébé (fun)",
-    link: "/grossesse/calculateur-sexe-bebe",
-    icon: ICONS[3],
-    color: "bg-gradient-to-br from-fuchsia-50 to-pink-100",
-  },
-  {
-    label: "Simulateur Budget Bébé Année 1",
-    link: "/grossesse/simulateur-budget-bebe",
-    icon: ICONS[0],
-    color: "bg-gradient-to-br from-sky-50 to-blue-100",
-  },
-  {
-    label: "Calculateur Poussées Dentaires",
-    link: "/grossesse/calculateur-dents",
-    icon: ICONS[2],
-    color: "bg-gradient-to-br from-emerald-50 to-green-100",
-  },
-  {
-    label: "Courbes Croissance OMS",
-    link: "/enfant/courbes-croissance",
-    icon: ICONS[0],
-    color: "bg-gradient-to-br from-blue-50 to-indigo-50",
-  },
-  {
-    label: "Guide Diversification Alimentaire",
-    link: "/enfant/guide-diversification",
-    icon: ICONS[3],
-    color: "bg-gradient-to-br from-lime-50 to-lime-100",
-  },
-  {
-    label: "Tracker Développement Moteur 0-3 ans",
-    link: "/enfant/developpement-moteur",
-    icon: ICONS[1],
-    color: "bg-gradient-to-br from-orange-50 to-yellow-50",
-  },
-  {
-    label: "Calculateur Besoins Nutritionnels Enfant",
-    link: "/enfant/besoins-nutritionnels",
-    icon: ICONS[2],
-    color: "bg-gradient-to-br from-teal-50 to-blue-50",
-  },
-  {
-    label: "Tracker Pleurs & Humeur Bébé",
-    link: "/enfant/tracker-pleurs-humeur",
-    icon: ICONS[0],
-    color: "bg-gradient-to-br from-purple-50 to-indigo-50",
-  },
-  {
-    label: "Guide Allaitement Complet",
-    link: "/sante/guide-allaitement",
-    icon: ICONS[3],
-    color: "bg-gradient-to-br from-pink-50 to-pink-100",
-  },
-];
+import ToolsGrid from "@/components/home/ToolsGrid";
+import { AccordionSimple, AccordionSimpleItem } from "@/components/ui/accordion-simple";
+import { Star, HelpCircle } from "lucide-react";
 
 const WELCOME = [
   "Bienvenue sur MomTech Suite 👶",
@@ -117,7 +19,6 @@ const WELCOME = [
 
 const Index = () => {
   const [search, setSearch] = useState("");
-  const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const [showTour, setShowTour] = useState(
     () => window.localStorage.getItem("momtech-user-tour-done") !== "yes"
   );
@@ -132,18 +33,9 @@ const Index = () => {
     window.localStorage.setItem("momtech-user-tour-done", "yes");
   }
 
-  const filtered = TOOLS; // recherche désactivée pour l’instant
-
-  // Trie : favoris d’abord, puis autres
-  const sorted = [
-    ...filtered.filter(tool => favorites.includes(tool.link)),
-    ...filtered.filter(tool => !favorites.includes(tool.link)),
-  ];
-
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-tr from-pink-50 via-white to-blue-50">
       <UserTourModal open={showTour} onClose={closeTour} />
-      {/* MODAL FEEDBACK UTILISATEUR */}
       <UserFeedbackModal open={showFeedback} onClose={() => setShowFeedback(false)} />
 
       {/* BOUTON FEEDBACK flottant */}
@@ -170,7 +62,6 @@ const Index = () => {
       </button>
 
       <main className="flex-1 flex flex-col items-center px-3 pt-10 pb-10">
-        {/* Animation fade-in sur l'illustration */}
         <FamilyIllustration className="animate-fade-in" />
         <div className="w-full max-w-2xl mx-auto flex flex-col gap-4 items-center mt-0 mb-12">
           <div className="flex flex-col items-center gap-2 w-full">
@@ -183,35 +74,9 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="grid gap-8 md:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">
-          {sorted.map(({ label, link, icon, color }) => (
-            <a
-              key={link}
-              href={link}
-              className="group rounded-3xl shadow-lg border border-blue-100 bg-white/75 backdrop-blur-xl hover:shadow-2xl transition-all hover:-translate-y-0.5 hover:scale-[1.03] px-7 py-7 flex flex-col items-center gap-4 relative overflow-hidden story-link ring-1 ring-blue-50 hover:ring-blue-200"
-              style={{ minHeight: 170 }}
-              aria-label={label}
-            >
-              {/* bouton Favori */}
-              <FavoriteButton
-                isActive={isFavorite(link)}
-                onClick={() => toggleFavorite(link)}
-              />
-              {/* En-tête coloré pastel */}
-              <div
-                className={`absolute top-0 left-0 w-full h-16 rounded-t-3xl z-0 blur-sm ${color} opacity-40`}
-              />
-              <div className="z-10 relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-white via-blue-50 to-pink-50 shadow border border-blue-100 mb-1 mt-3">
-                {icon}
-              </div>
-              <span className="z-10 mt-1 text-base md:text-lg font-semibold text-blue-900 text-center drop-shadow-sm">
-                {label}
-              </span>
-            </a>
-          ))}
-        </div>
+        <ToolsGrid />
 
-        {/* Bloc Accordéon FAQ positionné en bas de page après les outils */}
+        {/* Bloc FAQ bas de page */}
         <div className="w-full flex justify-center mt-14 mb-1 animate-fade-in">
           <div className="rounded-2xl bg-gradient-to-br from-blue-50/40 to-blue-100/30 border border-blue-100 shadow-sm overflow-hidden max-w-xl w-full mx-auto"
             style={{
@@ -219,17 +84,17 @@ const Index = () => {
               background: "linear-gradient(135deg, #f0f7ff 60%, #e2eaff 100%)"
             }}
           >
-            <Accordion>
-              <AccordionItem title="Comment fonctionne la suite ?">
+            <AccordionSimple>
+              <AccordionSimpleItem title="Comment fonctionne la suite ?">
                 50 outils entièrement offline, gratuits, permettant de gérer santé, grossesse et parentalité.
-              </AccordionItem>
-              <AccordionItem title="Mes données sont-elles privées ?">
+              </AccordionSimpleItem>
+              <AccordionSimpleItem title="Mes données sont-elles privées ?">
                 Oui, tout est traité en local, aucune donnée transmise ni stockée à l’extérieur.
-              </AccordionItem>
-              <AccordionItem title="Comment ajouter aux favoris ?">
+              </AccordionSimpleItem>
+              <AccordionSimpleItem title="Comment ajouter aux favoris ?">
                 Cliquez sur l’étoile jaune en haut à droite de chaque outil pour le retrouver en priorité.
-              </AccordionItem>
-            </Accordion>
+              </AccordionSimpleItem>
+            </AccordionSimple>
           </div>
         </div>
       </main>
@@ -237,57 +102,5 @@ const Index = () => {
     </div>
   );
 };
-
-// Accordéon interactif simple (utilise shadcn/ui primitives)
-function Accordion({ children }: { children: React.ReactNode }) {
-  const [activeIdx, setActiveIdx] = useState<number | null>(null);
-  return (
-    <div>
-      {React.Children.map(children, (child, idx) =>
-        React.isValidElement(child)
-          ? React.cloneElement(
-              child as React.ReactElement<any>, // <-- fix typage ici !
-              {
-                open: idx === activeIdx,
-                onToggle: () => setActiveIdx(idx === activeIdx ? null : idx),
-              }
-            )
-          : child
-      )}
-    </div>
-  );
-}
-
-function AccordionItem({
-  title,
-  children,
-  open,
-  onToggle,
-}: {
-  title: string;
-  children: React.ReactNode;
-  open?: boolean;
-  onToggle?: () => void;
-}) {
-  return (
-    <div className="border-b last:border-b-0">
-      <button
-        className="w-full text-left py-4 px-6 font-semibold flex justify-between items-center transition-colors hover:bg-blue-50 focus:outline-none"
-        onClick={onToggle}
-        aria-expanded={open}
-      >
-        <span>{title}</span>
-        <span className={`transition-transform duration-200 ${open ? "rotate-90" : "rotate-0"}`}>›</span>
-      </button>
-      <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${open ? "max-h-48 opacity-100 py-2 px-6" : "max-h-0 opacity-0 py-0 px-6"}`}
-        style={{}}
-        aria-hidden={!open}
-      >
-        <div className="text-gray-700 text-base">{children}</div>
-      </div>
-    </div>
-  );
-}
 
 export default Index;
