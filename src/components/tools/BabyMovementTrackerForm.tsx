@@ -4,34 +4,31 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { db } from "@/storage/db";
-import { format, isToday, subDays } from "date-fns";
-import { Calendar, ListChecks, AlertCircle, CheckCircle2 } from "lucide-react";
+import { format } from "date-fns";
+import { Calendar, AlertCircle, CheckCircle2 } from "lucide-react";
 import type { EncryptedToolData } from "@/types/models";
+import BabyMovementHistory from "./BabyMovementHistory";
+import type { BabyMovementEntry } from "@/types/movement-entry";
+import { isBabyMovementTool, getBabyMovementData, wrapBabyMovementEntry } from "@/utils/baby-movement";
 
-type TrackingMethod = "Cardiff" | "Moore" | "Sadovsky";
+export type TrackingMethod = "Cardiff" | "Moore" | "Sadovsky";
 const METHODS = [
   { value: "Cardiff", label: "Méthode Cardiff (10 mouvements / 24h)" },
   { value: "Moore", label: "Méthode Moore (3 mouvements / 30 min)" },
   { value: "Sadovsky", label: "Méthode Sadovsky (4 mouvements / 1h)" },
 ];
 
-type MovementEntry = {
-  timestamp: number;
-  date: string; // YYYY-MM-DD
-  movements: number;
-  duration: number; // seconds
-  method: TrackingMethod;
-  note?: string;
-};
-
-function getInitialTodayMovements(history: EncryptedToolData[], method: TrackingMethod) {
+// Utilitaire pour mouvements du jour
+function movementsToday(history: EncryptedToolData[], method: TrackingMethod) {
   const todayStr = format(new Date(), "yyyy-MM-dd");
-  const today = history.filter(
-    e => e.data?.method === method && e.data?.date === todayStr
-  );
-  let count = 0;
-  today.forEach(e => { count += e.data?.movements ?? 0 });
-  return count;
+  return history
+    .filter(
+      e =>
+        isBabyMovementTool(e) &&
+        getBabyMovementData(e)?.method === method &&
+        getBabyMovementData(e)?.date === todayStr
+    )
+    .reduce((acc, e) => acc + (getBabyMovementData(e)?.movements ?? 0), 0);
 }
 
 export function BabyMovementTrackerForm() {
@@ -43,50 +40,49 @@ export function BabyMovementTrackerForm() {
   const [note, setNote] = useState("");
   const [alert, setAlert] = useState<string | null>(null);
 
-  // Charger historique 7 derniers jours
+  // Charger l'historique (7 derniers jours)
   useEffect(() => {
-    let isMounted = true;
+    let mounted = true;
     db.tools
       .where("toolKey")
       .equals("baby-movement-tracker")
       .reverse()
       .sortBy("timestamp")
-      .then(all =>
-        isMounted
-          ? setHistory(
-              all.filter(e => e.data?.method && e.data?.date)
-            )
-          : undefined
-      );
+      .then((all) => {
+        if (!mounted) return;
+        setHistory(all.filter(isBabyMovementTool));
+      });
     return () => {
-      isMounted = false;
+      mounted = false;
     };
   }, []);
 
-  // Timer: incremente chaque seconde si actif
+  // Timer
   useEffect(() => {
     if (!isTiming) return;
     const interval = setInterval(() => setTimer(t => t + 1), 1000);
     return () => clearInterval(interval);
   }, [isTiming]);
 
-  // Détection alertes selon méthode et valeurs du jour
+  // Détection alertes
   useEffect(() => {
-    const todayCount = getInitialTodayMovements(history, method) + movements;
-    let threshold = 0;
+    const todayCount = movementsToday(history, method) + movements;
     let recommend = "";
     switch (method) {
       case "Cardiff":
-        threshold = 10;
-        recommend = todayCount < 10 ? "Pensez à surveiller les mouvements du bébé tout au long de la journée. Si moins de 10 mouvements sur 24h ou arrêt net, contactez la maternité." : "Patron de mouvements rassurant.";
+        recommend = todayCount < 10
+          ? "Pensez à surveiller les mouvements du bébé. Si moins de 10 mouvements sur 24h, contactez la maternité."
+          : "Patron de mouvements rassurant.";
         break;
       case "Moore":
-        threshold = 3;
-        recommend = movements < 3 ? "Ajoutez les mouvements sur 30 minutes. Moins de 3 mouvements sur 30 min → consulter." : "Patron de mouvements rassurant.";
+        recommend = movements < 3 && !isTiming
+          ? "Ajoutez les mouvements sur 30 min. Moins de 3 mouvements sur 30 min → consulter."
+          : "Patron de mouvements rassurant.";
         break;
       case "Sadovsky":
-        threshold = 4;
-        recommend = movements < 4 ? "Comptez sur 1h : moins de 4 mouvements = alerte. Recommencez plus tard si besoin." : "Patron de mouvements rassurant.";
+        recommend = movements < 4 && !isTiming
+          ? "Comptez 1h : moins de 4 mouvements = alerte. Recommencez plus tard."
+          : "Patron de mouvements rassurant.";
         break;
     }
     if (
@@ -109,7 +105,7 @@ export function BabyMovementTrackerForm() {
 
   const stopSession = async () => {
     setIsTiming(false);
-    const entry: MovementEntry = {
+    const entry: BabyMovementEntry = {
       timestamp: Date.now(),
       date: format(new Date(), "yyyy-MM-dd"),
       method,
@@ -117,31 +113,12 @@ export function BabyMovementTrackerForm() {
       duration: timer,
       note: note.trim() ? note.trim() : undefined,
     };
-    // Must wrap into .data, and add toolKey/category for EncryptedToolData
-    await db.tools.add({
-      toolKey: "baby-movement-tracker",
-      category: "pregnancy",
-      data: entry
-    });
-    setHistory([{ toolKey: "baby-movement-tracker", category: "pregnancy", data: entry }, ...history]);
+    await db.tools.add(wrapBabyMovementEntry(entry));
+    setHistory([{ ...wrapBabyMovementEntry(entry) }, ...history]);
     setMovements(0);
     setTimer(0);
     setNote("");
   };
-
-  // Pour affichage historique : 7 derniers jours, par méthode
-  const weekHistory = (() => {
-    const days: { date: string; total: number }[] = [];
-    for (let i = 6; i >= 0; i--) {
-      const d = subDays(new Date(), i);
-      const dateStr = format(d, "yyyy-MM-dd");
-      const total = history
-        .filter(h => h.data?.date === dateStr && h.data?.method === method)
-        .reduce((acc, h) => acc + (h.data?.movements ?? 0), 0);
-      days.push({ date: dateStr, total });
-    }
-    return days;
-  })();
 
   return (
     <div>
@@ -177,7 +154,6 @@ export function BabyMovementTrackerForm() {
               <span className="font-mono">{format(new Date(), "dd/MM/yyyy")}</span>
             </div>
           </div>
-          {/* Affichage session actuelle */}
           <div className="border rounded-lg p-3 mb-3 bg-accent flex flex-col gap-2">
             <div className="flex flex-wrap gap-2 justify-between items-center">
               <div>
@@ -224,50 +200,8 @@ export function BabyMovementTrackerForm() {
               <span>Mouvements dans la norme pour cette méthode.</span>
             </div>
           )}
-          {/* Historique visuel 7 jours */}
-          <div className="mt-7">
-            <div className="font-medium mb-2 flex items-center gap-2">
-              <ListChecks className="w-4 h-4" />
-              Historique 7 derniers jours ({METHODS.find(m=>m.value===method)?.label})
-            </div>
-            <div className="flex gap-1 text-[12px]">
-              {weekHistory.map((d, i) => (
-                <div
-                  key={d.date}
-                  className={`flex flex-col items-center px-1 py-1 rounded ${
-                    isToday(new Date(d.date))
-                      ? "bg-primary text-white"
-                      : "bg-muted"
-                  }`}
-                  style={{ minWidth: 44 }}
-                >
-                  <span className="font-mono font-semibold">{d.total}</span>
-                  <span className="opacity-60">{format(new Date(d.date), "EE")}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Historique détaillé */}
-          <details className="mt-6">
-            <summary className="cursor-pointer text-muted-foreground">Voir sessions précédentes enregistrées</summary>
-            <div className="mt-2 max-h-48 overflow-auto">
-              <ul className="text-xs space-y-2">
-                {history
-                  .filter(e => e.data?.method === method)
-                  .slice(0, 10)
-                  .map(e => (
-                    <li key={e.data?.timestamp ?? Math.random()} className="border-b pb-1">
-                      <span className="font-mono">{format(new Date(e.data?.timestamp ?? 0), "dd/MM HH:mm")}</span> – 
-                      <b>{e.data?.movements} mouv.</b> ({Math.floor((e.data?.duration ?? 0)/60)}:{((e.data?.duration ?? 0)%60).toString().padStart(2,"0")}) 
-                      {e.data?.note && <span className="ml-1 italic opacity-60">({e.data.note})</span>}
-                    </li>
-                  ))}
-                {history.filter(e => e.data?.method === method).length === 0 && (
-                  <li className="opacity-60">Aucune session enregistrée.</li>
-                )}
-              </ul>
-            </div>
-          </details>
+          {/* Historique - composant dédié */}
+          <BabyMovementHistory history={history} method={method} />
         </CardContent>
       </Card>
     </div>
