@@ -25,7 +25,8 @@ const SUBTOOLS = [
   { label: "Calendrier Grossesse Semaine/Semaine", link: "/grossesse/calendrier-semaine" },
   { label: "Tracker Mouvements Bébé", link: "/grossesse/tracker-mouvements-bebe" },
   { label: "Journal Symptômes", link: "/grossesse/journal-symptomes" },
-  { label: "Calculateur Sexe Bébé (fun)", link: "/grossesse/calculateur-sexe-bebe" }, // AJOUT
+  { label: "Calculateur Sexe Bébé (fun)", link: "/grossesse/calculateur-sexe-bebe" },
+  { label: "Simulateur Budget Bébé Année 1", link: "/grossesse/simulateur-budget-bebe" },
 ];
 
 export default function AppSidebar() {

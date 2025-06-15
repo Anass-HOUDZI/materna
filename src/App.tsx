@@ -14,6 +14,7 @@ import PregnancyWeeklyCalendar from "./pages/PregnancyWeeklyCalendar";
 import BabyMovementTracker from "./pages/BabyMovementTracker";
 import PregnancySymptomJournal from "./pages/PregnancySymptomJournal";
 import SexPredictionCalculator from "./pages/SexPredictionCalculator";
+import BabyBudgetSimulator from "./pages/BabyBudgetSimulator";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
               <Route path="/grossesse/tracker-mouvements-bebe" element={<BabyMovementTracker />} />
               <Route path="/grossesse/journal-symptomes" element={<PregnancySymptomJournal />} />
               <Route path="/grossesse/calculateur-sexe-bebe" element={<SexPredictionCalculator />} />
+              <Route path="/grossesse/simulateur-budget-bebe" element={<BabyBudgetSimulator />} />
               {/* [TODO] ADD CUSTOM ROUTES FOR EACH TOOL AS DEVELOPED */}
               <Route path="*" element={<NotFound />} />
             </Routes>
