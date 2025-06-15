@@ -164,7 +164,8 @@ const Index = () => {
       </button>
 
       <main className="flex-1 flex flex-col items-center px-3 pt-10 pb-10">
-        <FamilyIllustration />
+        {/* Animation fade-in sur l'illustration */}
+        <FamilyIllustration className="animate-fade-in" />
         <div className="w-full max-w-2xl mx-auto flex flex-col gap-4 items-center mt-0 mb-12">
           <div className="flex flex-col items-center gap-2 w-full">
             <h1 className="font-playfair text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow leading-tight animate-fade-in text-center tracking-tight mb-0">
@@ -173,6 +174,23 @@ const Index = () => {
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-medium animate-fade-in text-center">
               {WELCOME[1]}
             </p>
+          </div>
+
+          {/* Accordéon interactif affiché sous l’intro */}
+          <div className="w-full mt-2 animate-fade-in">
+            <div className="rounded-2xl bg-white/90 border border-blue-100 shadow-sm overflow-hidden max-w-xl mx-auto">
+              <Accordion>
+                <AccordionItem title="Comment fonctionne la suite ?">
+                  50 outils entièrement offline, gratuits, permettant de gérer santé, grossesse et parentalité.
+                </AccordionItem>
+                <AccordionItem title="Mes données sont-elles privées ?">
+                  Oui, tout est traité en local, aucune donnée transmise ni stockée à l’extérieur.
+                </AccordionItem>
+                <AccordionItem title="Comment ajouter aux favoris ?">
+                  Cliquez sur l’étoile jaune en haut à droite de chaque outil pour le retrouver en priorité.
+                </AccordionItem>
+              </Accordion>
+            </div>
           </div>
         </div>
         <div className="grid gap-8 md:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">
@@ -207,5 +225,54 @@ const Index = () => {
     </div>
   );
 };
+
+// Accordéon interactif simple (utilise shadcn/ui primitives)
+function Accordion({ children }: { children: React.ReactNode }) {
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  return (
+    <div>
+      {React.Children.map(children, (child, idx) =>
+        React.isValidElement(child)
+          ? React.cloneElement(child, {
+              open: idx === activeIdx,
+              onToggle: () => setActiveIdx(idx === activeIdx ? null : idx),
+            })
+          : child
+      )}
+    </div>
+  );
+}
+
+function AccordionItem({
+  title,
+  children,
+  open,
+  onToggle,
+}: {
+  title: string;
+  children: React.ReactNode;
+  open?: boolean;
+  onToggle?: () => void;
+}) {
+  return (
+    <div className="border-b last:border-b-0">
+      <button
+        className="w-full text-left py-4 px-6 font-semibold flex justify-between items-center transition-colors hover:bg-blue-50 focus:outline-none"
+        onClick={onToggle}
+        aria-expanded={open}
+      >
+        <span>{title}</span>
+        <span className={`transition-transform duration-200 ${open ? "rotate-90" : "rotate-0"}`}>›</span>
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${open ? "max-h-48 opacity-100 py-2 px-6" : "max-h-0 opacity-0 py-0 px-6"}`}
+        style={{}}
+        aria-hidden={!open}
+      >
+        <div className="text-gray-700 text-base">{children}</div>
+      </div>
+    </div>
+  );
+}
 
 export default Index;

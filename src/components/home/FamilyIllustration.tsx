@@ -1,11 +1,17 @@
 
 import React from "react";
 
-// Illustration SVG pastel pour le header (naissance/famille, friendly)
-export default function FamilyIllustration() {
+export default function FamilyIllustration({ className = "" }: { className?: string }) {
   return (
-    <div className="mx-auto mb-4 flex justify-center select-none" aria-hidden>
-      <svg width="160" height="100" viewBox="0 0 160 100" fill="none">
+    <div className={`mx-auto mb-4 flex justify-center select-none ${className}`} aria-hidden>
+      <svg
+        width="160"
+        height="100"
+        viewBox="0 0 160 100"
+        fill="none"
+        className="animate-scale-in"
+        style={{ animationDuration: "0.8s", animationTimingFunction: "ease-out" }}
+      >
         <ellipse cx="80" cy="90" rx="60" ry="10" fill="#f3e8ff" />
         {/* Parent 1 */}
         <circle cx="56" cy="53" r="18" fill="#dbeafe"/>

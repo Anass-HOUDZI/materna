@@ -38,10 +38,10 @@ export default function UserFeedbackModal({ open, onClose }: UserFeedbackModalPr
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-md rounded-2xl shadow-2xl p-0">
+      <DialogContent className="max-w-md rounded-2xl shadow-2xl p-0 animate-fade-in animate-scale-in" style={{ animationDuration: "0.5s" }}>
         <form onSubmit={handleSubmit}>
           <DialogHeader className="items-center py-2">
-            <DialogTitle className="flex flex-col gap-1 items-center text-2xl font-bold mt-2 mb-1 font-playfair">
+            <DialogTitle className="flex flex-col gap-1 items-center text-2xl font-bold mt-2 mb-1 font-playfair animate-fade-in">
               <Star className="text-yellow-500" size={32} />
               Donnez votre avis
             </DialogTitle>
@@ -55,7 +55,7 @@ export default function UserFeedbackModal({ open, onClose }: UserFeedbackModalPr
                   onClick={() => handleRate(s)}
                   className={`transition ${s <= (rating ?? 0)
                     ? "text-yellow-400"
-                    : "text-gray-200 hover:text-yellow-400"}`
+                    : "text-gray-200 hover:text-yellow-400"} scale-100 ${s === rating ? "animate-bounce" : ""}`
                   }
                   tabIndex={0}
                   aria-label={`${s} étoile${s > 1 ? "s" : ""}`}
