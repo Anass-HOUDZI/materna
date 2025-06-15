@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import CryingMoodTabs from "@/components/tools/CryingMoodTabs";
@@ -6,10 +7,12 @@ import Footer from "@/components/ui/Footer";
 export default function CryingMoodTracker() {
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="flex-1 flex flex-1 justify-center items-center bg-background py-10 px-2 animate-fade-in">
-        <Card className="w-full max-w-2xl shadow-lg">
+      <div className="flex-1 flex justify-center items-center bg-gradient-to-br from-rose-50 via-white to-blue-50 py-10 px-2 animate-fade-in">
+        <Card className="w-full max-w-2xl shadow-xl rounded-2xl border-rose-100 bg-white/90">
           <CardHeader>
-            <CardTitle>Tracker Pleurs & Humeur Bébé</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl font-bold text-rose-900">
+              Tracker Pleurs & Humeur Bébé
+            </CardTitle>
             <div className="text-muted-foreground text-sm mt-2">
               Enregistrez les épisodes de pleurs ou humeurs de bébé, visualisez tendances et accédez à des conseils bienveillants pour toute la famille.
             </div>

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import BreastfeedingTabs from "@/components/tools/BreastfeedingTabs";
@@ -7,7 +8,7 @@ import Footer from "@/components/ui/Footer";
 export default function BreastfeedingGuide() {
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="flex-1 flex flex-1 justify-center items-center bg-gradient-to-br from-fuchsia-50 via-white to-pink-100 py-10 px-2 animate-fade-in">
+      <div className="flex-1 flex justify-center items-center bg-gradient-to-br from-fuchsia-50 via-white to-pink-100 py-10 px-2 animate-fade-in">
         <Card className="w-full max-w-2xl shadow-xl rounded-2xl border-fuchsia-100 bg-white/90">
           <CardHeader>
             <div className="flex items-center gap-4 mb-2">

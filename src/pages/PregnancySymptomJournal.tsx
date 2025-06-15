@@ -81,9 +81,9 @@ export default function PregnancySymptomJournal() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="flex-1">
-        <div className="max-w-2xl mx-auto py-8 space-y-8">
-          <Card>
+      <div className="flex-1 flex justify-center items-center bg-gradient-to-br from-lime-50 via-white to-pink-50 py-10 px-2 animate-fade-in">
+        <div className="w-full max-w-2xl">
+          <Card className="rounded-2xl shadow-xl border-lime-100 bg-white/90 mb-8">
             <CardHeader>
               <CardTitle>Journal Symptômes Grossesse</CardTitle>
             </CardHeader>
@@ -157,8 +157,7 @@ export default function PregnancySymptomJournal() {
               </Form>
             </CardContent>
           </Card>
-
-          <Card>
+          <Card className="rounded-2xl shadow-lg border-pink-100 bg-white/80">
             <CardHeader>
               <CardTitle>Entrées récentes</CardTitle>
             </CardHeader>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { useForm, Controller } from "react-hook-form";
 import { Baby } from "lucide-react";
@@ -48,7 +48,7 @@ export default function GrowthCurves() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="flex-1 w-full min-h-[80vh] flex flex-col items-center px-2 pt-10 pb-12 bg-gradient-to-b from-accent/30 to-background">
+      <div className="flex-1 w-full flex flex-col items-center bg-gradient-to-br from-cyan-50 via-white to-fuchsia-50 py-10 px-2 animate-fade-in">
         <section className="flex flex-col items-center mb-10 max-w-2xl w-full">
           <div className="flex flex-col items-center gap-6">
             <Baby size={54} className="text-primary drop-shadow-xl" />
@@ -60,8 +60,7 @@ export default function GrowthCurves() {
             Entrez les mesures pour visualiser la courbe de poids de votre enfant, comparée aux standards OMS.
           </p>
         </section>
-
-        <Card className="w-full max-w-md p-6 mb-8">
+        <Card className="w-full max-w-md p-6 mb-8 rounded-2xl shadow-xl border-indigo-100 bg-white/90">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
               <FormField
@@ -123,29 +122,32 @@ export default function GrowthCurves() {
             </form>
           </Form>
         </Card>
-
-        <div className="w-full max-w-xl bg-background rounded-xl border p-4 shadow-md">
-          <h2 className="font-bold mb-3 text-lg text-primary text-center">Courbe de poids (OMS vs. Enfant)</h2>
-          <ResponsiveContainer width="100%" height={270}>
-            <LineChart data={dataChart} margin={{ top: 20, bottom: 14, left: 0, right: 12 }}>
-              <XAxis dataKey="age" label={{ value: "Mois", position: "insideBottom", offset: -6 }} />
-              <YAxis
-                label={{ value: "Poids (kg)", angle: -90, position: "insideLeft" }}
-                domain={[2.5, 14]}
-                tickCount={7}
-              />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="reference" stroke="#38bdf8" strokeWidth={3}
-                name="OMS (médiane)" dot={false} />
-              <Line type="monotone" dataKey="user" stroke="#10b981" strokeWidth={3}
-                name="Votre enfant" dot={{ r: 6 }} />
-            </LineChart>
-          </ResponsiveContainer>
-          {entries.length === 0 && (
-            <p className="text-muted-foreground text-sm mt-5 text-center">Ajoutez une ou plusieurs mesures pour afficher votre courbe.</p>
-          )}
-        </div>
+        <Card className="w-full max-w-xl bg-background rounded-2xl border p-4 shadow-lg mb-8">
+          <CardHeader>
+            <CardTitle className="font-bold text-lg text-primary text-center mb-2">Courbe de poids (OMS vs. Enfant)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={270}>
+              <LineChart data={dataChart} margin={{ top: 20, bottom: 14, left: 0, right: 12 }}>
+                <XAxis dataKey="age" label={{ value: "Mois", position: "insideBottom", offset: -6 }} />
+                <YAxis
+                  label={{ value: "Poids (kg)", angle: -90, position: "insideLeft" }}
+                  domain={[2.5, 14]}
+                  tickCount={7}
+                />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="reference" stroke="#38bdf8" strokeWidth={3}
+                  name="OMS (médiane)" dot={false} />
+                <Line type="monotone" dataKey="user" stroke="#10b981" strokeWidth={3}
+                  name="Votre enfant" dot={{ r: 6 }} />
+              </LineChart>
+            </ResponsiveContainer>
+            {entries.length === 0 && (
+              <p className="text-muted-foreground text-sm mt-5 text-center">Ajoutez une ou plusieurs mesures pour afficher votre courbe.</p>
+            )}
+          </CardContent>
+        </Card>
       </div>
       <Footer />
     </div>
