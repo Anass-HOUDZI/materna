@@ -23,6 +23,7 @@ const SUBTOOLS = [
   { label: "Tracker Contractions", link: "/grossesse/tracker-contractions" },
   { label: "Calculateur Prise de Poids", link: "/grossesse/calculateur-poids" },
   { label: "Calendrier Grossesse Semaine/Semaine", link: "/grossesse/calendrier-semaine" },
+  { label: "Tracker Mouvements Bébé", link: "/grossesse/tracker-mouvements-bebe" },
 ];
 
 export default function AppSidebar() {
