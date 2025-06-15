@@ -29,6 +29,13 @@ const SUBTOOLS = [
   { label: "Simulateur Budget Bébé Année 1", link: "/grossesse/simulateur-budget-bebe" },
 ];
 
+const EDUCATION_SUBTOOLS = [
+  {
+    label: "Courbes Croissance OMS",
+    link: "/enfant/courbes-croissance"
+  }
+];
+
 export default function AppSidebar() {
   return (
     <Sidebar>
@@ -45,10 +52,22 @@ export default function AppSidebar() {
                       <span>{label}</span>
                     </a>
                   </SidebarMenuButton>
-                  {/* Si catégorie = grossesse, affiche sous-menu */}
                   {key === "pregnancy" && (
                     <div className="ml-6 mt-2 space-y-1">
                       {SUBTOOLS.map(sub => (
+                        <SidebarMenuItem key={sub.link}>
+                          <SidebarMenuButton asChild>
+                            <a href={sub.link} className="text-sm">
+                              {sub.label}
+                            </a>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </div>
+                  )}
+                  {key === "education" && (
+                    <div className="ml-6 mt-2 space-y-1">
+                      {EDUCATION_SUBTOOLS.map(sub => (
                         <SidebarMenuItem key={sub.link}>
                           <SidebarMenuButton asChild>
                             <a href={sub.link} className="text-sm">
