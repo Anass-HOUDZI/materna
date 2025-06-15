@@ -41,6 +41,10 @@ const EDUCATION_SUBTOOLS = [
   {
     label: "Tracker Développement Moteur 0-3 ans",
     link: "/enfant/developpement-moteur"
+  },
+  {
+    label: "Calculateur Besoins Nutritionnels Enfant",
+    link: "/enfant/besoins-nutritionnels"
   }
 ];
 
