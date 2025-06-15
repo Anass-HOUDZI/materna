@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import AppSidebar from "@/components/app-sidebar";
 import { Input } from "@/components/ui/input";
@@ -25,8 +24,6 @@ const Index = () => {
     () => window.localStorage.getItem("momtech-user-tour-done") !== "yes"
   );
   const [showFeedback, setShowFeedback] = useState(false);
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [updateAvailable, setUpdateAvailable] = useState(false);
 
   function openTour() {
     setShowTour(true);
@@ -38,23 +35,9 @@ const Index = () => {
   }
 
   useEffect(() => {
-    // Écoute online/offline
-    const updateNetwork = () => setIsOnline(navigator.onLine);
-    window.addEventListener("online", updateNetwork);
-    window.addEventListener("offline", updateNetwork);
-
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.addEventListener("message", (event) => {
-        if (event.data && event.data.type === "UPDATE_AVAILABLE") {
-          setUpdateAvailable(true);
-        }
-      });
-    }
-
-    return () => {
-      window.removeEventListener("online", updateNetwork);
-      window.removeEventListener("offline", updateNetwork);
-    };
+    // Empty useEffect can be removed if not used for other purposes,
+    // but we leave it in case other logic is added later.
+    // The PWA status logic has been moved to a global component.
   }, []);
 
   return (
@@ -90,30 +73,7 @@ const Index = () => {
       </TouchOptimized>
 
       <main className="flex-1 flex flex-col items-center px-0 pt-6 mobile-s:pt-8 sm:pt-10 pb-20 mobile-s:pb-16 sm:pb-10">
-        {/* Message d'état réseau - Responsive */}
-        <ResponsiveContainer maxWidth="full" padding="sm">
-          <div className="w-full flex flex-col mobile-s:flex-row items-center justify-center mb-3 mobile-s:mb-2 gap-2 mobile-s:gap-0">
-            {!isOnline ? (
-              <div className="flex items-center gap-2 px-3 mobile-s:px-4 py-2 rounded-lg bg-yellow-50 border border-yellow-300 text-yellow-700 font-semibold shadow animate-pulse text-sm mobile-s:text-base text-center">
-                Mode hors ligne : outils offline disponibles
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 px-3 mobile-s:px-4 py-2 rounded-lg bg-green-50 border border-green-300 text-green-800 font-semibold shadow text-sm mobile-s:text-base text-center">
-                En ligne : toutes fonctionnalités disponibles
-              </div>
-            )}
-            {updateAvailable && (
-              <TouchOptimized variant="button">
-                <button
-                  className="ml-0 mobile-s:ml-4 mt-2 mobile-s:mt-0 px-3 py-1 rounded-md bg-blue-600 text-white font-semibold shadow hover:bg-blue-800 transition text-sm mobile-s:text-base touch:min-h-[44px]"
-                  onClick={() => window.location.reload()}
-                >
-                  Mettre à jour
-                </button>
-              </TouchOptimized>
-            )}
-          </div>
-        </ResponsiveContainer>
+        {/* L'indicateur de statut réseau a été déplacé dans un composant global */}
 
         <ResponsiveContainer maxWidth="2xl" padding="sm">
           <FamilyIllustration className="animate-fade-in w-full max-w-xs mobile-s:max-w-sm sm:max-w-md mx-auto" />

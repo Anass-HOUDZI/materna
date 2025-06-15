@@ -24,6 +24,7 @@ import ChildNutritionCalculator from "./pages/ChildNutritionCalculator";
 import BreastfeedingGuide from "./pages/BreastfeedingGuide";
 import TeethingCalculator from "./pages/TeethingCalculator";
 import CryingMoodTracker from "./pages/CryingMoodTracker";
+import PwaStatusIndicator from "./components/ui/PwaStatusIndicator";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ const App = () => (
             <Route path="/enfant/tracker-pleurs-humeur" element={<CryingMoodTracker />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <PwaStatusIndicator />
         </div>
       </BrowserRouter>
     </TooltipProvider>
@@ -61,4 +63,3 @@ const App = () => (
 );
 
 export default App;
-
