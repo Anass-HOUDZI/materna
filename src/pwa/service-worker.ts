@@ -1,5 +1,6 @@
 
-// Squelette du service worker (Workbox ou vanilla à compléter, format TypeScript)
+/// <reference lib="webworker" />
+
 self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
