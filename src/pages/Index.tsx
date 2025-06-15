@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Search, Calendar, Baby, LineChart, ClipboardList } from "lucide-react";
 import Footer from "@/components/ui/Footer";
 import FamilyIllustration from "@/components/home/FamilyIllustration";
+import FavoriteButton from "@/components/home/FavoriteButton";
+import { useFavorites } from "@/hooks/useFavorites";
 
 // Ordre de popularité proposé : Date d'accouchement, Contractions, Prise de poids, Calendrier, Tracker mouvements bébé, etc.
 const TOOLS = [
@@ -106,19 +108,20 @@ const WELCOME = [
 
 const Index = () => {
   const [search, setSearch] = useState("");
-  // On enlève le filtrage lié à la recherche
-  // const filtered = TOOLS.filter((tool) =>
-  //   tool.label.toLowerCase().includes(search.toLowerCase())
-  // );
-  // À la place, on garde l'intégralité :
-  const filtered = TOOLS;
+  const { favorites, toggleFavorite, isFavorite } = useFavorites();
+
+  const filtered = TOOLS; // recherche désactivée pour l’instant
+
+  // Trie : favoris d’abord, puis autres
+  const sorted = [
+    ...filtered.filter(tool => favorites.includes(tool.link)),
+    ...filtered.filter(tool => !favorites.includes(tool.link)),
+  ];
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-tr from-pink-50 via-white to-blue-50">
       <main className="flex-1 flex flex-col items-center px-3 pt-10 pb-10">
-        {/* Illustration d'accueil */}
         <FamilyIllustration />
-        {/* Section d’accueil modernisée */}
         <div className="w-full max-w-2xl mx-auto flex flex-col gap-4 items-center mt-0 mb-12">
           <div className="flex flex-col items-center gap-2 w-full">
             <h1 className="font-playfair text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow leading-tight animate-fade-in text-center tracking-tight mb-0">
@@ -129,9 +132,8 @@ const Index = () => {
             </p>
           </div>
         </div>
-        {/* Outils en cartes modernisées */}
         <div className="grid gap-8 md:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">
-          {filtered.map(({ label, link, icon, color }) => (
+          {sorted.map(({ label, link, icon, color }) => (
             <a
               key={link}
               href={link}
@@ -139,8 +141,15 @@ const Index = () => {
               style={{ minHeight: 170 }}
               aria-label={label}
             >
+              {/* bouton Favori */}
+              <FavoriteButton
+                isActive={isFavorite(link)}
+                onClick={() => toggleFavorite(link)}
+              />
               {/* En-tête coloré pastel */}
-              <div className={`absolute top-0 left-0 w-full h-16 rounded-t-3xl z-0 blur-sm ${color} opacity-40`} />
+              <div
+                className={`absolute top-0 left-0 w-full h-16 rounded-t-3xl z-0 blur-sm ${color} opacity-40`}
+              />
               <div className="z-10 relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-white via-blue-50 to-pink-50 shadow border border-blue-100 mb-1 mt-3">
                 {icon}
               </div>
