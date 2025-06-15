@@ -1,9 +1,9 @@
-
 import React, { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { TooltipInfo } from "@/components/ui/TooltipInfo";
 import { cn } from "@/lib/utils";
 
 type ActivityLevel = "bas" | "modéré" | "élevé";
@@ -80,6 +80,7 @@ export default function ChildNutritionCalculatorForm() {
     activity: "modéré",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [touched, setTouched] = useState<{[K in keyof FormFields]?: boolean}>({});
 
   const valid =
     !!fields.age &&
@@ -104,11 +105,32 @@ export default function ChildNutritionCalculatorForm() {
     setSubmitted(true);
   }
 
+  // Utilitaire pour messages d’erreur
+  function getError(field: keyof FormFields): string | null {
+    switch (field) {
+      case "age":
+        if (touched.age && (!fields.age || Number(fields.age) <= 0)) return "Âge requis (> 0)";
+        break;
+      case "weight":
+        if (touched.weight && (!fields.weight || Number(fields.weight) < 2)) return "Poids requis (kg, min. 2)";
+        break;
+      case "height":
+        if (touched.height && (!fields.height || Number(fields.height) < 45)) return "Taille requise (cm, min. 45)";
+        break;
+      default:
+        return null;
+    }
+    return null;
+  }
+
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormItem>
-          <FormLabel>Âge</FormLabel>
+          <div className="flex items-center gap-1">
+            <FormLabel>Âge</FormLabel>
+            <TooltipInfo label="Indiquez l’âge de l’enfant en années ou mois révolus à la date du calcul. Utilisez la même unité que sur la courbe de croissance." />
+          </div>
           <div className="flex gap-2">
             <FormControl>
               <Input
@@ -116,9 +138,15 @@ export default function ChildNutritionCalculatorForm() {
                 min={0}
                 max={16}
                 value={fields.age}
-                onChange={e => handleChange("age", e.target.value === "" ? "" : Number(e.target.value))}
+                onChange={e => {
+                  handleChange("age", e.target.value === "" ? "" : Number(e.target.value));
+                  setTouched(t => ({ ...t, age: true }));
+                }}
+                onBlur={() => setTouched(t => ({ ...t, age: true }))}
                 placeholder="ex : 3"
                 step="1"
+                aria-describedby="form-age-message"
+                aria-invalid={!!getError("age")}
               />
             </FormControl>
             <select
@@ -127,19 +155,29 @@ export default function ChildNutritionCalculatorForm() {
                 "px-2 py-1 border rounded bg-muted text-base md:text-sm max-w-[80px]"
               )}
               onChange={e => handleChange("ageUnit", e.target.value as any)}
+              aria-label="Unité âge"
             >
               <option value="années">années</option>
               <option value="mois">mois</option>
             </select>
           </div>
+          <div className="transition-all duration-300 min-h-[1.6em]" id="form-age-message">
+            <span className={getError("age") ? "text-destructive text-sm" : "text-muted-foreground text-xs"}>
+              {getError("age") || "Saisissez l’âge réel (arrondi inférieur)."}
+            </span>
+          </div>
         </FormItem>
         <FormItem>
-          <FormLabel>Sexe</FormLabel>
+          <div className="flex items-center gap-1">
+            <FormLabel>Sexe</FormLabel>
+            <TooltipInfo label="Sélectionnez « Fille » ou « Garçon » selon l’enfant évalué. Les besoins énergétiques diffèrent selon le sexe." />
+          </div>
           <FormControl>
             <RadioGroup
               value={fields.gender}
               onValueChange={v => handleChange("gender", v as any)}
               className="flex gap-4"
+              aria-label="Sexe de l’enfant"
             >
               <RadioGroupItem value="fille" id="gender-fille" />
               <label htmlFor="gender-fille" className="mr-3 cursor-pointer">Fille</label>
@@ -147,9 +185,13 @@ export default function ChildNutritionCalculatorForm() {
               <label htmlFor="gender-garçon" className="cursor-pointer">Garçon</label>
             </RadioGroup>
           </FormControl>
+          {/* Pas d’erreur possible ici */}
         </FormItem>
         <FormItem>
-          <FormLabel>Poids (kg)</FormLabel>
+          <div className="flex items-center gap-1">
+            <FormLabel>Poids (kg)</FormLabel>
+            <TooltipInfo label="Poids actuel sans vêtement, à calibrer sur la même balance si possible. Utile pour des calculs précis des besoins quotidiens." />
+          </div>
           <FormControl>
             <Input
               type="number"
@@ -157,31 +199,60 @@ export default function ChildNutritionCalculatorForm() {
               max={70}
               step="0.1"
               value={fields.weight}
-              onChange={e => handleChange("weight", e.target.value === "" ? "" : Number(e.target.value))}
+              onChange={e => {
+                handleChange("weight", e.target.value === "" ? "" : Number(e.target.value));
+                setTouched(t => ({ ...t, weight: true }));
+              }}
+              onBlur={() => setTouched(t => ({ ...t, weight: true }))}
               placeholder="ex : 14.2"
+              aria-describedby="form-weight-message"
+              aria-invalid={!!getError("weight")}
             />
           </FormControl>
+          <div className="transition-all duration-300 min-h-[1.6em]" id="form-weight-message">
+            <span className={getError("weight") ? "text-destructive text-sm" : "text-muted-foreground text-xs"}>
+              {getError("weight") || "Poids en kilogrammes (ex : 14,2)."}
+            </span>
+          </div>
         </FormItem>
         <FormItem>
-          <FormLabel>Taille (cm)</FormLabel>
+          <div className="flex items-center gap-1">
+            <FormLabel>Taille (cm)</FormLabel>
+            <TooltipInfo label="Taille debout (ou allongé si <2 ans). Mesurez en centimètres pour une meilleure estimation." />
+          </div>
           <FormControl>
             <Input
               type="number"
               min={45}
               max={180}
               value={fields.height}
-              onChange={e => handleChange("height", e.target.value === "" ? "" : Number(e.target.value))}
+              onChange={e => {
+                handleChange("height", e.target.value === "" ? "" : Number(e.target.value));
+                setTouched(t => ({ ...t, height: true }));
+              }}
+              onBlur={() => setTouched(t => ({ ...t, height: true }))}
               placeholder="ex : 98"
+              aria-describedby="form-height-message"
+              aria-invalid={!!getError("height")}
             />
           </FormControl>
+          <div className="transition-all duration-300 min-h-[1.6em]" id="form-height-message">
+            <span className={getError("height") ? "text-destructive text-sm" : "text-muted-foreground text-xs"}>
+              {getError("height") || "Indiquez la taille en centimètres."}
+            </span>
+          </div>
         </FormItem>
         <FormItem className="md:col-span-2">
-          <FormLabel>Niveau d’activité physique</FormLabel>
+          <div className="flex items-center gap-1">
+            <FormLabel>Niveau d’activité physique</FormLabel>
+            <TooltipInfo label="Estimez l’activité quotidienne : Bas (sédentaire), Modéré (jeux quotidiens), Élevé (sport régulier ou activité très dynamique)." />
+          </div>
           <FormControl>
             <RadioGroup
               value={fields.activity}
               onValueChange={v => handleChange("activity", v as ActivityLevel)}
               className="flex gap-3"
+              aria-label="Niveau d’activité"
             >
               <RadioGroupItem value="bas" id="activity-bas" />
               <label htmlFor="activity-bas" className="mr-5 cursor-pointer">Bas</label>
