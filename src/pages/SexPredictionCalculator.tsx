@@ -18,30 +18,43 @@ export default function SexPredictionCalculator() {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto py-10 flex flex-col items-center">
-      <div className="flex items-center mb-4 gap-2">
-        <Baby />
-        <h1 className="text-3xl font-bold">Calculateur Probabilité Sexe Bébé</h1>
-      </div>
-
-      {explanations.map((line, i) => (
-        <p key={i} className="text-muted-foreground text-center mb-2">{line}</p>
-      ))}
-
-      <Button onClick={getRandomPrediction} className="my-6" size="lg">
-        Découvrir mon verdict&nbsp;🎲
-      </Button>
+    <div className="w-full min-h-[80vh] flex flex-col justify-center items-center px-3 pb-10 pt-8 bg-gradient-to-b from-accent to-background">
+      <section className="w-full flex flex-col justify-center items-center mb-12 max-w-2xl">
+        <div className="flex flex-col items-center gap-6">
+          <Baby size={64} className="text-primary animate-fade-in drop-shadow-2xl" />
+          <h1 className="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight text-primary text-center drop-shadow-lg">
+            Calculateur&nbsp;<br className="hidden md:inline" />
+            Probabilité Sexe Bébé
+          </h1>
+        </div>
+        <div className="mt-10 space-y-3">
+          {explanations.map((line, i) => (
+            <p key={i} className="text-lg md:text-xl text-muted-foreground text-center">
+              {line}
+            </p>
+          ))}
+        </div>
+        <Button
+          onClick={getRandomPrediction}
+          className="mt-10 px-8 py-4 text-lg rounded-full shadow-lg animate-fade-in"
+          size="lg"
+        >
+          Découvrir mon verdict&nbsp;🎲
+        </Button>
+      </section>
 
       {prediction && (
-        <div className="mt-6 flex flex-col items-center">
-          <div className={`text-2xl font-bold ${prediction === "Fille" ? "text-pink-500" : "text-blue-500"}`}>
+        <div className="mt-8 flex flex-col items-center">
+          <div className={`text-3xl md:text-4xl font-bold ${prediction === "Fille" ? "text-pink-500" : "text-blue-500"} drop-shadow-lg`}>
             {prediction}
           </div>
-          <Badge variant="secondary" className="mt-2">Juste pour le fun !</Badge>
+          <Badge variant="secondary" className="mt-3 text-base px-4 py-2 rounded-full shadow">
+            Juste pour le fun !
+          </Badge>
         </div>
       )}
 
-      <div className="mt-8 p-3 bg-accent rounded text-center text-sm border">
+      <div className="mt-16 max-w-lg p-4 md:p-6 bg-accent/70 rounded-xl border text-center text-base md:text-lg shadow">
         <strong>Disclaimer&nbsp;:</strong> Le seul moyen fiable est l'échographie médicale.
       </div>
     </div>
