@@ -19,14 +19,26 @@ export default {
 			}
 		},
 		screens: {
-			'xs': '475px',
+			// Breakpoints standards étendus
+			'xs': '375px',
 			'sm': '640px',
 			'md': '768px',
 			'lg': '1024px',
 			'xl': '1280px',
 			'2xl': '1536px',
 			'3xl': '1920px',
-			// Breakpoints spécifiques mobiles
+			
+			// Breakpoints mobiles spécifiques
+			'mobile-xs': '320px',
+			'mobile-sm': '375px',
+			'mobile-md': '414px',
+			'mobile-lg': '480px',
+			
+			// Breakpoints tablettes
+			'tablet-sm': '768px',
+			'tablet-lg': '1024px',
+			
+			// Breakpoints legacy pour compatibilité
 			'mobile-s': '320px',
 			'mobile-m': '375px',
 			'mobile-l': '425px',
@@ -34,12 +46,17 @@ export default {
 			'laptop': '1024px',
 			'laptop-l': '1440px',
 			'desktop': '1920px',
+			
 			// Breakpoints orientation
 			'portrait': {'raw': '(orientation: portrait)'},
 			'landscape': {'raw': '(orientation: landscape)'},
-			// Breakpoints touch
+			
+			// Breakpoints capacités tactiles
 			'touch': {'raw': '(hover: none) and (pointer: coarse)'},
 			'no-touch': {'raw': '(hover: hover) and (pointer: fine)'},
+			
+			// Breakpoints résolution
+			'retina': {'raw': '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)'},
 		},
 		extend: {
 			colors: {
@@ -100,6 +117,17 @@ export default {
 				'safe-bottom': 'env(safe-area-inset-bottom)',
 				'safe-left': 'env(safe-area-inset-left)',
 				'safe-right': 'env(safe-area-inset-right)',
+				// Touch targets optimaux
+				'touch-min': '44px',
+				'touch-lg': '56px',
+			},
+			minHeight: {
+				'touch': '44px',
+				'touch-lg': '56px',
+			},
+			minWidth: {
+				'touch': '44px',
+				'touch-lg': '56px',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -145,14 +173,31 @@ export default {
 					'50%': {
 						transform: 'translateY(-2px)'
 					}
-				}
+				},
+				// Animations tactiles
+				'touch-feedback': {
+					'0%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(0.95)' },
+					'100%': { transform: 'scale(1)' }
+				},
+				'shimmer': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(100%)' }
+				},
+				'pulse-soft': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.8' }
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.6s ease-out',
 				'slide-up': 'slide-up 0.4s ease-out',
-				'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite'
+				'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite',
+				'touch-feedback': 'touch-feedback 0.15s ease-out',
+				'shimmer': 'shimmer 2s ease-in-out infinite',
+				'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
 			}
 		}
 	},
