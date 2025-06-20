@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import AppSidebar from "@/components/app-sidebar";
 import { Input } from "@/components/ui/input";
@@ -6,8 +7,6 @@ import Footer from "@/components/ui/Footer";
 import FamilyIllustration from "@/components/home/FamilyIllustration";
 import FavoriteButton from "@/components/home/FavoriteButton";
 import { useFavorites } from "@/hooks/useFavorites";
-import UserTourModal from "@/components/home/UserTourModal";
-import UserFeedbackModal from "@/components/home/UserFeedbackModal";
 import ToolsGrid from "@/components/home/ToolsGrid";
 import { AccordionSimple, AccordionSimpleItem } from "@/components/ui/accordion-simple";
 import ResponsiveContainer from "@/components/ui/ResponsiveContainer";
@@ -20,19 +19,6 @@ const WELCOME = [
 
 const Index = () => {
   const [search, setSearch] = useState("");
-  const [showTour, setShowTour] = useState(
-    () => window.localStorage.getItem("momtech-user-tour-done") !== "yes"
-  );
-  const [showFeedback, setShowFeedback] = useState(false);
-
-  function openTour() {
-    setShowTour(true);
-    window.localStorage.setItem("momtech-user-tour-done", "no");
-  }
-  function closeTour() {
-    setShowTour(false);
-    window.localStorage.setItem("momtech-user-tour-done", "yes");
-  }
 
   useEffect(() => {
     // Empty useEffect can be removed if not used for other purposes,
@@ -42,36 +28,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-tr from-pink-50 via-white to-blue-50 pt-safe-top pb-safe-bottom">
-      <UserTourModal open={showTour} onClose={closeTour} />
-      <UserFeedbackModal open={showFeedback} onClose={() => setShowFeedback(false)} />
-
-      {/* BOUTON FEEDBACK flottant - Optimisé mobile */}
-      <TouchOptimized variant="button" size="md">
-        <button
-          onClick={() => setShowFeedback(true)}
-          className="fixed z-40 bottom-5 left-3 mobile-s:left-4 sm:left-5 bg-white/95 backdrop-blur-sm rounded-full shadow-lg border border-yellow-200 transition-all duration-300 hover:bg-yellow-50 hover:scale-105 active:scale-95 px-3 mobile-s:px-4 py-2 mobile-s:py-2.5 flex items-center gap-1 mobile-s:gap-2 text-yellow-600 font-semibold text-sm mobile-s:text-base touch:min-h-[44px]"
-          style={{ boxShadow: "0 2px 12px 0 #fef08a90" }}
-          aria-label="Donner un avis"
-          title="Donner un avis sur MomTech Suite"
-        >
-          <Star className="mobile-s:mr-1" size={18} />
-          <span className="hidden mobile-s:inline">Avis</span>
-        </button>
-      </TouchOptimized>
-
-      {/* Bouton d'aide/visite guidée flottant - Optimisé mobile */}
-      <TouchOptimized variant="button" size="md">
-        <button
-          onClick={openTour}
-          className="fixed z-40 bottom-5 right-3 mobile-s:right-4 sm:right-5 bg-white/95 backdrop-blur-sm rounded-full shadow-lg border border-blue-200 transition-all duration-300 hover:bg-blue-50 hover:scale-105 active:scale-95 px-3 mobile-s:px-4 py-2 mobile-s:py-2.5 flex items-center gap-1 mobile-s:gap-2 text-blue-600 font-semibold text-sm mobile-s:text-base touch:min-h-[44px]"
-          style={{ boxShadow: "0 2px 12px 0 #dbeafe90" }}
-          aria-label="Guide utilisateur"
-        >
-          <HelpCircle className="mobile-s:mr-1" size={18} />
-          <span className="hidden mobile-s:inline">Aide</span>
-        </button>
-      </TouchOptimized>
-
       <main className="flex-1 flex flex-col items-center px-0 pt-6 mobile-s:pt-8 sm:pt-10 pb-20 mobile-s:pb-16 sm:pb-10">
         {/* L'indicateur de statut réseau a été déplacé dans un composant global */}
 

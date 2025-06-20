@@ -21,11 +21,9 @@ export function SkeletonLoader({
 }: SkeletonLoaderProps) {
   const baseClasses = cn(
     'bg-muted',
-    animated && 'relative overflow-hidden',
+    animated && 'relative overflow-hidden after:absolute after:inset-0 after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent after:animate-shimmer',
     className
   );
-
-  const shimmerClasses = animated ? 'after:absolute after:inset-0 after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent after:animate-shimmer' : '';
 
   const variantClasses = {
     text: 'h-4 rounded',
@@ -48,7 +46,6 @@ export function SkeletonLoader({
             className={cn(
               baseClasses,
               variantClasses.text,
-              shimmerClasses,
               index === lines - 1 && 'w-3/4' // Dernière ligne plus courte
             )}
             style={{
@@ -65,8 +62,7 @@ export function SkeletonLoader({
     <div
       className={cn(
         baseClasses,
-        variantClasses[variant],
-        shimmerClasses
+        variantClasses[variant]
       )}
       style={style}
     />

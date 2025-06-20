@@ -8,22 +8,18 @@ interface TouchOptimizedProps {
   className?: string;
   variant?: "button" | "card" | "link";
   size?: "sm" | "md" | "lg";
-  hapticFeedback?: boolean;
-  ripple?: boolean;
 }
 
 export default function TouchOptimized({ 
   children, 
   className,
   variant = "button",
-  size = "md",
-  hapticFeedback = false,
-  ripple = false
+  size = "md"
 }: TouchOptimizedProps) {
-  const { isTouch, isMobile } = useResponsive();
+  const { isTouch } = useResponsive();
 
   const baseClasses = cn(
-    "transition-all duration-200 ease-out select-none relative overflow-hidden",
+    "transition-all duration-200 ease-out select-none",
     // GPU acceleration
     "transform-gpu will-change-transform",
     // Touch optimizations
@@ -68,63 +64,6 @@ export default function TouchOptimized({
     )
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    // Haptic feedback simulation
-    if (hapticFeedback && navigator.vibrate) {
-      navigator.vibrate(1);
-    }
-    
-    // Ripple effect
-    if (ripple && isTouch) {
-      const element = e.currentTarget as HTMLElement;
-      const rect = element.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      const x = e.touches[0].clientX - rect.left - size / 2;
-      const y = e.touches[0].clientY - rect.top - size / 2;
-      
-      // Create ripple element
-      const rippleElement = document.createElement('span');
-      rippleElement.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
-        background: currentColor;
-        border-radius: 50%;
-        opacity: 0.3;
-        transform: scale(0);
-        animation: ripple 0.6s ease-out;
-        pointer-events: none;
-        z-index: 0;
-      `;
-      
-      // Add ripple styles if not already added
-      if (!document.getElementById('ripple-styles')) {
-        const style = document.createElement('style');
-        style.id = 'ripple-styles';
-        style.textContent = `
-          @keyframes ripple {
-            to {
-              transform: scale(2);
-              opacity: 0;
-            }
-          }
-        `;
-        document.head.appendChild(style);
-      }
-      
-      element.appendChild(rippleElement);
-      
-      // Remove ripple after animation
-      setTimeout(() => {
-        if (rippleElement.parentNode) {
-          rippleElement.parentNode.removeChild(rippleElement);
-        }
-      }, 600);
-    }
-  };
-
   return (
     <div 
       className={cn(
@@ -133,14 +72,8 @@ export default function TouchOptimized({
         sizeClasses[size],
         className
       )}
-      onTouchStart={handleTouchStart}
     >
       {children}
-      
-      {/* Static ripple overlay for consistent visual feedback */}
-      {ripple && (
-        <div className="absolute inset-0 bg-current opacity-0 transition-opacity duration-150 hover:opacity-5 active:opacity-10 pointer-events-none" />
-      )}
     </div>
   );
 }

@@ -11,7 +11,6 @@ interface MobileCardProps {
   disabled?: boolean;
   variant?: 'default' | 'elevated' | 'outlined' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
-  touchFeedback?: boolean;
   href?: string;
 }
 
@@ -23,7 +22,6 @@ const MobileCard = forwardRef<HTMLDivElement, MobileCardProps>(({
   disabled = false,
   variant = 'default',
   size = 'md',
-  touchFeedback = true,
   href,
   ...props
 }, ref) => {
@@ -37,7 +35,7 @@ const MobileCard = forwardRef<HTMLDivElement, MobileCardProps>(({
     // Touch optimizations
     isTouch && [
       'min-h-touch', // 44px minimum
-      touchFeedback && 'active:scale-[0.98] active:brightness-95',
+      'active:scale-[0.98] active:brightness-95',
       'touch-manipulation', // Disable double-tap zoom
     ],
     
@@ -93,13 +91,6 @@ const MobileCard = forwardRef<HTMLDivElement, MobileCardProps>(({
       )}>
         {children}
       </div>
-      
-      {/* Ripple effect placeholder */}
-      {touchFeedback && isTouch && (
-        <div className="absolute inset-0 overflow-hidden rounded-xl">
-          <div className="absolute inset-0 bg-current opacity-0 transition-opacity duration-150 hover:opacity-5 active:opacity-10" />
-        </div>
-      )}
     </Component>
   );
 });
