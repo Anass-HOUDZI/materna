@@ -1,19 +1,21 @@
-import { Card } from "@/components/ui/card";
+
 import { PregnancyWeightGainCalculatorForm } from "@/components/tools/PregnancyWeightGainCalculatorForm";
-import Footer from "@/components/ui/Footer";
-import PageHeader from "@/components/ui/PageHeader";
+import ToolPageLayout from "@/components/ui/ToolPageLayout";
+import ToolCard from "@/components/ui/ToolCard";
 
 export default function PregnancyWeightGainCalculator() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <PageHeader crumbs={[
+    <ToolPageLayout
+      crumbs={[
         { href: "/grossesse", label: "Grossesse" },
         { label: "Calculateur Prise de Poids" },
-      ]} />
-      <div className="flex flex-1 justify-center items-center bg-background py-10 animate-fade-in">
+      ]}
+      title="Calculateur Prise de Poids Grossesse"
+      description="Suivez votre prise de poids pendant la grossesse selon les recommandations médicales personnalisées"
+    >
+      <ToolCard variant="elevated" size="lg">
         <PregnancyWeightGainCalculatorForm />
-      </div>
-      <Footer />
-    </div>
+      </ToolCard>
+    </ToolPageLayout>
   );
 }
