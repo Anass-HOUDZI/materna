@@ -10,10 +10,10 @@ import {
 } from "lucide-react";
 
 const ICONS = [
-  <Activity className="text-blue-500" size={38} />,      // 0
-  <BarChart3 className="text-pink-500" size={38} />,     // 1
-  <TrendingUp className="text-green-500" size={38} />,   // 2
-  <Search className="text-violet-500" size={38} />,      // 3
+  <Activity className="text-blue-600" size={42} />,      // 0
+  <BarChart3 className="text-pink-600" size={42} />,     // 1
+  <TrendingUp className="text-green-600" size={42} />,   // 2
+  <Search className="text-violet-600" size={42} />,      // 3
 ];
 
 const TOOLS = [
@@ -21,91 +21,91 @@ const TOOLS = [
     label: "Calculateur de date d'accouchement",
     link: "/grossesse/calculateur-terme",
     icon: ICONS[0],
-    color: "bg-gradient-to-br from-blue-50 to-blue-100",
+    color: "bg-gradient-to-br from-blue-50/80 to-blue-100/80",
   },
   {
     label: "Tracker Contractions",
-    link: "/grossesse/tracker-contractions",
+    link: "/grossesse/tracker-contractions", 
     icon: ICONS[1],
-    color: "bg-gradient-to-br from-pink-50 to-pink-100",
+    color: "bg-gradient-to-br from-pink-50/80 to-pink-100/80",
   },
   {
     label: "Calculateur Prise de Poids",
     link: "/grossesse/calculateur-poids",
     icon: ICONS[2],
-    color: "bg-gradient-to-br from-green-50 to-green-100",
+    color: "bg-gradient-to-br from-green-50/80 to-green-100/80",
   },
   {
     label: "Calendrier Grossesse Semaine/Semaine",
     link: "/grossesse/calendrier-semaine",
     icon: ICONS[3],
-    color: "bg-gradient-to-br from-violet-50 to-violet-100",
+    color: "bg-gradient-to-br from-violet-50/80 to-violet-100/80",
   },
   {
     label: "Tracker Mouvements Bébé",
     link: "/grossesse/tracker-mouvements-bebe",
     icon: ICONS[1],
-    color: "bg-gradient-to-br from-rose-50 to-pink-100",
+    color: "bg-gradient-to-br from-rose-50/80 to-pink-100/80",
   },
   {
     label: "Journal Symptômes",
     link: "/grossesse/journal-symptomes",
     icon: ICONS[2],
-    color: "bg-gradient-to-br from-yellow-50 to-orange-50",
+    color: "bg-gradient-to-br from-yellow-50/80 to-orange-50/80",
   },
   {
     label: "Calculateur Sexe Bébé (fun)",
     link: "/grossesse/calculateur-sexe-bebe",
     icon: ICONS[3],
-    color: "bg-gradient-to-br from-fuchsia-50 to-pink-100",
+    color: "bg-gradient-to-br from-fuchsia-50/80 to-pink-100/80",
   },
   {
     label: "Simulateur Budget Bébé Année 1",
     link: "/grossesse/simulateur-budget-bebe",
     icon: ICONS[0],
-    color: "bg-gradient-to-br from-sky-50 to-blue-100",
+    color: "bg-gradient-to-br from-sky-50/80 to-blue-100/80",
   },
   {
     label: "Calculateur Poussées Dentaires",
     link: "/grossesse/calculateur-dents",
     icon: ICONS[2],
-    color: "bg-gradient-to-br from-emerald-50 to-green-100",
+    color: "bg-gradient-to-br from-emerald-50/80 to-green-100/80",
   },
   {
     label: "Courbes Croissance OMS",
     link: "/enfant/courbes-croissance",
     icon: ICONS[0],
-    color: "bg-gradient-to-br from-blue-50 to-indigo-50",
+    color: "bg-gradient-to-br from-blue-50/80 to-indigo-50/80",
   },
   {
     label: "Guide Diversification Alimentaire",
     link: "/enfant/guide-diversification",
     icon: ICONS[3],
-    color: "bg-gradient-to-br from-lime-50 to-lime-100",
+    color: "bg-gradient-to-br from-lime-50/80 to-lime-100/80",
   },
   {
     label: "Tracker Développement Moteur 0-3 ans",
     link: "/enfant/developpement-moteur",
     icon: ICONS[1],
-    color: "bg-gradient-to-br from-orange-50 to-yellow-50",
+    color: "bg-gradient-to-br from-orange-50/80 to-yellow-50/80",
   },
   {
     label: "Calculateur Besoins Nutritionnels Enfant",
     link: "/enfant/besoins-nutritionnels",
     icon: ICONS[2],
-    color: "bg-gradient-to-br from-teal-50 to-blue-50",
+    color: "bg-gradient-to-br from-teal-50/80 to-blue-50/80",
   },
   {
     label: "Tracker Pleurs & Humeur Bébé",
     link: "/enfant/tracker-pleurs-humeur",
     icon: ICONS[0],
-    color: "bg-gradient-to-br from-purple-50 to-indigo-50",
+    color: "bg-gradient-to-br from-purple-50/80 to-indigo-50/80",
   },
   {
     label: "Guide Allaitement Complet",
     link: "/sante/guide-allaitement",
     icon: ICONS[3],
-    color: "bg-gradient-to-br from-pink-50 to-pink-100",
+    color: "bg-gradient-to-br from-pink-50/80 to-pink-100/80",
   },
 ];
 
@@ -113,7 +113,6 @@ interface ToolsGridProps {}
 
 export default function ToolsGrid({}: ToolsGridProps) {
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
-  // recherche désactivée pour l’instant
   const filtered = TOOLS;
   const sorted = [
     ...filtered.filter(tool => favorites.includes(tool.link)),
@@ -121,28 +120,60 @@ export default function ToolsGrid({}: ToolsGridProps) {
   ];
 
   return (
-    <div className="grid gap-8 md:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">
+    <div className="grid gap-8 mobile-s:gap-10 sm:gap-12 lg:gap-14 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl px-4 mobile-s:px-6 sm:px-8">
       {sorted.map(({ label, link, icon, color }) => (
         <a
           key={link}
           href={link}
-          className="group rounded-3xl shadow-lg border border-blue-100 bg-white/75 backdrop-blur-xl hover:shadow-2xl transition-all hover:-translate-y-0.5 hover:scale-[1.03] px-7 py-7 flex flex-col items-center gap-4 relative overflow-hidden story-link ring-1 ring-blue-50 hover:ring-blue-200"
-          style={{ minHeight: 170 }}
+          className="group relative rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] 
+                     bg-white/90 backdrop-blur-sm border border-white/20 ring-1 ring-gray-200/50 hover:ring-blue-300/50
+                     flex flex-col items-center gap-6 p-8 mobile-s:p-10 sm:p-12 lg:p-14 
+                     overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+                     touch-manipulation transform-gpu will-change-transform"
+          style={{ minHeight: 220 }}
           aria-label={label}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              window.location.href = link;
+            }
+          }}
         >
           <FavoriteButton
             isActive={isFavorite(link)}
             onClick={() => toggleFavorite(link)}
           />
+          
+          {/* Gradient background with blur effect */}
           <div
-            className={`absolute top-0 left-0 w-full h-16 rounded-t-3xl z-0 blur-sm ${color} opacity-40`}
+            className={`absolute top-0 left-0 w-full h-20 rounded-t-3xl opacity-60 backdrop-blur-sm ${color}`}
           />
-          <div className="z-10 relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-white via-blue-50 to-pink-50 shadow border border-blue-100 mb-1 mt-3">
-            {icon}
+          
+          {/* Enhanced icon container */}
+          <div className="relative z-10 flex items-center justify-center w-20 h-20 mobile-s:w-24 mobile-s:h-24 
+                          rounded-2xl bg-gradient-to-br from-white/95 via-white/90 to-gray-50/95 
+                          shadow-lg border border-white/30 ring-1 ring-gray-100/50
+                          group-hover:shadow-xl group-hover:scale-110 transition-all duration-300 ease-out
+                          mt-6">
+            <div className="transform group-hover:scale-110 transition-transform duration-300 ease-out">
+              {icon}
+            </div>
           </div>
-          <span className="z-10 mt-1 text-base md:text-lg font-semibold text-blue-900 text-center drop-shadow-sm">
+          
+          {/* Enhanced text */}
+          <span className="relative z-10 text-lg mobile-s:text-xl sm:text-xl lg:text-2xl font-semibold 
+                          text-gray-800 text-center leading-tight tracking-tight
+                          group-hover:text-blue-700 transition-colors duration-300 ease-out
+                          max-w-full break-words hyphens-auto">
             {label}
           </span>
+          
+          {/* Subtle hover glow effect */}
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-400/0 to-purple-400/0 
+                          group-hover:from-blue-400/5 group-hover:to-purple-400/5 
+                          transition-all duration-500 ease-out pointer-events-none" />
         </a>
       ))}
     </div>
