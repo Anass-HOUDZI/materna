@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import { PregnancyWeekDetail } from "./PregnancyWeekDetail";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SoftButton from "@/components/ui/SoftButton";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download, ChevronLeft, ChevronRight } from "lucide-react";
 
 type WeekData = {
   num: number;
@@ -24,13 +25,13 @@ const WEEK_INFOS: WeekData[] = Array.from({ length: 40 }, (_, i) => {
     weight: i < 13 ? `${(2 + i * 8).toFixed(1)} g` : `${(2 + i * 18).toFixed(1)} g`,
     description:
       i === 0
-        ? "Début du suivi : fécondation et implantation, rien de mesurable."
-        : `Développement du bébé : ${i < 13 ? "1er trimestre" : i < 28 ? "2e trimestre" : "3e trimestre"}. Croissance progressive, organes principaux, poids et taille augmentent.`,
+        ? "Début du suivi : fécondation et implantation, rien de mesurable."
+        : `Développement du bébé : ${i < 13 ? "1er trimestre" : i < 28 ? "2e trimestre" : "3e trimestre"}. Croissance progressive, organes principaux, poids et taille augmentent.`,
     medical:
       i === 0
         ? "Consultation pré-conception possible."
         : i === 3
-        ? "Prise de sang recommandée : βhCG. RDV médecin si symptômes."
+        ? "Prise de sang recommandée : βhCG. RDV médecin si symptômes."
         : i === 12
         ? "1re échographie obligatoire (11-13 SA)."
         : i === 22
@@ -42,7 +43,7 @@ const WEEK_INFOS: WeekData[] = Array.from({ length: 40 }, (_, i) => {
       i === 0
         ? "Conseils nutritionnels, acide folique avant conception."
         : i === 36
-        ? "Préparez la valise maternité !"
+        ? "Préparez la valise maternité !"
         : "Hydratez-vous et reposez-vous.",
   };
 });
@@ -76,47 +77,87 @@ export function PregnancyWeeklyCalendarView() {
   }
 
   return (
-    <Card className="w-full max-w-2xl shadow-lg">
-      <CardHeader>
-        <CardTitle>Calendrier Grossesse semaine {week}</CardTitle>
-        <div className="text-muted-foreground text-xs mt-1">
+    <div className="w-full space-y-8">
+      <div className="text-center space-y-4">
+        <h2 className="text-2xl font-bold text-slate-800">Semaine {week}</h2>
+        <p className="text-slate-600 text-sm">
           Accédez semaine par semaine à votre suivi personnalisé
-        </div>
-      </CardHeader>
-      <CardContent>
-        {/* Timeline scrollable */}
-        <div className="flex mb-4 overflow-x-auto gap-2 py-1">
+        </p>
+      </div>
+
+      {/* Timeline scrollable */}
+      <div className="bg-gradient-to-r from-blue-50/80 to-pink-50/80 rounded-2xl p-4 border border-white/40 shadow-md">
+        <div className="flex mb-4 overflow-x-auto gap-2 py-2 scrollbar-hide">
           {weeks.map((w, idx) => (
             <Button
               key={w.num}
               size="sm"
-              className={`min-w-[2.5rem] px-2 ${week === w.num ? "bg-primary text-white" : "bg-secondary"} rounded-md`}
+              className={`min-w-[3rem] px-3 py-2 rounded-xl font-semibold transition-all duration-300 ${
+                week === w.num 
+                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md scale-105" 
+                  : "bg-white/80 text-slate-600 hover:bg-blue-50 hover:scale-105 shadow-sm"
+              }`}
               variant={week === w.num ? "default" : "ghost"}
               onClick={() => setWeek(w.num)}
               aria-label={`Semaine ${w.num}`}
-              tabIndex={0}
             >
               {w.num}
             </Button>
           ))}
         </div>
+        
         {/* Repères trimestres */}
-        <div className="flex justify-between text-xs text-muted-foreground px-1 mb-2 select-none">
+        <div className="flex justify-between text-xs text-slate-500 px-2 font-medium">
           <span>1er trimestre</span>
           <span>2ᵉ trimestre</span>
           <span>3ᵉ trimestre</span>
         </div>
-        {/* Détails de la semaine */}
-        <PregnancyWeekDetail week={weeks[week - 1]} note={notes[week]} onNoteChange={handleNotesChange} />
-        {/* Actions */}
-        <div className="flex justify-between mt-6">
-          <Button onClick={handleExportPDF} variant="outline" size="sm" className="gap-1">
+      </div>
+
+      {/* Détails de la semaine */}
+      <PregnancyWeekDetail 
+        week={weeks[week - 1]} 
+        note={notes[week]} 
+        onNoteChange={handleNotesChange} 
+      />
+
+      {/* Navigation et actions */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6">
+        <div className="flex gap-3">
+          <SoftButton 
+            onClick={() => setWeek(Math.max(week - 1, 1))} 
+            disabled={week === 1}
+            gradient="blue"
+            className="flex items-center gap-2"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Semaine précédente
+          </SoftButton>
+          
+          <SoftButton 
+            onClick={() => setWeek(Math.min(week + 1, 40))} 
+            disabled={week === 40}
+            gradient="rose"
+            className="flex items-center gap-2"
+          >
+            Semaine suivante
+            <ChevronRight className="w-4 h-4" />
+          </SoftButton>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Button 
+            onClick={handleExportPDF} 
+            variant="outline" 
+            size="sm" 
+            className="flex items-center gap-2 rounded-xl border-2 hover:bg-blue-50"
+          >
             <Download className="h-4 w-4" />
             Export PDF
           </Button>
-          <span className="text-xs text-muted-foreground">Vos notes sont enregistrées localement</span>
+          <span className="text-xs text-slate-500">Vos notes sont enregistrées localement</span>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

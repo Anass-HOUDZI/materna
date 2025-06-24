@@ -33,32 +33,35 @@ export default function BabyMovementHistory({ history, method }: Props) {
   })();
 
   return (
-    <div className="mt-7">
-      <div className="font-medium mb-2 flex items-center gap-2">
-        <ListChecks className="w-4 h-4" />
+    <div className="mt-8 space-y-6">
+      <div className="font-semibold mb-4 flex items-center gap-3 text-slate-800">
+        <ListChecks className="w-5 h-5 text-blue-600" />
         Historique 7 derniers jours
       </div>
-      <div className="flex gap-1 text-[12px]">
+      
+      <div className="flex gap-2 justify-center">
         {weekHistory.map(({ date, total }) => (
           <div
             key={date}
-            className={`flex flex-col items-center px-1 py-1 rounded ${
+            className={`flex flex-col items-center px-3 py-3 rounded-2xl transition-all duration-300 shadow-sm min-w-[56px] ${
               isToday(new Date(date))
-                ? "bg-primary text-white"
-                : "bg-muted"
+                ? "bg-gradient-to-b from-blue-500 to-blue-600 text-white shadow-md scale-105"
+                : "bg-gradient-to-b from-slate-100 to-slate-200 text-slate-700 hover:from-blue-50 hover:to-blue-100 hover:shadow-md"
             }`}
-            style={{ minWidth: 44 }}
           >
-            <span className="font-mono font-semibold">{total}</span>
-            <span className="opacity-60">{format(new Date(date), "EE")}</span>
+            <span className="font-bold text-lg">{total}</span>
+            <span className="text-xs opacity-80 font-medium">{format(new Date(date), "EE")}</span>
           </div>
         ))}
       </div>
+      
       {/* Liste détaillée */}
-      <details className="mt-6">
-        <summary className="cursor-pointer text-muted-foreground">Voir sessions précédentes enregistrées</summary>
-        <div className="mt-2 max-h-48 overflow-auto">
-          <ul className="text-xs space-y-2">
+      <details className="mt-8">
+        <summary className="cursor-pointer text-slate-600 hover:text-slate-800 transition-colors font-medium py-2 px-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl border border-gray-200 hover:border-gray-300">
+          Voir sessions précédentes enregistrées
+        </summary>
+        <div className="mt-4 max-h-64 overflow-auto bg-white rounded-2xl border border-gray-200 shadow-sm">
+          <ul className="text-sm space-y-2 p-4">
             {history
               .filter(
                 e =>
@@ -70,10 +73,15 @@ export default function BabyMovementHistory({ history, method }: Props) {
                 const d = getBabyMovementData(e);
                 if (!d) return null;
                 return (
-                  <li key={d.timestamp + idx} className="border-b pb-1">
-                    <span className="font-mono">{format(new Date(d.timestamp), "dd/MM HH:mm")}</span> – 
-                    <b>{d.movements} mouv.</b> ({Math.floor(d.duration / 60)}:{(d.duration % 60).toString().padStart(2, "0")})
-                    {d.note && <span className="ml-1 italic opacity-60">({d.note})</span>}
+                  <li key={d.timestamp + idx} className="p-3 border-b border-gray-100 last:border-0 hover:bg-blue-50/50 rounded-lg transition-colors">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono font-semibold text-slate-600">{format(new Date(d.timestamp), "dd/MM HH:mm")}</span>
+                      <div className="text-right">
+                        <span className="font-bold text-blue-600">{d.movements} mouv.</span>
+                        <span className="text-slate-500 text-xs ml-2">({Math.floor(d.duration / 60)}:{(d.duration % 60).toString().padStart(2, "0")})</span>
+                      </div>
+                    </div>
+                    {d.note && <div className="mt-1 text-xs italic text-slate-500 bg-gray-50 px-2 py-1 rounded-lg">{d.note}</div>}
                   </li>
                 );
               })}
@@ -82,7 +90,10 @@ export default function BabyMovementHistory({ history, method }: Props) {
                 isBabyMovementTool(e) &&
                 getBabyMovementData(e)?.method === method
             ).length === 0 && (
-              <li className="opacity-60">Aucune session enregistrée.</li>
+              <li className="text-center p-8 text-slate-500">
+                <div className="text-4xl mb-2">📊</div>
+                Aucune session enregistrée.
+              </li>
             )}
           </ul>
         </div>
