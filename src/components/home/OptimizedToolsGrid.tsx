@@ -128,10 +128,7 @@ const OptimizedToolsGrid = React.memo(() => {
           <FlexibleLayout direction="column" gap="lg" align="center" className="relative min-h-[200px]">
             <FavoriteButton
               isActive={isFavorite(link)}
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleFavorite(link);
-              }}
+              onClick={() => toggleFavorite(link)}
             />
             
             {/* Gradient background */}

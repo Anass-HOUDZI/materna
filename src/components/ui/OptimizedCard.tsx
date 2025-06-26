@@ -8,6 +8,8 @@ interface OptimizedCardProps {
   variant?: "default" | "elevated" | "glass";
   size?: "sm" | "md" | "lg";
   hover?: boolean;
+  onClick?: () => void;
+  style?: React.CSSProperties;
 }
 
 const OptimizedCard = React.memo(({ 
@@ -15,7 +17,9 @@ const OptimizedCard = React.memo(({
   className,
   variant = "default",
   size = "md",
-  hover = true
+  hover = true,
+  onClick,
+  style
 }: OptimizedCardProps) => {
   const variantStyles = {
     default: "bg-white/90 backdrop-blur-sm border border-white/30 shadow-lg",
@@ -36,10 +40,13 @@ const OptimizedCard = React.memo(({
         "transition-all duration-300 ease-out transform-gpu",
         hover && "hover:shadow-2xl hover:ring-blue-300/40 hover:-translate-y-1 hover:scale-[1.01]",
         "focus-within:ring-2 focus-within:ring-blue-400 focus-within:ring-offset-2",
+        onClick && "cursor-pointer",
         variantStyles[variant],
         sizeStyles[size],
         className
       )}
+      onClick={onClick}
+      style={style}
       role="region"
     >
       {children}
