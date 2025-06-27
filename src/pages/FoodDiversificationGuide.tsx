@@ -1,21 +1,25 @@
 
 import React from "react";
 import FoodDiversificationTabs from "@/components/tools/FoodDiversificationTabs";
-import ToolPageLayout from "@/components/ui/ToolPageLayout";
-import ToolCard from "@/components/ui/ToolCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function FoodDiversificationGuide() {
   return (
-    <ToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Guide Diversification Alimentaire" },
       ]}
       title="Guide Diversification Alimentaire"
-      description="Conseils d'experts et recettes validées par des nutritionnistes pédiatriques, pour accompagner chaque étape de l'introduction des aliments solides, en toute sécurité et avec plaisir."
+      description="Accompagnez votre bébé dans la découverte des aliments avec nos conseils d'experts et recettes validées par des nutritionnistes pédiatriques."
+      maxWidth="xl"
     >
-      <ToolCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Diversification Réussie"
+        description="Introduisez les aliments en toute sécurité et avec plaisir"
+      >
         <FoodDiversificationTabs />
-      </ToolCard>
-    </ToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

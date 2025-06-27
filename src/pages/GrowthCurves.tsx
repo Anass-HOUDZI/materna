@@ -1,21 +1,25 @@
 
 import React from "react";
 import GrowthCurvesForm from "@/components/tools/GrowthCurvesForm";
-import OptimizedToolPageLayout from "@/components/ui/OptimizedToolPageLayout";
-import OptimizedCard from "@/components/ui/OptimizedCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function GrowthCurves() {
   return (
-    <OptimizedToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Courbes Croissance OMS" },
       ]}
       title="Courbes de Croissance OMS"
-      description="Visualisez les courbes de croissance de l'OMS pour suivre le développement de votre enfant, de la naissance à 5 ans, selon les normes internationales."
+      description="Suivez le développement de votre enfant avec les courbes de croissance officielles de l'OMS, personnalisées selon son profil."
+      maxWidth="xl"
     >
-      <OptimizedCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Suivi de Croissance"
+        description="Visualisez les courbes de croissance de votre enfant selon les standards internationaux"
+      >
         <GrowthCurvesForm />
-      </OptimizedCard>
-    </OptimizedToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

@@ -1,21 +1,25 @@
 
 import React from "react";
 import BreastfeedingTabs from "@/components/tools/BreastfeedingTabs";
-import ToolPageLayout from "@/components/ui/ToolPageLayout";
-import ToolCard from "@/components/ui/ToolCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function BreastfeedingGuide() {
   return (
-    <ToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Guide Allaitement Complet" },
       ]}
       title="Guide Allaitement Complet"
-      description="Diagnostic interactif, conseils d'experts, tracking, et bientôt communauté : toutes les ressources dont vous avez besoin pour allaiter en confiance, validées par des consultantes IBCLC."
+      description="Ressources complètes pour un allaitement réussi : diagnostic, conseils d'experts, suivi et communauté bienveillante."
+      maxWidth="xl"
     >
-      <ToolCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Votre Compagnon Allaitement"
+        description="Tout ce dont vous avez besoin pour allaiter en confiance"
+      >
         <BreastfeedingTabs />
-      </ToolCard>
-    </ToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

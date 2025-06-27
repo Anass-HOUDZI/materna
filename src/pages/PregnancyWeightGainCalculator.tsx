@@ -1,21 +1,25 @@
 
+import React from "react";
 import { PregnancyWeightGainCalculatorForm } from "@/components/tools/PregnancyWeightGainCalculatorForm";
-import ToolPageLayout from "@/components/ui/ToolPageLayout";
-import ToolCard from "@/components/ui/ToolCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function PregnancyWeightGainCalculator() {
   return (
-    <ToolPageLayout
+    <BasePageLayout
       crumbs={[
-        { href: "/grossesse", label: "Grossesse" },
-        { label: "Calculateur Prise de Poids" },
+        { label: "Calculateur Prise de Poids Grossesse" },
       ]}
       title="Calculateur Prise de Poids Grossesse"
-      description="Suivez votre prise de poids pendant la grossesse selon les recommandations médicales personnalisées"
+      description="Suivez votre prise de poids pendant la grossesse selon les recommandations médicales IOM/HAS personnalisées à votre profil."
+      maxWidth="xl"
     >
-      <ToolCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Suivi Personnalisé"
+        description="Surveillez votre prise de poids selon les recommandations médicales"
+      >
         <PregnancyWeightGainCalculatorForm />
-      </ToolCard>
-    </ToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

@@ -1,21 +1,25 @@
 
 import React from "react";
 import { PregnancyWeeklyCalendarView } from "@/components/tools/PregnancyWeeklyCalendarView";
-import ToolPageLayout from "@/components/ui/ToolPageLayout";
-import ToolCard from "@/components/ui/ToolCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function PregnancyWeeklyCalendar() {
   return (
-    <ToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Calendrier Grossesse Semaine par Semaine" },
       ]}
       title="Calendrier Grossesse Semaine par Semaine"
-      description="Accédez semaine par semaine à votre suivi personnalisé avec le développement fœtal, les examens médicaux et les conseils adaptés."
+      description="Suivez votre grossesse étape par étape avec le développement fœtal, les examens médicaux et les conseils personnalisés pour chaque semaine."
+      maxWidth="xl"
     >
-      <ToolCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Votre Grossesse Semaine par Semaine"
+        description="Découvrez les étapes clés de votre grossesse"
+      >
         <PregnancyWeeklyCalendarView />
-      </ToolCard>
-    </ToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

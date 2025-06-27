@@ -1,66 +1,75 @@
+
 import React, { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Baby } from "lucide-react";
-import Footer from "@/components/ui/Footer";
-import PageHeader from "@/components/ui/PageHeader";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
+import BaseButton from "@/components/ui/BaseButton";
+import BaseLayout from "@/components/layout/BaseLayout";
 
-const explanations = [
+const EXPLANATIONS = [
   "Résultat basé sur des traditions populaires !",
   "Sélectionnez le bouton et découvrez le verdict fun du jour.",
-  "🤭 Fiabilité scientifique : 50% ! Utilisez pour s'amuser en famille…"
+  "🤭 Fiabilité scientifique : 50% ! Utilisez pour s'amuser en famille…"
 ];
 
 export default function SexPredictionCalculator() {
   const [prediction, setPrediction] = useState<null | "Fille" | "Garçon">(null);
 
-  function getRandomPrediction() {
+  const getRandomPrediction = React.useCallback(() => {
     setPrediction(Math.random() < 0.5 ? "Fille" : "Garçon");
-  }
+  }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <PageHeader crumbs={[
-        { href: "/grossesse", label: "Grossesse" },
+    <BasePageLayout
+      crumbs={[
         { label: "Calculateur Probabilité Sexe Bébé" },
-      ]} />
-      <div className="flex-1 flex flex-col justify-center items-center px-3 pb-10 pt-8 bg-gradient-to-b from-accent to-background">
-        <section className="w-full flex flex-col justify-center items-center mb-12 max-w-2xl">
-          <div className="flex flex-col items-center gap-6">
-            <Baby size={64} className="text-primary animate-fade-in drop-shadow-2xl" />
-            <h1 className="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight text-primary text-center drop-shadow-lg">
-              Calculateur&nbsp;<br className="hidden md:inline" />
-              Probabilité Sexe Bébé
-            </h1>
+      ]}
+      title="Calculateur Probabilité Sexe Bébé"
+      description="Amusez-vous en famille avec ce calculateur ludique basé sur les traditions populaires. Fiabilité : 50% ! 😄"
+      maxWidth="xl"
+    >
+      <BaseToolForm
+        title="Prédiction Amusante"
+        description="Un moment de détente et de plaisir en attendant l'échographie officielle"
+      >
+        <BaseLayout direction="column" gap="lg" align="center" className="text-center">
+          <div className="p-8 bg-gradient-to-r from-pink-50 to-blue-50 rounded-2xl">
+            <Baby size={80} className="mx-auto text-primary mb-6 drop-shadow-lg" />
+            
+            <BaseLayout direction="column" gap="md">
+              {EXPLANATIONS.map((line, i) => (
+                <p key={i} className="text-lg mobile-s:text-xl text-slate-600 leading-relaxed">
+                  {line}
+                </p>
+              ))}
+            </BaseLayout>
+            
+            <BaseButton
+              onClick={getRandomPrediction}
+              size="lg"
+              gradient
+              className="mt-8"
+              fullWidth
+            >
+              Découvrir mon verdict 🎲
+            </BaseButton>
           </div>
-          <div className="mt-10 space-y-3">
-            {explanations.map((line, i) => (
-              <p key={i} className="text-lg md:text-xl text-muted-foreground text-center">
-                {line}
-              </p>
-            ))}
-          </div>
-          <Button
-            onClick={getRandomPrediction}
-            className="mt-10 px-8 py-4 text-lg rounded-full shadow-lg animate-fade-in"
-            size="lg"
-          >
-            Découvrir mon verdict&nbsp;🎲
-          </Button>
-        </section>
 
-        {prediction && (
-          <div className="mt-8 flex flex-col items-center">
-            <div className={`text-3xl md:text-4xl font-bold ${prediction === "Fille" ? "text-pink-500" : "text-blue-500"} drop-shadow-lg`}>
-              {prediction}
+          {prediction && (
+            <div className="p-8 bg-white/80 backdrop-blur-sm rounded-2xl border border-white/40 shadow-lg">
+              <div className={`text-4xl mobile-s:text-5xl font-bold mb-4 ${
+                prediction === "Fille" ? "text-pink-500" : "text-blue-500"
+              }`}>
+                {prediction} !
+              </div>
+              <Badge variant="secondary" className="text-lg px-6 py-3 rounded-full shadow-md">
+                Juste pour le fun ! 🎉
+              </Badge>
             </div>
-            <Badge variant="secondary" className="mt-3 text-base px-4 py-2 rounded-full shadow">
-              Juste pour le fun !
-            </Badge>
-          </div>
-        )}
-      </div>
-      <Footer />
-    </div>
+          )}
+        </BaseLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

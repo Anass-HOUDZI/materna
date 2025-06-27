@@ -1,21 +1,25 @@
 
 import React from "react";
 import MotorDevelopmentTrackerForm from "@/components/tools/MotorDevelopmentTrackerForm";
-import ToolPageLayout from "@/components/ui/ToolPageLayout";
-import ToolCard from "@/components/ui/ToolCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function MotorDevelopmentTracker() {
   return (
-    <ToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Tracker Développement Moteur 0-3 ans" },
       ]}
       title="Tracker Développement Moteur 0-3 ans"
-      description="Évaluez les principales acquisitions motrices de votre enfant selon son âge entre 1 et 36 mois, selon les références scientifiques internationales."
+      description="Évaluez les acquisitions motrices de votre enfant selon les références scientifiques internationales et accompagnez son développement."
+      maxWidth="xl"
     >
-      <ToolCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Évaluation du Développement"
+        description="Suivez les étapes clés du développement moteur de votre enfant"
+      >
         <MotorDevelopmentTrackerForm />
-      </ToolCard>
-    </ToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

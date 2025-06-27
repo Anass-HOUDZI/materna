@@ -1,20 +1,25 @@
 
+import React from "react";
 import { ContractionTrackerForm } from "@/components/tools/ContractionTrackerForm";
-import OptimizedToolPageLayout from "@/components/ui/OptimizedToolPageLayout";
-import OptimizedCard from "@/components/ui/OptimizedCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function ContractionTracker() {
   return (
-    <OptimizedToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Tracker Contractions Intelligent" },
       ]}
       title="Tracker Contractions Intelligent"
-      description="Suivi intelligent : enregistrez vos contractions et recevez des recommandations médicales en temps réel."
+      description="Suivez vos contractions en temps réel et recevez des recommandations personnalisées pour savoir quand vous rendre à la maternité."
+      maxWidth="xl"
     >
-      <OptimizedCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Suivi des Contractions"
+        description="Enregistrez la durée et l'intensité de vos contractions pour une analyse précise"
+      >
         <ContractionTrackerForm />
-      </OptimizedCard>
-    </OptimizedToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

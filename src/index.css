@@ -3,71 +3,58 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-    --safe-area-inset-top: env(safe-area-inset-top);
-    --safe-area-inset-bottom: env(safe-area-inset-bottom);
-    --safe-area-inset-left: env(safe-area-inset-left);
-    --safe-area-inset-right: env(safe-area-inset-right);
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
+/* Variables CSS personnalisées pour une meilleure cohérence */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 84% 4.9%;
+  --radius: 0.5rem;
+  
+  /* Variables pour les zones sécurisées */
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+  --safe-area-inset-right: env(safe-area-inset-right);
+  
+  /* Variables pour les breakpoints mobiles */
+  --mobile-s: 320px;
+  --mobile-m: 375px;
+  --mobile-l: 425px;
+  --tablet: 768px;
+  --desktop: 1024px;
 }
 
+/* Styles de base optimisés */
 @layer base {
   * {
     @apply border-border;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
@@ -76,51 +63,56 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
+    line-height: 1.5;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
 
-  html {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
-
+  /* Typographie optimisée */
   .font-playfair {
     font-family: 'Playfair Display', serif;
     letter-spacing: -0.5px;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "swsh" 1;
   }
 
+  /* Focus states améliorés */
   *:focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
     border-radius: 0.375rem;
   }
 
+  /* Headings avec style cohérent */
   h1, h2, h3, h4, h5, h6 {
     color: hsl(215 25% 20%);
     font-weight: 600;
     line-height: 1.2;
+    letter-spacing: -0.025em;
   }
 
+  /* Paragraphes et texte optimisés */
   p, span, div {
     line-height: 1.6;
     color: hsl(215 16% 35%);
   }
 
+  /* Optimisations mobiles */
   @media (max-width: 640px) {
     body {
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
     }
     
+    /* Prévient le zoom sur les inputs mobiles */
     input, textarea, select {
       font-size: 16px !important;
     }
   }
 
+  /* Styles pour les éléments interactifs */
   button, [role="button"], a {
     cursor: pointer;
     transition: all 0.2s ease-out;
+    touch-action: manipulation;
   }
 
   button:disabled, [role="button"][aria-disabled="true"] {
@@ -128,10 +120,12 @@
     cursor: not-allowed;
   }
 
+  /* Styles pour les inputs */
   input, textarea, select {
     border-radius: 0.75rem;
     border: 2px solid hsl(var(--border));
     transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+    background-color: white;
   }
 
   input:focus, textarea:focus, select:focus {
@@ -139,6 +133,7 @@
     box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
   }
 
+  /* Optimisations pour les animations réduites */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -147,6 +142,7 @@
     }
   }
 
+  /* Support pour le contraste élevé */
   @media (prefers-contrast: high) {
     * {
       border-color: ButtonText !important;
@@ -158,7 +154,9 @@
   }
 }
 
+/* Utilitaires personnalisés */
 @layer utilities {
+  /* Masquer les scrollbars */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -167,15 +165,18 @@
     display: none;
   }
 
+  /* Feedback tactile */
   .touch-feedback {
     @apply transition-transform duration-300 ease-out active:scale-95;
   }
 
+  /* Contrôles tactiles */
   .touch-pan-x { touch-action: pan-x; }
   .touch-pan-y { touch-action: pan-y; }
   .touch-none { touch-action: none; }
   .touch-manipulation { touch-action: manipulation; }
 
+  /* Accélération GPU */
   .gpu-accelerated {
     transform: translateZ(0);
     will-change: transform;
@@ -185,6 +186,7 @@
     transform: translate3d(0, 0, 0);
   }
 
+  /* Zones sécurisées */
   .pt-safe-top { padding-top: env(safe-area-inset-top); }
   .pb-safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
   .pl-safe-left { padding-left: env(safe-area-inset-left); }
@@ -192,24 +194,55 @@
   .mt-safe-top { margin-top: env(safe-area-inset-top); }
   .mb-safe-bottom { margin-bottom: env(safe-area-inset-bottom); }
 
+  /* Cibles tactiles */
   .touch-target { min-height: 44px; min-width: 44px; }
   .touch-target-lg { min-height: 56px; min-width: 56px; }
   .momentum-scroll { -webkit-overflow-scrolling: touch; overflow-scrolling: touch; }
 
-  .soft-gradient-blue { background: linear-gradient(135deg, hsl(213 100% 96%) 0%, hsl(220 100% 98%) 100%); }
-  .soft-gradient-rose { background: linear-gradient(135deg, hsl(351 100% 96%) 0%, hsl(348 100% 98%) 100%); }
-  .soft-gradient-mint { background: linear-gradient(135deg, hsl(152 100% 96%) 0%, hsl(158 100% 98%) 100%); }
+  /* Dégradés doux */
+  .soft-gradient-blue { 
+    background: linear-gradient(135deg, hsl(213 100% 96%) 0%, hsl(220 100% 98%) 100%); 
+  }
+  .soft-gradient-rose { 
+    background: linear-gradient(135deg, hsl(351 100% 96%) 0%, hsl(348 100% 98%) 100%); 
+  }
+  .soft-gradient-mint { 
+    background: linear-gradient(135deg, hsl(152 100% 96%) 0%, hsl(158 100% 98%) 100%); 
+  }
 
-  .shadow-soft { box-shadow: 0 4px 20px -2px hsl(220 13% 69% / 0.3); }
-  .shadow-soft-lg { box-shadow: 0 8px 30px -4px hsl(220 13% 69% / 0.4); }
+  /* Ombres douces */
+  .shadow-soft { 
+    box-shadow: 0 4px 20px -2px hsl(220 13% 69% / 0.3); 
+  }
+  .shadow-soft-lg { 
+    box-shadow: 0 8px 30px -4px hsl(220 13% 69% / 0.4); 
+  }
 
+  /* Effet verre */
   .glass {
     background: hsla(0, 0%, 100%, 0.8);
     backdrop-filter: blur(20px);
     border: 1px solid hsla(0, 0%, 100%, 0.3);
   }
+
+  /* Animations fade */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
+/* Optimisations spécifiques aux appareils tactiles */
 @media (hover: none) and (pointer: coarse) {
   button, a, [role="button"], [tabindex] {
     @apply touch-feedback;
@@ -224,12 +257,14 @@
   }
 }
 
+/* Optimisations pour les appareils avec hover */
 @media (hover: hover) and (pointer: fine) {
   button:hover, a:hover, [role="button"]:hover {
     @apply transition-all duration-300;
   }
 }
 
+/* Optimisations pour les écrans haute résolution */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .crisp-edges {
     image-rendering: -webkit-optimize-contrast;
@@ -242,6 +277,7 @@
   }
 }
 
+/* Support pour les appareils iOS */
 @supports (-webkit-touch-callout: none) {
   body {
     overscroll-behavior: none;
@@ -252,20 +288,7 @@
   }
 }
 
-@media screen and (max-width: 767px) {
-  input[type="email"], 
-  input[type="number"], 
-  input[type="search"], 
-  input[type="tel"], 
-  input[type="url"], 
-  input[type="password"], 
-  input[type="text"], 
-  select, 
-  textarea {
-    font-size: 16px;
-  }
-}
-
+/* Optimisations pour les PWA */
 @media (display-mode: standalone) {
   body {
     -webkit-user-select: none;
@@ -276,4 +299,17 @@
     -webkit-user-select: text;
     user-select: text;
   }
+}
+
+/* Breakpoints personnalisés */
+@media (max-width: 320px) {
+  .mobile-s\\:text-xs { font-size: 0.75rem; }
+  .mobile-s\\:text-sm { font-size: 0.875rem; }
+  .mobile-s\\:text-base { font-size: 1rem; }
+  .mobile-s\\:text-lg { font-size: 1.125rem; }
+  .mobile-s\\:text-xl { font-size: 1.25rem; }
+  .mobile-s\\:text-2xl { font-size: 1.5rem; }
+  .mobile-s\\:text-3xl { font-size: 1.875rem; }
+  .mobile-s\\:text-4xl { font-size: 2.25rem; }
+  .mobile-s\\:text-5xl { font-size: 3rem; }
 }

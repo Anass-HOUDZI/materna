@@ -1,20 +1,25 @@
 
+import React from "react";
 import PregnancySymptomJournalForm from "@/components/tools/PregnancySymptomJournalForm";
-import ToolPageLayout from "@/components/ui/ToolPageLayout";
-import ToolCard from "@/components/ui/ToolCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function PregnancySymptomJournal() {
   return (
-    <ToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Journal Symptômes Grossesse" },
       ]}
       title="Journal des Symptômes de Grossesse"
-      description="Notez quotidiennement vos symptômes, humeurs et événements marquants de votre grossesse. Suivez les tendances, identifiez les facteurs déclencheurs et partagez ces informations avec votre professionnel de santé."
+      description="Documentez votre grossesse au quotidien : symptômes, humeurs et événements marquants pour un suivi optimal avec votre professionnel de santé."
+      maxWidth="xl"
     >
-      <ToolCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Votre Journal Personnel"
+        description="Suivez et analysez vos symptômes tout au long de votre grossesse"
+      >
         <PregnancySymptomJournalForm />
-      </ToolCard>
-    </ToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

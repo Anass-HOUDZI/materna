@@ -1,20 +1,25 @@
 
+import React from "react";
 import { DueDateCalculatorForm } from "@/components/tools/DueDateCalculatorForm";
-import OptimizedToolPageLayout from "@/components/ui/OptimizedToolPageLayout";
-import OptimizedCard from "@/components/ui/OptimizedCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function PregnancyDueDateCalculator() {
   return (
-    <OptimizedToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Calculateur de Date d'Accouchement" },
       ]}
       title="Calculateur de Date d'Accouchement"
-      description="Estimez la date de votre accouchement facilement, méthode médicale Naegele (standard)."
+      description="Estimez votre date d'accouchement avec précision grâce à la méthode médicale Naegele, adaptée à votre cycle personnel."
+      maxWidth="xl"
     >
-      <OptimizedCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Calcul Personnalisé"
+        description="Renseignez vos informations pour obtenir une estimation précise de votre date d'accouchement"
+      >
         <DueDateCalculatorForm />
-      </OptimizedCard>
-    </OptimizedToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

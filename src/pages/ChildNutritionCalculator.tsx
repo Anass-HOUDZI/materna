@@ -1,21 +1,25 @@
 
 import React from "react";
 import ChildNutritionCalculatorForm from "@/components/tools/ChildNutritionCalculatorForm";
-import ToolPageLayout from "@/components/ui/ToolPageLayout";
-import ToolCard from "@/components/ui/ToolCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function ChildNutritionCalculator() {
   return (
-    <ToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Calculateur Besoins Nutritionnels Enfant" },
       ]}
       title="Calculateur Besoins Nutritionnels Enfant"
-      description="Calculez les besoins énergétiques et macronutriments quotidiens d'un enfant en fonction de son âge, poids, sexe et activité, avec des suggestions d'aliments équilibrés selon les recommandations OMS/ANSES."
+      description="Calculez les besoins nutritionnels personnalisés de votre enfant selon les recommandations OMS/ANSES avec des suggestions d'aliments équilibrés."
+      maxWidth="xl"
     >
-      <ToolCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Nutrition Personnalisée"
+        description="Évaluez les besoins nutritionnels spécifiques de votre enfant"
+      >
         <ChildNutritionCalculatorForm />
-      </ToolCard>
-    </ToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

@@ -1,21 +1,25 @@
 
 import React from "react";
 import TeethingTable from "@/components/tools/TeethingTable";
-import ToolPageLayout from "@/components/ui/ToolPageLayout";
-import ToolCard from "@/components/ui/ToolCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function TeethingCalculator() {
   return (
-    <ToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Calculateur Poussées Dentaires" },
       ]}
       title="Calculateur Poussées Dentaires"
-      description="Visualisez le planning classique des 20 dents primaires, suivez la sortie de chaque dent et découvrez les conseils adaptés pour accompagner votre bébé pendant cette période clé."
+      description="Anticipez et accompagnez les poussées dentaires de votre bébé avec le calendrier des 20 dents primaires et nos conseils adaptés."
+      maxWidth="xl"
     >
-      <ToolCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Calendrier Dentaire"
+        description="Suivez l'évolution dentaire de votre bébé étape par étape"
+      >
         <TeethingTable />
-      </ToolCard>
-    </ToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

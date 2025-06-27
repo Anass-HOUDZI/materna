@@ -1,20 +1,25 @@
 
+import React from "react";
 import { BabyMovementTrackerForm } from "@/components/tools/BabyMovementTrackerForm";
-import ToolPageLayout from "@/components/ui/ToolPageLayout";
-import ToolCard from "@/components/ui/ToolCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function BabyMovementTracker() {
   return (
-    <ToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Tracker Mouvements Bébé" },
       ]}
       title="Tracker Mouvements Bébé"
-      description="Comptabilisez les mouvements fœtaux selon la méthode Cardiff/Sadovsky/Moore. Soyez alertée en cas de changement ou diminution inhabituelle."
+      description="Suivez les mouvements fœtaux selon les méthodes médicales reconnues (Cardiff, Sadovsky, Moore) pour votre tranquillité d'esprit."
+      maxWidth="xl"
     >
-      <ToolCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Suivi des Mouvements"
+        description="Comptabilisez et analysez les mouvements de votre bébé"
+      >
         <BabyMovementTrackerForm />
-      </ToolCard>
-    </ToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }

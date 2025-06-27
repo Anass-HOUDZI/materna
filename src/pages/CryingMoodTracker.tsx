@@ -1,21 +1,25 @@
 
 import React from "react";
 import CryingMoodTabs from "@/components/tools/CryingMoodTabs";
-import ToolPageLayout from "@/components/ui/ToolPageLayout";
-import ToolCard from "@/components/ui/ToolCard";
+import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function CryingMoodTracker() {
   return (
-    <ToolPageLayout
+    <BasePageLayout
       crumbs={[
         { label: "Tracker Pleurs & Humeur Bébé" },
       ]}
       title="Tracker Pleurs & Humeur Bébé"
-      description="Enregistrez les épisodes de pleurs ou humeurs de bébé, visualisez tendances et accédez à des conseils bienveillants pour toute la famille."
+      description="Suivez les épisodes de pleurs et d'humeur de votre bébé pour mieux comprendre ses besoins et accompagner toute la famille."
+      maxWidth="xl"
     >
-      <ToolCard variant="elevated" size="lg">
+      <BaseToolForm
+        title="Suivi Émotionnel"
+        description="Comprendre et accompagner les émotions de votre bébé"
+      >
         <CryingMoodTabs />
-      </ToolCard>
-    </ToolPageLayout>
+      </BaseToolForm>
+    </BasePageLayout>
   );
 }
