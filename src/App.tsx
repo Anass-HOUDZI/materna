@@ -6,9 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-// Suppression de la sidebar
-// import AppSidebar from "@/components/app-sidebar";
-// import { SidebarProvider } from "@/components/ui/sidebar";
+import CategoryPage from "./pages/CategoryPage";
 import PregnancyDueDateCalculator from "./pages/PregnancyDueDateCalculator";
 import ContractionTracker from "./pages/ContractionTracker";
 import PregnancyWeightGainCalculator from "./pages/PregnancyWeightGainCalculator";
@@ -38,6 +36,7 @@ const App = () => (
         <div className="min-h-screen flex w-full flex-col">
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/categorie/:categoryId" element={<CategoryPage />} />
             <Route path="/grossesse/calculateur-terme" element={<PregnancyDueDateCalculator />} />
             <Route path="/grossesse/tracker-contractions" element={<ContractionTracker />} />
             <Route path="/grossesse/calculateur-poids" element={<PregnancyWeightGainCalculator />} />

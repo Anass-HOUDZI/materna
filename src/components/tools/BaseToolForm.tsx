@@ -20,11 +20,11 @@ const BaseToolForm = React.memo<BaseToolFormProps>(({
   loading = false
 }) => {
   return (
-    <div className="w-full max-w-none mx-auto">
+    <div className="w-full mx-auto">
       <BaseCard 
         variant="elevated" 
         size="lg" 
-        className={cn("w-full max-w-none shadow-2xl border-0 bg-white/95 backdrop-blur-md", className)}
+        className={cn("w-full shadow-2xl border-0 bg-white/95 backdrop-blur-md", className)}
         loading={loading}
       >
         <BaseLayout direction="column" gap="xl">

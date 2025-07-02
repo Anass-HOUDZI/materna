@@ -21,8 +21,8 @@ interface PageHeaderProps {
 }
 
 export default function PageHeader({ crumbs }: PageHeaderProps) {
-  // Simplifier les breadcrumbs : seulement Accueil + nom de l'outil
-  const simplifiedCrumbs = crumbs.length > 1 ? [crumbs[crumbs.length - 1]] : crumbs;
+  // Conserver tous les breadcrumbs pour une navigation correcte
+  const displayCrumbs = crumbs;
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col gap-4 pt-6 mobile-s:pt-8 sm:pt-10 pb-4 mobile-s:pb-6 mb-4">
@@ -55,14 +55,23 @@ export default function PageHeader({ crumbs }: PageHeaderProps) {
           </Button>
           
           <Breadcrumb className="flex-1">
-            <BreadcrumbList className="text-base mobile-s:text-lg">
-              {simplifiedCrumbs.map((crumb, idx) => (
+            <BreadcrumbList className="text-sm mobile-s:text-base">
+              {displayCrumbs.map((crumb, idx) => (
                 <React.Fragment key={crumb.label}>
-                  {idx === 0 && <BreadcrumbSeparator className="text-slate-400" />}
+                  {idx > 0 && <BreadcrumbSeparator className="text-slate-400" />}
                   <BreadcrumbItem>
-                    <BreadcrumbPage className="text-slate-800 font-semibold text-lg mobile-s:text-xl">
-                      {crumb.label}
-                    </BreadcrumbPage>
+                    {crumb.href && idx < displayCrumbs.length - 1 ? (
+                      <BreadcrumbLink 
+                        href={crumb.href}
+                        className="text-slate-600 hover:text-slate-800 font-medium text-sm mobile-s:text-base transition-colors duration-200"
+                      >
+                        {crumb.label}
+                      </BreadcrumbLink>
+                    ) : (
+                      <BreadcrumbPage className="text-slate-800 font-semibold text-sm mobile-s:text-base">
+                        {crumb.label}
+                      </BreadcrumbPage>
+                    )}
                   </BreadcrumbItem>
                 </React.Fragment>
               ))}
