@@ -56,36 +56,53 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
     )}>
       {/* Header */}
       {showHeader && (
-        <div className="w-full">
+        <div className="w-full py-2">
           <div className={cn("mx-auto px-4 mobile-s:px-6 sm:px-8", maxWidthClasses[maxWidth])}>
-            <PageHeader crumbs={crumbs} />
+            <div className="text-sm text-slate-500">
+              <PageHeader crumbs={crumbs} />
+            </div>
           </div>
         </div>
       )}
 
       {/* Title Section */}
       {(title || description) && (
-        <div className="w-full">
+        <div className="w-full bg-gradient-to-br from-blue-50/50 via-white to-purple-50/50 py-12 mobile-s:py-16 sm:py-20">
           <div className={cn("mx-auto px-4 mobile-s:px-6 sm:px-8", maxWidthClasses[maxWidth])}>
             <BaseLayout 
               direction="column" 
-              gap="md" 
+              gap="lg" 
               align="center" 
-              className="text-center animate-fade-in py-6 mobile-s:py-8"
+              className="text-center animate-fade-in"
             >
               {title && (
-                <h1 className="text-3xl mobile-s:text-4xl sm:text-5xl lg:text-6xl font-bold font-playfair 
-                               bg-gradient-to-r from-blue-600 via-indigo-600 to-rose-600 bg-clip-text text-transparent 
-                               leading-tight tracking-tight max-w-4xl">
-                  {title}
-                </h1>
+                <div className="space-y-4">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100/80 text-blue-700 rounded-full text-sm font-medium">
+                    🛠️ Outil professionnel
+                  </div>
+                  <h1 className="text-4xl mobile-s:text-5xl sm:text-6xl lg:text-7xl font-bold 
+                                 text-slate-900 leading-tight tracking-tight max-w-5xl">
+                    {title}
+                  </h1>
+                </div>
               )}
               {description && (
-                <p className="text-lg mobile-s:text-xl sm:text-2xl text-slate-600 max-w-3xl 
+                <p className="text-xl mobile-s:text-2xl sm:text-3xl text-slate-600 max-w-4xl 
                               leading-relaxed font-medium">
                   {description}
                 </p>
               )}
+              <div className="flex flex-wrap gap-4 justify-center mt-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                  ⚡ Rapide et Efficace
+                </div>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
+                  🔒 Sécurisé et Privé
+                </div>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                  ⭐ Qualité Professionnelle
+                </div>
+              </div>
             </BaseLayout>
           </div>
         </div>
@@ -93,8 +110,8 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
 
       {/* Main Content */}
       <main className="flex-1 w-full">
-        <div className={cn("mx-auto px-4 mobile-s:px-6 sm:px-8 py-8 mobile-s:py-12", maxWidthClasses[maxWidth])}>
-          <div className="animate-fade-in">
+        <div className={cn("mx-auto px-4 mobile-s:px-6 sm:px-8 py-8 mobile-s:py-12", "max-w-full")}>
+          <div className="animate-fade-in w-full">
             {children}
           </div>
         </div>

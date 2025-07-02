@@ -8,8 +8,9 @@ import BaseLayout from "@/components/layout/BaseLayout";
 import BaseCard from "@/components/ui/BaseCard";
 
 const WELCOME_CONTENT = {
-  title: "Bienvenue sur MomTech Suite 👶",
-  subtitle: "50 outils santé, grossesse, bébé, sécurité et parentalité 100% offline, gratuits, privacy-first.",
+  title: "MomTech Suite",
+  subtitle: "Suite complète et gratuite",
+  description: "50 outils santé, grossesse, bébé, sécurité et parentalité 100% offline, gratuits, privacy-first.",
   features: [
     "Outils médicaux validés scientifiquement",
     "100% offline et privacy-first",
@@ -61,15 +62,31 @@ const Index = React.memo(() => {
           </div>
           
           <BaseLayout direction="column" gap="md" align="center" className="animate-fade-in">
-            <h1 className="text-4xl mobile-s:text-5xl sm:text-6xl lg:text-7xl font-bold font-playfair 
-                           bg-gradient-to-r from-blue-600 via-indigo-600 to-rose-600 bg-clip-text text-transparent 
-                           leading-tight tracking-tight">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100/80 text-blue-700 rounded-full text-sm font-medium mb-4">
+              ⭐ 50 outils SEO gratuits et professionnels
+            </div>
+            
+            <h1 className="text-5xl mobile-s:text-6xl sm:text-7xl lg:text-8xl font-bold 
+                           text-slate-900 leading-tight tracking-tight mb-4">
               {WELCOME_CONTENT.title}
+              <span className="block text-4xl mobile-s:text-5xl sm:text-6xl lg:text-7xl 
+                               bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 bg-clip-text text-transparent font-bold">
+                {WELCOME_CONTENT.subtitle}
+              </span>
             </h1>
             
-            <p className="text-xl mobile-s:text-2xl sm:text-3xl text-slate-600 max-w-4xl leading-relaxed font-medium">
-              {WELCOME_CONTENT.subtitle}
+            <p className="text-xl mobile-s:text-2xl sm:text-3xl text-slate-600 max-w-5xl leading-relaxed font-medium text-center">
+              {WELCOME_CONTENT.description}
             </p>
+            
+            <div className="flex flex-wrap gap-4 justify-center mt-8">
+              <button className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                🔍 Découvrir les outils
+              </button>
+              <button className="inline-flex items-center gap-2 px-8 py-4 bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-700 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105">
+                ⚡ 100% Gratuit
+              </button>
+            </div>
 
             {/* Features Highlights */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 w-full max-w-2xl">

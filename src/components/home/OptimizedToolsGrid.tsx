@@ -116,46 +116,70 @@ const OptimizedToolsGrid = React.memo(() => {
   ], [favorites]);
 
   return (
-    <div className="grid gap-6 mobile-s:gap-8 sm:gap-10 lg:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl px-4 mobile-s:px-6 sm:px-8">
-      {sortedTools.map(({ label, link, icon, gradient }) => (
-        <OptimizedCard
-          key={link}
-          className="group cursor-pointer transform-gpu will-change-transform"
-          variant="elevated"
-          size="md"
-          onClick={() => window.location.href = link}
-        >
-          <FlexibleLayout direction="column" gap="lg" align="center" className="relative min-h-[200px]">
-            <FavoriteButton
-              isActive={isFavorite(link)}
-              onClick={() => toggleFavorite(link)}
-            />
-            
-            {/* Gradient background */}
-            <div className={`absolute top-0 left-0 w-full h-16 rounded-t-2xl opacity-60 bg-gradient-to-r ${gradient}`} />
-            
-            {/* Icon container */}
-            <div className="relative z-10 flex items-center justify-center w-20 h-20 mobile-s:w-24 mobile-s:h-24 
-                            rounded-2xl bg-gradient-to-br from-white/95 via-white/90 to-gray-50/95 
-                            shadow-lg border border-white/30 ring-1 ring-gray-100/50
-                            group-hover:shadow-xl group-hover:scale-110 transition-all duration-300 ease-out">
-              <div className="transform group-hover:scale-110 transition-transform duration-300 ease-out">
-                {icon}
+    <div className="w-full max-w-7xl mx-auto px-4 mobile-s:px-6 sm:px-8">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl mobile-s:text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
+          Découvrez nos outils
+        </h2>
+        <p className="text-lg mobile-s:text-xl text-slate-600 max-w-3xl mx-auto">
+          Chaque catégorie regroupe des outils spécialisés pour répondre à vos besoins spécifiques
+        </p>
+      </div>
+
+      <div className="grid gap-6 mobile-s:gap-8 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {sortedTools.map(({ label, link, icon, gradient }) => (
+          <div
+            key={link}
+            className="group cursor-pointer transform-gpu will-change-transform"
+            onClick={() => window.location.href = link}
+          >
+            <div className="relative bg-white rounded-3xl p-6 shadow-lg border border-slate-100 
+                            hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out
+                            hover:border-blue-200 overflow-hidden">
+              {/* Favorite Button */}
+              <FavoriteButton
+                isActive={isFavorite(link)}
+                onClick={() => toggleFavorite(link)}
+              />
+              
+              {/* Icon Container */}
+              <div className="relative z-10 mb-6">
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient.replace('50/80', '500').replace('100/80', '600')} 
+                                flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <div className="text-white transform group-hover:scale-110 transition-transform duration-300">
+                    {React.cloneElement(icon, { className: "text-white", size: 32 })}
+                  </div>
+                </div>
               </div>
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <h3 className="text-lg mobile-s:text-xl font-semibold text-slate-900 mb-3 leading-tight">
+                  {label}
+                </h3>
+                <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
+                  <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                    ⭐ Excellent
+                  </span>
+                  <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
+                    Facile
+                  </span>
+                </div>
+                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 
+                                 text-white py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-300 
+                                 hover:shadow-lg transform hover:scale-105">
+                  Utiliser l'outil →
+                </button>
+              </div>
+              
+              {/* Background decoration */}
+              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${gradient} 
+                              opacity-20 rounded-full transform translate-x-8 -translate-y-8 
+                              group-hover:scale-125 transition-transform duration-500`} />
             </div>
-            
-            {/* Text */}
-            <Typography
-              variant="h4"
-              className="relative z-10 text-center leading-tight tracking-tight
-                         group-hover:text-blue-700 transition-colors duration-300 ease-out
-                         max-w-full break-words hyphens-auto"
-            >
-              {label}
-            </Typography>
-          </FlexibleLayout>
-        </OptimizedCard>
-      ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 });
