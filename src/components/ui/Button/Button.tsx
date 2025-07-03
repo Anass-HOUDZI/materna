@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { designSystem } from "@/theme/design-system";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   variant?: "primary" | "secondary" | "outline" | "ghost" | "danger" | "success";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   loading?: boolean;
@@ -44,12 +44,22 @@ const Button = React.memo<ButtonProps>(({
     xl: "px-10 py-5 text-xl min-h-[52px]"
   };
 
+  // If only icon and no children, use smaller padding
+  const isIconOnly = icon && !children;
+  const finalSizeStyles = isIconOnly ? {
+    xs: "p-1.5 min-h-[32px] min-w-[32px]",
+    sm: "p-2 min-h-[36px] min-w-[36px]",
+    md: "p-3 min-h-[44px] min-w-[44px]",
+    lg: "p-4 min-h-[48px] min-w-[48px]",
+    xl: "p-5 min-h-[52px] min-w-[52px]"
+  } : sizeStyles;
+
   return (
     <button 
       className={cn(
         baseStyles,
         variantStyles[variant],
-        sizeStyles[size],
+        finalSizeStyles[size],
         fullWidth && "w-full",
         className
       )}
@@ -59,10 +69,10 @@ const Button = React.memo<ButtonProps>(({
       {loading ? (
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-          <span>Chargement...</span>
+          {children && <span>Chargement...</span>}
         </div>
       ) : (
-        <div className="flex items-center gap-2">
+        <div className={cn("flex items-center", children && icon && "gap-2")}>
           {icon && iconPosition === "left" && icon}
           {children}
           {icon && iconPosition === "right" && icon}
