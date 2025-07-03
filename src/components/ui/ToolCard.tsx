@@ -1,3 +1,4 @@
+
 import React from "react";
 import { cn } from "@/lib/utils";
 import { Star } from "lucide-react";
@@ -33,9 +34,9 @@ const ToolCard = React.memo<ToolCardProps>(({
   };
 
   const difficultyColors = {
-    "Facile": "bg-green-100 text-green-700",
-    "Moyen": "bg-yellow-100 text-yellow-700", 
-    "Avancé": "bg-red-100 text-red-700"
+    "Facile": "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 border-green-200",
+    "Moyen": "bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-700 border-yellow-200", 
+    "Avancé": "bg-gradient-to-r from-red-100 to-rose-100 text-red-700 border-red-200"
   };
 
   return (
@@ -43,10 +44,10 @@ const ToolCard = React.memo<ToolCardProps>(({
       onClick={handleClick}
       className={cn(
         "group relative overflow-hidden rounded-3xl cursor-pointer",
-        "bg-white border border-slate-200/50 shadow-lg",
-        "hover:shadow-2xl hover:-translate-y-2 hover:border-blue-300/50",
+        "bg-white/90 backdrop-blur-sm border border-slate-200 shadow-lg",
+        "hover:shadow-2xl hover:-translate-y-3 hover:border-blue-300/50 hover:bg-white",
         "transition-all duration-500 ease-out transform-gpu",
-        "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/50",
+        "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/50 focus-visible:ring-offset-2",
         "active:scale-[0.98] active:shadow-xl",
         className
       )}
@@ -70,68 +71,93 @@ const ToolCard = React.memo<ToolCardProps>(({
         </div>
       )}
 
-      {/* Background Gradient */}
+      {/* Background Gradient with enhanced hover effect */}
       <div 
         className={cn(
-          "absolute inset-0 bg-gradient-to-br opacity-60",
-          "group-hover:opacity-80 transition-opacity duration-500",
+          "absolute inset-0 bg-gradient-to-br opacity-40",
+          "group-hover:opacity-60 transition-all duration-500",
           gradient
         )}
       />
       
       {/* Content Container */}
       <div className="relative p-6 h-full flex flex-col">
-        {/* Icon */}
+        {/* Icon with enhanced animation */}
         {icon && (
-          <div className="mb-4">
-            <div className="w-14 h-14 rounded-2xl bg-white/90 shadow-md flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              {React.cloneElement(icon as React.ReactElement, { 
-                className: "text-blue-600", 
-                size: 28 
-              })}
+          <div className="mb-6">
+            <div className="w-16 h-16 rounded-2xl bg-white/95 backdrop-blur-sm shadow-lg flex items-center justify-center 
+                          group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-xl 
+                          transition-all duration-500 ease-out border border-white/50">
+              <div className="text-blue-600 group-hover:text-blue-700 transition-colors duration-300">
+                {React.cloneElement(icon as React.ReactElement, { 
+                  size: 32
+                })}
+              </div>
             </div>
           </div>
         )}
 
-        {/* Title */}
-        <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-900 transition-colors duration-300 mb-3 leading-tight">
+        {/* Title with improved typography */}
+        <h3 className="text-lg font-bold text-slate-800 group-hover:text-slate-900 transition-colors duration-300 mb-3 leading-tight">
           {title}
         </h3>
 
-        {/* Description */}
+        {/* Description with better contrast */}
         {description && (
-          <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
+          <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-1 line-clamp-3 group-hover:text-slate-700 transition-colors duration-300">
             {description}
           </p>
         )}
 
-        {/* Badges */}
-        <div className="flex items-center gap-2 mb-4">
-          <span className={cn("px-2 py-1 rounded-full text-xs font-medium", difficultyColors[difficulty])}>
+        {/* Enhanced badges with gradients */}
+        <div className="flex items-center gap-3 mb-6">
+          <span className={cn(
+            "px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-300 hover:scale-105",
+            difficultyColors[difficulty]
+          )}>
             {difficulty}
           </span>
-          <div className="flex items-center gap-1">
+          
+          {/* Enhanced star rating */}
+          <div className="flex items-center gap-1" role="img" aria-label={`Note: ${rating} sur 5 étoiles`}>
             {[...Array(5)].map((_, i) => (
               <Star 
                 key={i}
-                size={12} 
+                size={14} 
                 className={cn(
-                  "transition-colors duration-200",
-                  i < rating ? "text-yellow-400 fill-current" : "text-slate-300"
+                  "transition-all duration-300",
+                  i < rating 
+                    ? "text-yellow-400 fill-yellow-400 drop-shadow-sm" 
+                    : "text-slate-300"
                 )}
               />
             ))}
           </div>
         </div>
 
-        {/* Action Button */}
-        <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-6 rounded-2xl font-semibold text-sm transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] group-hover:shadow-blue-500/25">
-          Utiliser l'outil →
+        {/* Enhanced action button */}
+        <button 
+          className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 
+                   text-white py-3.5 px-6 rounded-2xl font-semibold text-sm transition-all duration-300 
+                   hover:shadow-xl transform hover:scale-[1.02] group-hover:shadow-blue-500/30
+                   focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-white
+                   active:scale-95"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClick();
+          }}
+          aria-label={`Accéder à l'outil ${title}`}
+        >
+          <span className="flex items-center justify-center gap-2">
+            <span>Utiliser l'outil</span>
+            <span className="group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true">→</span>
+          </span>
         </button>
       </div>
 
-      {/* Hover Effect Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      {/* Enhanced hover effect overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-indigo-500/0 
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
     </div>
   );
 });
