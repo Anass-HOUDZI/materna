@@ -54,7 +54,7 @@ const Index = React.memo(() => {
   // Filter tools based on selected category
   const filteredTools = selectedCategory === "all" 
     ? TOOLS_DATA 
-    : TOOLS_DATA.filter(tool => tool.categoryId === selectedCategory);
+    : TOOLS_DATA.filter(tool => tool.category === selectedCategory);
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
