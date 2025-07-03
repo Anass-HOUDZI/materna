@@ -10,6 +10,7 @@ export interface LayoutProps {
   justify?: "start" | "center" | "end" | "between" | "around" | "evenly";
   wrap?: boolean;
   className?: string;
+  id?: string;
 }
 
 const Layout = React.memo<LayoutProps>(({
@@ -19,7 +20,8 @@ const Layout = React.memo<LayoutProps>(({
   align = "stretch",
   justify = "start",
   wrap = false,
-  className
+  className,
+  id
 }) => {
   const directionClasses = {
     row: "flex-row",
@@ -53,15 +55,18 @@ const Layout = React.memo<LayoutProps>(({
   };
 
   return (
-    <div className={cn(
-      "flex",
-      directionClasses[direction],
-      gapClasses[gap],
-      alignClasses[align],
-      justifyClasses[justify],
-      wrap && "flex-wrap",
-      className
-    )}>
+    <div 
+      id={id}
+      className={cn(
+        "flex",
+        directionClasses[direction],
+        gapClasses[gap],
+        alignClasses[align],
+        justifyClasses[justify],
+        wrap && "flex-wrap",
+        className
+      )}
+    >
       {children}
     </div>
   );

@@ -4,8 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Baby } from "lucide-react";
 import BasePageLayout from "@/components/ui/BasePageLayout";
 import BaseToolForm from "@/components/tools/BaseToolForm";
-import BaseButton from "@/components/ui/BaseButton";
-import BaseLayout from "@/components/layout/BaseLayout";
+import { Button } from "@/components/ui/Button";
+import { Layout } from "@/components/ui/Layout";
 
 const EXPLANATIONS = [
   "Résultat basé sur des traditions populaires !",
@@ -33,27 +33,27 @@ export default function SexPredictionCalculator() {
         title="Prédiction Amusante"
         description="Un moment de détente et de plaisir en attendant l'échographie officielle"
       >
-        <BaseLayout direction="column" gap="lg" align="center" className="text-center">
+        <Layout direction="column" gap="lg" align="center" className="text-center">
           <div className="p-8 bg-gradient-to-r from-pink-50 to-blue-50 rounded-2xl">
             <Baby size={80} className="mx-auto text-primary mb-6 drop-shadow-lg" />
             
-            <BaseLayout direction="column" gap="md">
+            <Layout direction="column" gap="md">
               {EXPLANATIONS.map((line, i) => (
                 <p key={i} className="text-lg mobile-s:text-xl text-slate-600 leading-relaxed">
                   {line}
                 </p>
               ))}
-            </BaseLayout>
+            </Layout>
             
-            <BaseButton
+            <Button
               onClick={getRandomPrediction}
               size="lg"
-              gradient
+              variant="primary"
               className="mt-8"
               fullWidth
             >
               Découvrir mon verdict 🎲
-            </BaseButton>
+            </Button>
           </div>
 
           {prediction && (
@@ -68,7 +68,7 @@ export default function SexPredictionCalculator() {
               </Badge>
             </div>
           )}
-        </BaseLayout>
+        </Layout>
       </BaseToolForm>
     </BasePageLayout>
   );

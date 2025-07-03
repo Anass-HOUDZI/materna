@@ -4,7 +4,7 @@ import { FileBarChart2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import BasePageLayout from "@/components/ui/BasePageLayout";
 import BaseToolForm from "@/components/tools/BaseToolForm";
-import BaseLayout from "@/components/layout/BaseLayout";
+import { Layout } from "@/components/ui/Layout";
 
 export default function BabyBudgetSimulator() {
   return (
@@ -20,11 +20,11 @@ export default function BabyBudgetSimulator() {
         title="Planification Budgétaire"
         description="Préparez sereinement l'arrivée de votre bébé"
       >
-        <BaseLayout direction="column" gap="lg" align="center" className="text-center">
+        <Layout direction="column" gap="lg" align="center" className="text-center">
           <div className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl">
             <FileBarChart2 size={80} className="mx-auto text-blue-600 mb-6 drop-shadow-lg" />
             
-            <BaseLayout direction="column" gap="md">
+            <Layout direction="column" gap="md">
               <p className="text-lg mobile-s:text-xl text-slate-600 leading-relaxed max-w-2xl">
                 Renseignez votre profil familial et explorez différents scénarios pour optimiser votre budget, 
                 anticiper les postes de coûts et limiter les surprises financières.
@@ -38,7 +38,7 @@ export default function BabyBudgetSimulator() {
                   Fonctionnalités professionnelles en cours de développement.
                 </span>
               </div>
-            </BaseLayout>
+            </Layout>
           </div>
           
           <div className="max-w-2xl p-8 bg-gradient-to-br from-blue-50/80 to-indigo-50/80 
@@ -52,7 +52,7 @@ export default function BabyBudgetSimulator() {
               <li>Export PDF du rapport budgétaire</li>
             </ul>
           </div>
-        </BaseLayout>
+        </Layout>
       </BaseToolForm>
     </BasePageLayout>
   );

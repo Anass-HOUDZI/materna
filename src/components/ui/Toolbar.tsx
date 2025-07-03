@@ -1,7 +1,8 @@
+
 import React from "react";
 import { cn } from "@/lib/utils";
 import { Calculator, RotateCcw, Share2, Printer, Download, Clock } from "lucide-react";
-import BaseButton from "./BaseButton";
+import { Button } from "@/components/ui/Button";
 
 interface ToolbarProps {
   onCalculate?: () => void;
@@ -57,65 +58,57 @@ const Toolbar = React.memo<ToolbarProps>(({
           {/* Right Section - Actions */}
           <div className="flex items-center gap-2 flex-wrap">
             {onCalculate && (
-              <BaseButton
+              <Button
                 onClick={onCalculate}
                 disabled={isCalculating}
                 variant="primary"
                 size="md"
-                className="gap-2"
+                icon={<Calculator size={16} />}
               >
-                <Calculator size={16} />
                 Calculer
-              </BaseButton>
+              </Button>
             )}
             
             {onReset && (
-              <BaseButton
+              <Button
                 onClick={onReset}
                 variant="outline"
                 size="md"
-                className="gap-2"
+                icon={<RotateCcw size={16} />}
               >
-                <RotateCcw size={16} />
                 Réinitialiser
-              </BaseButton>
+              </Button>
             )}
 
             <div className="flex items-center gap-1">
               {onShare && (
-                <BaseButton
+                <Button
                   onClick={onShare}
                   variant="ghost"
                   size="sm"
+                  icon={<Share2 size={16} />}
                   className="gap-1"
-                  aria-label="Partager"
-                >
-                  <Share2 size={16} />
-                </BaseButton>
+                />
               )}
               
               {onPrint && (
-                <BaseButton
+                <Button
                   onClick={onPrint}
                   variant="ghost"
                   size="sm"
+                  icon={<Printer size={16} />}
                   className="gap-1"
-                  aria-label="Imprimer"
-                >
-                  <Printer size={16} />
-                </BaseButton>
+                />
               )}
               
               {onExport && (
-                <BaseButton
+                <Button
                   onClick={onExport}
                   variant="ghost"
                   size="sm"
+                  icon={<Download size={16} />}
                   className="gap-1"
-                  aria-label="Exporter"
-                >
-                  <Download size={16} />
-                </BaseButton>
+                />
               )}
             </div>
           </div>

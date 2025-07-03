@@ -1,9 +1,8 @@
-
 import React, { useMemo } from "react";
 import { Activity, BarChart3, TrendingUp, Search } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import FavoriteButton from "@/components/home/FavoriteButton";
-import OptimizedCard from "@/components/ui/OptimizedCard";
+import { Card } from "@/components/ui/Card";
 import FlexibleLayout from "@/components/ui/FlexibleLayout";
 import Typography from "@/components/ui/Typography";
 
@@ -133,9 +132,11 @@ const OptimizedToolsGrid = React.memo(() => {
             className="group cursor-pointer transform-gpu will-change-transform"
             onClick={() => window.location.href = link}
           >
-            <div className="relative bg-white rounded-3xl p-6 shadow-lg border border-slate-100 
-                            hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out
-                            hover:border-blue-200 overflow-hidden">
+            <Card
+              variant="interactive"
+              size="md"
+              className="relative overflow-hidden hover:-translate-y-2 transition-all duration-500 ease-out"
+            >
               {/* Favorite Button */}
               <FavoriteButton
                 isActive={isFavorite(link)}
@@ -176,7 +177,7 @@ const OptimizedToolsGrid = React.memo(() => {
               <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${gradient} 
                               opacity-20 rounded-full transform translate-x-8 -translate-y-8 
                               group-hover:scale-125 transition-transform duration-500`} />
-            </div>
+            </Card>
           </div>
         ))}
       </div>

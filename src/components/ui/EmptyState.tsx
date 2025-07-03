@@ -1,7 +1,8 @@
+
 import React from "react";
 import { cn } from "@/lib/utils";
 import { Search, FileX, AlertCircle } from "lucide-react";
-import BaseButton from "./BaseButton";
+import { Button } from "@/components/ui/Button";
 
 interface EmptyStateProps {
   title: string;
@@ -57,13 +58,13 @@ const EmptyState = React.memo<EmptyStateProps>(({
       </p>
       
       {action && (
-        <BaseButton
+        <Button
           onClick={action.onClick}
           variant="primary"
           size="lg"
         >
           {action.label}
-        </BaseButton>
+        </Button>
       )}
     </div>
   );

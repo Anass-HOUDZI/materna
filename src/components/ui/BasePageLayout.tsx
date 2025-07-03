@@ -1,9 +1,8 @@
-
 import React from "react";
 import { cn } from "@/lib/utils";
 import PageHeader from "@/components/ui/PageHeader";
 import Footer from "@/components/ui/Footer";
-import BaseLayout from "@/components/layout/BaseLayout";
+import { Layout } from "@/components/ui/Layout";
 
 type Crumb = {
   href?: string;
@@ -69,7 +68,7 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
       {(title || description) && (
         <div className="w-full bg-gradient-to-br from-blue-50/50 via-white to-purple-50/50 py-12 mobile-s:py-16 sm:py-20">
           <div className={cn("mx-auto px-4 mobile-s:px-6 sm:px-8", maxWidthClasses[maxWidth])}>
-            <BaseLayout 
+            <Layout 
               direction="column" 
               gap="lg" 
               align="center" 
@@ -103,7 +102,7 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
                   ⭐ Qualité Professionnelle
                 </div>
               </div>
-            </BaseLayout>
+            </Layout>
           </div>
         </div>
       )}
