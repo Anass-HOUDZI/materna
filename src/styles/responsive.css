@@ -1,0 +1,54 @@
+
+/* Responsive utilities */
+
+/* Mobile breakpoints */
+@media (max-width: 320px) {
+  .mobile-s\:text-xs { font-size: 0.75rem; }
+  .mobile-s\:text-sm { font-size: 0.875rem; }
+  .mobile-s\:text-base { font-size: 1rem; }
+  .mobile-s\:text-lg { font-size: 1.125rem; }
+  .mobile-s\:text-xl { font-size: 1.25rem; }
+  .mobile-s\:text-2xl { font-size: 1.5rem; }
+  .mobile-s\:text-3xl { font-size: 1.875rem; }
+  .mobile-s\:text-4xl { font-size: 2.25rem; }
+  .mobile-s\:text-5xl { font-size: 3rem; }
+  
+  .mobile-s\:p-4 { padding: 1rem; }
+  .mobile-s\:p-6 { padding: 1.5rem; }
+  .mobile-s\:p-8 { padding: 2rem; }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  button, a, [role="button"], [tabindex] {
+    @apply touch-feedback;
+  }
+  
+  button, a, input, select, textarea {
+    min-height: 44px;
+  }
+  
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast */
+@media (prefers-contrast: high) {
+  * {
+    border-color: ButtonText !important;
+  }
+  
+  button, [role="button"] {
+    border: 2px solid ButtonText !important;
+  }
+}

@@ -1,0 +1,71 @@
+
+/* Base styles - Reset and typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Variables CSS pour une meilleure cohérence */
+:root {
+  --background: 248 250 252;
+  --foreground: 30 41 59;
+  --primary: 59 130 246;
+  --primary-foreground: 248 250 252;
+  --secondary: 241 245 249;
+  --secondary-foreground: 30 41 59;
+  --muted: 241 245 249;
+  --muted-foreground: 100 116 139;
+  --border: 226 232 240;
+  --ring: 59 130 246;
+  --radius: 0.75rem;
+  
+  /* Safe area variables */
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+  --safe-area-inset-right: env(safe-area-inset-right);
+}
+
+/* Base reset */
+* {
+  @apply border-border;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800;
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: hsl(30 41 59);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+p, span, div {
+  line-height: 1.6;
+  color: hsl(71 84 57);
+}
+
+/* Focus states */
+*:focus-visible {
+  outline: 2px solid hsl(59 130 246);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}

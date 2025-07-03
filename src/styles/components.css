@@ -1,0 +1,42 @@
+
+/* Component-specific styles */
+
+/* Buttons */
+button, [role="button"], a {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  touch-action: manipulation;
+}
+
+button:disabled, [role="button"][aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Inputs */
+input, textarea, select {
+  border-radius: 1rem;
+  border: 2px solid hsl(226 232 240);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: white;
+  font-size: 16px;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: hsl(59 130 246);
+  box-shadow: 0 0 0 4px hsl(59 130 246 / 0.1);
+}
+
+/* Cards */
+.card-elevated {
+  @apply bg-white/98 backdrop-blur-md border border-slate-200/60 shadow-xl;
+}
+
+.card-glass {
+  @apply bg-white/85 backdrop-blur-lg border border-white/30 shadow-2xl;
+}
+
+.card-interactive {
+  @apply bg-white/95 backdrop-blur-sm border border-slate-200/50 shadow-md;
+  @apply hover:shadow-xl hover:border-blue-300/50 cursor-pointer;
+}

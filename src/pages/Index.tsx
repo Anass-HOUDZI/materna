@@ -3,27 +3,28 @@ import React from "react";
 import { AccordionSimple, AccordionSimpleItem } from "@/components/ui/accordion-simple";
 import Footer from "@/components/ui/Footer";
 import FamilyIllustration from "@/components/home/FamilyIllustration";
-import BaseLayout from "@/components/layout/BaseLayout";
-import BaseCard from "@/components/ui/BaseCard";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { Layout } from "@/components/ui/Layout";
 import CategoryCard from "@/components/ui/CategoryCard";
 import ToolCard from "@/components/ui/ToolCard";
 import { CATEGORIES, TOOLS_DATA } from "@/data/categories";
 import { useFavorites } from "@/hooks/useFavorites";
 import { ChevronDown, Filter } from "lucide-react";
 
-const WELCOME_CONTENT = {
+const HERO_CONTENT = {
   title: "MomTech Suite",
   subtitle: "Suite complète et gratuite",
   description: "50 outils santé, grossesse, bébé, sécurité et parentalité 100% offline, gratuits, privacy-first.",
   features: [
     "Outils médicaux validés scientifiquement",
-    "100% offline et privacy-first",
+    "100% offline et privacy-first", 
     "Interface optimisée mobile",
     "Données chiffrées localement"
   ]
 };
 
-const FAQ_ITEMS = [
+const FAQ_DATA = [
   {
     question: "Comment fonctionne la suite ?",
     answer: "50 outils entièrement offline, gratuits, permettant de gérer santé, grossesse et parentalité avec des algorithmes validés médicalement."
@@ -42,16 +43,68 @@ const FAQ_ITEMS = [
   }
 ];
 
+const HeroSection = React.memo(() => (
+  <div className="text-center py-16 mobile-s:py-20 sm:py-24">
+    <div className="animate-fade-in mb-8">
+      <FamilyIllustration className="w-full max-w-xs mobile-s:max-w-sm sm:max-w-md mx-auto" />
+    </div>
+    
+    <Layout direction="column" gap="lg" align="center" className="animate-fade-in">
+      <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 
+                      text-blue-700 rounded-full text-sm font-semibold border border-blue-200/50 backdrop-blur-sm">
+        <span className="text-yellow-500" aria-hidden="true">⭐</span>
+        <span>Suite complète gratuite et professionnelle</span>
+      </div>
+      
+      <h1 className="text-4xl mobile-s:text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-800 leading-tight tracking-tight">
+        {HERO_CONTENT.title}
+        <span className="block text-3xl mobile-s:text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-bold mt-2">
+          {HERO_CONTENT.subtitle}
+        </span>
+      </h1>
+      
+      <p className="text-xl mobile-s:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-medium">
+        {HERO_CONTENT.description}
+      </p>
+      
+      <Layout direction="row" gap="md" justify="center" wrap className="mt-8">
+        <Button 
+          size="lg"
+          onClick={() => document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' })}
+          icon={<span aria-hidden="true">🔍</span>}
+          className="gap-3"
+        >
+          Découvrir les outils
+        </Button>
+        <div className="inline-flex items-center gap-3 px-8 py-4 bg-white/80 backdrop-blur-sm border-2 border-slate-200 
+                       text-slate-700 rounded-2xl font-semibold text-lg shadow-md">
+          <span className="text-green-500" aria-hidden="true">⚡</span>
+          <span>100% Gratuit</span>
+        </div>
+      </Layout>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-12 max-w-2xl mx-auto">
+        {HERO_CONTENT.features.map((feature, index) => (
+          <div 
+            key={index}
+            className="flex items-center gap-3 p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-white/40 
+                     shadow-sm hover:bg-white/80 hover:shadow-md transition-all duration-300"
+          >
+            <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex-shrink-0" />
+            <span className="text-slate-700 font-medium">{feature}</span>
+          </div>
+        ))}
+      </div>
+    </Layout>
+  </div>
+));
+
 const Index = React.memo(() => {
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const [selectedCategory, setSelectedCategory] = React.useState<string>("all");
   const [showMobileFilter, setShowMobileFilter] = React.useState(false);
   
-  // Outils favoris pour affichage prioritaire
   const favoriteTools = TOOLS_DATA.filter(tool => favorites.includes(tool.link)).slice(0, 8);
-  const hasCategories = CATEGORIES.length > 0;
-
-  // Filter tools based on selected category
   const filteredTools = selectedCategory === "all" 
     ? TOOLS_DATA 
     : TOOLS_DATA.filter(tool => tool.category === selectedCategory);
@@ -59,161 +112,87 @@ const Index = React.memo(() => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
       <div className="w-full max-w-7xl mx-auto px-4 mobile-s:px-6 sm:px-8 pt-safe-top pb-safe-bottom">
-        {/* Hero Section - Modernized */}
-        <div className="text-center py-16 mobile-s:py-20 sm:py-24">
-          <div className="animate-fade-in mb-8">
-            <FamilyIllustration className="w-full max-w-xs mobile-s:max-w-sm sm:max-w-md mx-auto" />
-          </div>
-          
-          <div className="animate-fade-in space-y-6">
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 
-                            text-blue-700 rounded-full text-sm font-semibold border border-blue-200/50 backdrop-blur-sm">
-              <span className="text-yellow-500" aria-hidden="true">⭐</span>
-              <span>Suite complète gratuite et professionnelle</span>
-            </div>
-            
-            <h1 className="text-4xl mobile-s:text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-800 leading-tight tracking-tight">
-              {WELCOME_CONTENT.title}
-              <span className="block text-3xl mobile-s:text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-bold mt-2">
-                {WELCOME_CONTENT.subtitle}
-              </span>
-            </h1>
-            
-            <p className="text-xl mobile-s:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-medium">
-              {WELCOME_CONTENT.description}
-            </p>
-            
-            <div className="flex flex-wrap gap-4 justify-center mt-8">
-              <button 
-                onClick={() => document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 
-                         hover:from-blue-700 hover:to-indigo-700 text-white rounded-2xl font-semibold text-lg 
-                         transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl hover:shadow-blue-500/25
-                         focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:ring-offset-2"
-                aria-label="Découvrir les outils disponibles"
-              >
-                <span aria-hidden="true">🔍</span>
-                <span>Découvrir les outils</span>
-              </button>
-              <div className="inline-flex items-center gap-3 px-8 py-4 bg-white/80 backdrop-blur-sm border-2 border-slate-200 
-                             text-slate-700 rounded-2xl font-semibold text-lg shadow-md">
-                <span className="text-green-500" aria-hidden="true">⚡</span>
-                <span>100% Gratuit</span>
-              </div>
-            </div>
+        <HeroSection />
 
-            {/* Features Highlights - Enhanced */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-12 max-w-2xl mx-auto">
-              {WELCOME_CONTENT.features.map((feature, index) => (
-                <div 
-                  key={index}
-                  className="flex items-center gap-3 p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-white/40 
-                           shadow-sm hover:bg-white/80 hover:shadow-md transition-all duration-300"
-                >
-                  <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex-shrink-0" />
-                  <span className="text-slate-700 font-medium">{feature}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Filter Dropdown */}
+        {/* Mobile Filter */}
         <div className="block sm:hidden mb-6">
-          <button
+          <Button
+            variant="outline"
+            fullWidth
             onClick={() => setShowMobileFilter(!showMobileFilter)}
-            className="w-full flex items-center justify-between px-4 py-3 bg-white/80 backdrop-blur-sm 
-                     border border-slate-200 rounded-xl text-slate-700 font-medium shadow-sm
-                     hover:bg-white hover:shadow-md transition-all duration-300"
-            aria-expanded={showMobileFilter}
-            aria-controls="mobile-filter-menu"
+            icon={<Filter size={18} />}
+            className="justify-between"
           >
-            <div className="flex items-center gap-2">
-              <Filter size={18} aria-hidden="true" />
-              <span>Filtrer par catégorie</span>
-            </div>
+            <span>Filtrer par catégorie</span>
             <ChevronDown 
               size={18} 
               className={`transform transition-transform duration-300 ${showMobileFilter ? 'rotate-180' : ''}`}
-              aria-hidden="true"
             />
-          </button>
+          </Button>
           
           {showMobileFilter && (
-            <div 
-              id="mobile-filter-menu"
-              className="mt-2 bg-white/95 backdrop-blur-sm border border-slate-200 rounded-xl shadow-lg 
-                       animate-fade-in overflow-hidden"
-            >
-              <button
-                onClick={() => {
-                  setSelectedCategory("all");
-                  setShowMobileFilter(false);
-                }}
-                className={`w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors duration-200 ${
-                  selectedCategory === "all" ? "bg-blue-50 text-blue-700 font-semibold" : "text-slate-700"
-                }`}
-              >
-                Toutes les catégories
-              </button>
-              {CATEGORIES.map((category) => (
-                <button
-                  key={category.id}
+            <Card variant="glass" size="sm" className="mt-2 animate-scale-in">
+              <Layout direction="column" gap="xs">
+                <Button
+                  variant="ghost"
+                  fullWidth
                   onClick={() => {
-                    setSelectedCategory(category.id);
+                    setSelectedCategory("all");
                     setShowMobileFilter(false);
                   }}
-                  className={`w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors duration-200 ${
-                    selectedCategory === category.id ? "bg-blue-50 text-blue-700 font-semibold" : "text-slate-700"
-                  }`}
+                  className={selectedCategory === "all" ? "bg-blue-50 text-blue-700" : ""}
                 >
-                  <div className="flex items-center gap-3">
-                    {React.createElement(category.icon, { size: 18, "aria-hidden": true })}
-                    <span>{category.title}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+                  Toutes les catégories
+                </Button>
+                {CATEGORIES.map((category) => (
+                  <Button
+                    key={category.id}
+                    variant="ghost"
+                    fullWidth
+                    onClick={() => {
+                      setSelectedCategory(category.id);
+                      setShowMobileFilter(false);
+                    }}
+                    className={selectedCategory === category.id ? "bg-blue-50 text-blue-700" : ""}
+                    icon={React.createElement(category.icon, { size: 18 })}
+                  >
+                    {category.title}
+                  </Button>
+                ))}
+              </Layout>
+            </Card>
           )}
         </div>
 
-        {/* Categories Section - Enhanced */}
-        {hasCategories && (
-          <div id="categories" className="w-full space-y-12">
-            <div className="text-center">
-              <h2 className="text-3xl mobile-s:text-4xl sm:text-5xl font-bold text-slate-800 mb-4">
+        {/* Categories Section */}
+        {CATEGORIES.length > 0 && (
+          <Layout direction="column" gap="3xl" id="categories">
+            <Layout direction="column" gap="lg" align="center" className="text-center">
+              <h2 className="text-3xl mobile-s:text-4xl sm:text-5xl font-bold text-slate-800">
                 Découvrez nos catégories
               </h2>
-              <p className="text-lg mobile-s:text-xl text-slate-600 max-w-3xl mx-auto font-medium">
+              <p className="text-lg mobile-s:text-xl text-slate-600 max-w-3xl font-medium">
                 Chaque catégorie regroupe des outils spécialisés pour répondre à vos besoins spécifiques
               </p>
-            </div>
+            </Layout>
 
             {/* Desktop Category Filter */}
             <div className="hidden sm:flex flex-wrap gap-3 justify-center">
-              <button
+              <Button
+                variant={selectedCategory === "all" ? "primary" : "outline"}
                 onClick={() => setSelectedCategory("all")}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                  selectedCategory === "all"
-                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg"
-                    : "bg-white/80 text-slate-700 hover:bg-white hover:shadow-md border border-slate-200"
-                }`}
               >
                 Toutes les catégories
-              </button>
+              </Button>
               {CATEGORIES.map((category) => (
-                <button
+                <Button
                   key={category.id}
+                  variant={selectedCategory === category.id ? "primary" : "outline"}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                    selectedCategory === category.id
-                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg"
-                      : "bg-white/80 text-slate-700 hover:bg-white hover:shadow-md border border-slate-200"
-                  }`}
+                  icon={React.createElement(category.icon, { size: 18 })}
                 >
-                  {React.createElement(category.icon, { size: 18, "aria-hidden": true })}
-                  <span>{category.title}</span>
-                </button>
+                  {category.title}
+                </Button>
               ))}
             </div>
 
@@ -224,26 +203,26 @@ const Index = React.memo(() => {
                   title={category.title}
                   description={category.description}
                   href={category.href}
-                  icon={React.createElement(category.icon, { size: 32, "aria-hidden": true })}
+                  icon={React.createElement(category.icon, { size: 32 })}
                   toolCount={category.tools.length}
                   gradient={category.gradient}
                 />
               ))}
             </div>
-          </div>
+          </Layout>
         )}
 
-        {/* Tools Section - Enhanced with filtering */}
-        <div className="w-full space-y-8">
-          <div className="text-center">
-            <h2 className="text-3xl mobile-s:text-4xl font-bold text-slate-800 mb-2">
+        {/* Tools Section */}
+        <Layout direction="column" gap="2xl">
+          <Layout direction="column" gap="md" align="center" className="text-center">
+            <h2 className="text-3xl mobile-s:text-4xl font-bold text-slate-800">
               {selectedCategory === "all" ? "Tous nos outils" : 
                `Outils ${CATEGORIES.find(c => c.id === selectedCategory)?.title || ""}`}
             </h2>
             <p className="text-slate-600 font-medium">
               {filteredTools.length} outil{filteredTools.length > 1 ? 's' : ''} disponible{filteredTools.length > 1 ? 's' : ''}
             </p>
-          </div>
+          </Layout>
 
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredTools.map((tool) => (
@@ -252,7 +231,7 @@ const Index = React.memo(() => {
                 title={tool.label}
                 description={tool.description}
                 href={tool.link}
-                icon={React.createElement(tool.icon, { size: 24, "aria-hidden": true })}
+                icon={React.createElement(tool.icon, { size: 24 })}
                 gradient={tool.gradient}
                 isFavorite={isFavorite(tool.link)}
                 onToggleFavorite={() => toggleFavorite(tool.link)}
@@ -261,19 +240,19 @@ const Index = React.memo(() => {
               />
             ))}
           </div>
-        </div>
+        </Layout>
 
-        {/* Favorite Tools Section - Enhanced */}
+        {/* Favorite Tools Section */}
         {favoriteTools.length > 0 && (
-          <div className="w-full space-y-8">
-            <div className="text-center">
-              <h2 className="text-2xl mobile-s:text-3xl font-bold text-slate-800 mb-2">
+          <Layout direction="column" gap="2xl">
+            <Layout direction="column" gap="md" align="center" className="text-center">
+              <h2 className="text-2xl mobile-s:text-3xl font-bold text-slate-800">
                 Vos outils favoris
               </h2>
               <p className="text-slate-600 font-medium">
                 Accédez rapidement à vos outils préférés
               </p>
-            </div>
+            </Layout>
 
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {favoriteTools.map((tool) => (
@@ -282,7 +261,7 @@ const Index = React.memo(() => {
                   title={tool.label}
                   description={tool.description}
                   href={tool.link}
-                  icon={React.createElement(tool.icon, { size: 24, "aria-hidden": true })}
+                  icon={React.createElement(tool.icon, { size: 24 })}
                   gradient={tool.gradient}
                   isFavorite={isFavorite(tool.link)}
                   onToggleFavorite={() => toggleFavorite(tool.link)}
@@ -291,25 +270,18 @@ const Index = React.memo(() => {
                 />
               ))}
             </div>
-          </div>
+          </Layout>
         )}
 
-        {/* FAQ Section - Enhanced */}
-        <div className="w-full max-w-4xl mx-auto space-y-8">
+        {/* FAQ Section */}
+        <Layout direction="column" gap="2xl" className="w-full max-w-4xl mx-auto">
           <h2 className="text-3xl mobile-s:text-4xl font-bold text-center text-slate-800">
             Questions fréquentes
           </h2>
           
-          <BaseCard 
-            variant="glass" 
-            size="lg"
-            className="w-full animate-fade-in"
-            style={{
-              background: "linear-gradient(135deg, rgba(248, 250, 252, 0.95) 60%, rgba(241, 245, 249, 0.95) 100%)"
-            }}
-          >
+          <Card variant="glass" size="lg" className="animate-fade-in">
             <AccordionSimple>
-              {FAQ_ITEMS.map((item, index) => (
+              {FAQ_DATA.map((item, index) => (
                 <AccordionSimpleItem key={index} title={item.question}>
                   <p className="text-slate-700 leading-relaxed font-medium">
                     {item.answer}
@@ -317,8 +289,8 @@ const Index = React.memo(() => {
                 </AccordionSimpleItem>
               ))}
             </AccordionSimple>
-          </BaseCard>
-        </div>
+          </Card>
+        </Layout>
       </div>
       
       <Footer />
