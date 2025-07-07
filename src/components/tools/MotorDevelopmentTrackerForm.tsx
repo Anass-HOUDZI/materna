@@ -4,107 +4,399 @@ import { FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/f
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-
-type Milestone = {
-  label: string;
-  min: number; // âge mini en mois
-  max: number; // âge maxi en mois (inclus)
-};
-
-const milestones: Milestone[] = [
-  { label: "Tient sa tête", min: 1, max: 4 },
-  { label: "S'assoit sans aide", min: 5, max: 9 },
-  { label: "Rampe/se déplace au sol", min: 6, max: 10 },
-  { label: "Se tient debout avec appui", min: 8, max: 12 },
-  { label: "Marche avec appui", min: 10, max: 15 },
-  { label: "Marche seul", min: 12, max: 20 },
-  { label: "Monte les escaliers à 4 pattes", min: 15, max: 24 },
-  { label: "Court sans tomber", min: 18, max: 30 },
-  { label: "Saute sur place", min: 24, max: 36 },
-];
-
-function getMilestonesByAge(age: number) {
-  return milestones.filter(m => age >= m.min && age <= m.max);
-}
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useMotorDevelopment } from "@/hooks/useMotorDevelopment";
+import { ChildProfile } from "@/types/motor-development";
+import { MOTOR_MILESTONES, DOMAIN_LABELS, DOMAIN_COLORS } from "@/data/motor-milestones";
+import { AlertTriangle, TrendingUp, Activity, FileText } from "lucide-react";
 
 export default function MotorDevelopmentTrackerForm() {
-  const [age, setAge] = useState<number | "">("");
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
-  const [result, setResult] = useState<{ total: number; ok: number } | null>(null);
+  const {
+    childProfile,
+    setChildProfile,
+    getMilestonesForAge,
+    evaluateChild,
+    saveEvaluation,
+    getRecommendedActivities,
+    generateReport,
+  } = useMotorDevelopment();
 
-  const currentMilestones = typeof age === "number" ? getMilestonesByAge(age) : [];
+  const [profileForm, setProfileForm] = useState({
+    name: "",
+    birthDate: "",
+    isPremature: false,
+    gestationalAge: "",
+  });
 
-  function handleCheck(label: string, val: boolean) {
-    setChecked(prev => ({ ...prev, [label]: val }));
-  }
+  const [selectedMilestones, setSelectedMilestones] = useState<string[]>([]);
+  const [evaluation, setEvaluation] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState("profile");
 
-  function handleSubmit(e: React.FormEvent) {
+  const handleProfileSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (typeof age !== "number" || isNaN(age)) return;
-    const milestonesThisAge = getMilestonesByAge(age);
-    const ok = milestonesThisAge.filter(m => checked[m.label]).length;
-    setResult({ total: milestonesThisAge.length, ok });
-  }
+    
+    const profile: ChildProfile = {
+      id: `child-${Date.now()}`,
+      name: profileForm.name,
+      birthDate: profileForm.birthDate,
+      isPremature: profileForm.isPremature,
+      gestationalAge: profileForm.gestationalAge ? Number(profileForm.gestationalAge) : undefined,
+      familyHistory: [],
+      createdAt: Date.now(),
+    };
+
+    setChildProfile(profile);
+    setActiveTab("evaluation");
+  };
+
+  const handleEvaluation = () => {
+    if (!childProfile) return;
+
+    const newEvaluation = evaluateChild(childProfile, selectedMilestones);
+    setEvaluation(newEvaluation);
+    saveEvaluation(newEvaluation);
+    setActiveTab("results");
+  };
+
+  const currentAge = childProfile ? 
+    Math.floor((Date.now() - new Date(childProfile.birthDate).getTime()) / (1000 * 60 * 60 * 24 * 30.44)) : 0;
+  
+  const relevantMilestones = currentAge > 0 ? getMilestonesForAge(currentAge) : [];
+  
+  // Grouper par domaine
+  const milestonesByDomain = relevantMilestones.reduce((acc, milestone) => {
+    if (!acc[milestone.domain]) acc[milestone.domain] = [];
+    acc[milestone.domain].push(milestone);
+    return acc;
+  }, {} as Record<string, typeof relevantMilestones>);
+
+  const recommendedActivities = evaluation ? 
+    getRecommendedActivities(currentAge, evaluation.alertFlags.map((flag: string) => flag.toLowerCase())) : [];
 
   return (
-    <div>
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        <FormItem>
-          <FormLabel>Âge de l’enfant (mois)</FormLabel>
-          <FormControl>
-            <Input
-              type="number"
-              min={1}
-              max={36}
-              value={age}
-              onChange={e => {
-                const val = e.target.value === "" ? "" : Number(e.target.value);
-                setAge(val);
-                setChecked({});
-                setResult(null);
-              }}
-              placeholder="ex : 16"
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
+    <div className="space-y-6">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="profile">Profil Enfant</TabsTrigger>
+          <TabsTrigger value="evaluation" disabled={!childProfile}>Évaluation</TabsTrigger>
+          <TabsTrigger value="results" disabled={!evaluation}>Résultats</TabsTrigger>
+        </TabsList>
 
-        {typeof age === "number" && !isNaN(age) && (
-          <div className="space-y-2">
-            <div className="font-semibold mb-1">Étapes motrices typiques à cet âge :</div>
-            {currentMilestones.length === 0 && (
-              <div className="text-muted-foreground text-sm">Aucune étape classique pour cet âge.</div>
-            )}
-            {currentMilestones.map(ms => (
-              <FormItem key={ms.label} className="flex items-center gap-2">
-                <FormControl>
-                  <Checkbox
-                    checked={!!checked[ms.label]}
-                    onCheckedChange={val => handleCheck(ms.label, !!val)}
-                    id={ms.label}
-                  />
-                </FormControl>
-                <FormLabel htmlFor={ms.label} className="cursor-pointer">{ms.label}</FormLabel>
-              </FormItem>
-            ))}
-          </div>
-        )}
+        <TabsContent value="profile" className="space-y-4">
+          <Card variant="outlined" size="md">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Activity size={20} />
+                Informations de l'enfant
+              </h3>
+              
+              <form onSubmit={handleProfileSubmit} className="space-y-4">
+                <FormItem>
+                  <FormLabel>Prénom de l'enfant</FormLabel>
+                  <FormControl>
+                    <Input
+                      value={profileForm.name}
+                      onChange={(e) => setProfileForm(prev => ({ ...prev, name: e.target.value }))}
+                      placeholder="Prénom"
+                      required
+                    />
+                  </FormControl>
+                </FormItem>
 
-        {typeof age === "number" && currentMilestones.length > 0 && (
-          <Button type="submit" className="w-full mt-2">Évaluer</Button>
-        )}
-      </form>
+                <FormItem>
+                  <FormLabel>Date de naissance</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      value={profileForm.birthDate}
+                      onChange={(e) => setProfileForm(prev => ({ ...prev, birthDate: e.target.value }))}
+                      required
+                    />
+                  </FormControl>
+                </FormItem>
 
-      {result && (
-        <div className="mt-6 p-4 bg-accent/20 rounded-lg border text-center">
-          <div className="font-semibold mb-2 text-lg">Résultat</div>
-          <div>{result.ok} étape(s) validée(s) sur {result.total}</div>
-          <div className="text-xs mt-2 text-muted-foreground">
-            N.B. : Chaque enfant évolue à son rythme.<br/>
-            Si vous avez un doute ou une inquiétude, parlez-en à votre professionnel de santé.
-          </div>
-        </div>
-      )}
+                <FormItem>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      checked={profileForm.isPremature}
+                      onCheckedChange={(checked) => 
+                        setProfileForm(prev => ({ ...prev, isPremature: !!checked }))
+                      }
+                      id="premature"
+                    />
+                    <FormLabel htmlFor="premature">Enfant prématuré</FormLabel>
+                  </div>
+                </FormItem>
+
+                {profileForm.isPremature && (
+                  <FormItem>
+                    <FormLabel>Âge gestationnel (semaines)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min="24"
+                        max="42"
+                        value={profileForm.gestationalAge}
+                        onChange={(e) => setProfileForm(prev => ({ ...prev, gestationalAge: e.target.value }))}
+                        placeholder="ex: 36"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+
+                <Button type="submit" className="w-full">
+                  Créer le profil
+                </Button>
+              </form>
+            </div>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="evaluation" className="space-y-4">
+          {childProfile && (
+            <>
+              <Card variant="outlined" size="md">
+                <div className="p-4 bg-blue-50 border-b">
+                  <h3 className="font-semibold text-blue-900">
+                    Évaluation pour {childProfile.name} - {currentAge} mois
+                  </h3>
+                  {childProfile.isPremature && (
+                    <p className="text-sm text-blue-700">
+                      Âge corrigé pris en compte pour l'évaluation
+                    </p>
+                  )}
+                </div>
+                
+                <div className="p-6 space-y-6">
+                  {Object.entries(milestonesByDomain).map(([domain, milestones]) => (
+                    <div key={domain} className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Badge className={DOMAIN_COLORS[domain as keyof typeof DOMAIN_COLORS]}>
+                          {DOMAIN_LABELS[domain as keyof typeof DOMAIN_LABELS]}
+                        </Badge>
+                        <span className="text-sm text-muted-foreground">
+                          ({milestones.length} étape{milestones.length > 1 ? 's' : ''})
+                        </span>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        {milestones.map(milestone => (
+                          <FormItem key={milestone.id} className="flex items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={selectedMilestones.includes(milestone.id)}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    setSelectedMilestones(prev => [...prev, milestone.id]);
+                                  } else {
+                                    setSelectedMilestones(prev => prev.filter(id => id !== milestone.id));
+                                  }
+                                }}
+                                id={milestone.id}
+                              />
+                            </FormControl>
+                            <div className="space-y-1">
+                              <FormLabel 
+                                htmlFor={milestone.id} 
+                                className="text-sm font-medium cursor-pointer"
+                              >
+                                {milestone.label}
+                              </FormLabel>
+                              <p className="text-xs text-muted-foreground">
+                                {milestone.description}
+                              </p>
+                              <p className="text-xs text-blue-600">
+                                Âge typique: {milestone.minAgeMonths}-{milestone.maxAgeMonths} mois
+                              </p>
+                            </div>
+                          </FormItem>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+
+                  {relevantMilestones.length === 0 && (
+                    <Alert>
+                      <AlertDescription>
+                        Aucune étape de développement n'est évaluée pour cet âge dans notre base de données.
+                      </AlertDescription>
+                    </Alert>
+                  )}
+
+                  <Button 
+                    onClick={handleEvaluation}
+                    className="w-full"
+                    disabled={relevantMilestones.length === 0}
+                  >
+                    Générer l'évaluation
+                  </Button>
+                </div>
+              </Card>
+            </>
+          )}
+        </TabsContent>
+
+        <TabsContent value="results" className="space-y-4">
+          {evaluation && (
+            <>
+              {/* Score global */}
+              <Card variant="outlined" size="md">
+                <div className="p-6 text-center">
+                  <div className="mb-4">
+                    <div className="text-4xl font-bold text-blue-600 mb-2">
+                      {evaluation.developmentScore}%
+                    </div>
+                    <h3 className="text-lg font-semibold">Score de développement global</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {evaluation.completedMilestones.length} / {evaluation.totalMilestones} étapes validées
+                    </p>
+                  </div>
+                  
+                  {evaluation.developmentScore >= 80 && (
+                    <Badge className="bg-green-100 text-green-800">Développement excellent</Badge>
+                  )}
+                  {evaluation.developmentScore >= 60 && evaluation.developmentScore < 80 && (
+                    <Badge className="bg-yellow-100 text-yellow-800">Développement normal</Badge>
+                  )}
+                  {evaluation.developmentScore < 60 && (
+                    <Badge className="bg-red-100 text-red-800">Attention requise</Badge>
+                  )}
+                </div>
+              </Card>
+
+              {/* Alertes */}
+              {evaluation.alertFlags.length > 0 && (
+                <Alert className="border-orange-200 bg-orange-50">
+                  <AlertTriangle className="h-4 w-4 text-orange-600" />
+                  <AlertDescription className="text-orange-800">
+                    <strong>Points d'attention :</strong>
+                    <ul className="list-disc list-inside mt-2">
+                      {evaluation.alertFlags.map((flag: string, index: number) => (
+                        <li key={index}>{flag}</li>
+                      ))}
+                    </ul>
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              {/* Score par domaine */}
+              <Card variant="outlined" size="md">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <TrendingUp size={20} />
+                    Détail par domaine
+                  </h3>
+                  
+                  <div className="space-y-3">
+                    {Object.entries(evaluation.scoreByDomain).map(([domain, score]: [string, any]) => {
+                      const percentage = score.total > 0 ? Math.round((score.completed / score.total) * 100) : 0;
+                      return (
+                        <div key={domain} className="space-y-2">
+                          <div className="flex justify-between items-center">
+                            <Badge className={DOMAIN_COLORS[domain as keyof typeof DOMAIN_COLORS]}>
+                              {DOMAIN_LABELS[domain as keyof typeof DOMAIN_LABELS]}
+                            </Badge>
+                            <span className="text-sm font-medium">
+                              {score.completed}/{score.total} ({percentage}%)
+                            </span>
+                          </div>
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div 
+                              className={`h-2 rounded-full ${
+                                percentage >= 80 ? 'bg-green-500' : 
+                                percentage >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                              }`}
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </Card>
+
+              {/* Recommandations */}
+              <Card variant="outlined" size="md">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold mb-4">Recommandations</h3>
+                  <ul className="space-y-2">
+                    {evaluation.recommendations.map((rec: string, index: number) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <span className="text-blue-500 mt-1">•</span>
+                        <span className="text-sm">{rec}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Card>
+
+              {/* Activités recommandées */}
+              {recommendedActivities.length > 0 && (
+                <Card variant="outlined" size="md">
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold mb-4">Activités de stimulation</h3>
+                    <div className="space-y-4">
+                      {recommendedActivities.map(activity => (
+                        <div key={activity.id} className="border rounded-lg p-4 bg-blue-50">
+                          <h4 className="font-semibold text-blue-900">{activity.title}</h4>
+                          <p className="text-sm text-blue-700 mb-2">{activity.duration}</p>
+                          <div className="space-y-2">
+                            <div>
+                              <strong className="text-xs">Matériel :</strong>
+                              <span className="text-xs ml-1">{activity.materials.join(", ")}</span>
+                            </div>
+                            <div>
+                              <strong className="text-xs">Instructions :</strong>
+                              <ul className="text-xs list-disc list-inside mt-1">
+                                {activity.instructions.map((instruction, i) => (
+                                  <li key={i}>{instruction}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Card>
+              )}
+
+              {/* Export */}
+              <Card variant="outlined" size="md">
+                <div className="p-6">
+                  <Button 
+                    onClick={() => {
+                      const report = generateReport(evaluation);
+                      const blob = new Blob([report], { type: 'application/json' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `evaluation-${childProfile?.name}-${evaluation.date}.json`;
+                      a.click();
+                    }}
+                    className="w-full"
+                    variant="outline"
+                  >
+                    <FileText className="mr-2 h-4 w-4" />
+                    Exporter le rapport d'évaluation
+                  </Button>
+                </div>
+              </Card>
+            </>
+          )}
+        </TabsContent>
+      </Tabs>
+
+      <div className="text-xs text-muted-foreground text-center border-t pt-4">
+        <p>
+          ⚠️ Cette évaluation est indicative et ne remplace pas un avis médical professionnel.<br/>
+          En cas de doute, consultez votre pédiatre.
+        </p>
+      </div>
     </div>
   );
 }

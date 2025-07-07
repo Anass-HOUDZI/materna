@@ -2,228 +2,405 @@
 import React, { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { FormItem, FormLabel, FormControl } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useChildNutrition } from "@/hooks/useChildNutrition";
+import { ChildNutritionProfile } from "@/types/child-nutrition";
+import { FOOD_CATEGORIES } from "@/data/nutrition-data";
+import { Calculator, TrendingUp, UtensilsCrossed, FileText, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type ActivityLevel = "bas" | "modéré" | "élevé";
-
-type FormFields = {
-  age: number | "";
-  ageUnit: "mois" | "années";
-  weight: number | "";
-  height: number | "";
-  gender: "fille" | "garçon";
-  activity: ActivityLevel;
-};
-
-const ALIMENTS: Record<"protéines" | "glucides" | "lipides", string[]> = {
-  protéines: ["Œuf", "Poisson", "Viande maigre", "Légumineuses", "Yaourt", "Fromage"],
-  glucides: ["Pain complet", "Pâtes", "Riz", "Pommes de terre", "Fruits", "Légumes"],
-  lipides: ["Huile d’olive", "Beurre", "Poissons gras", "Noix", "Avocat", "Jaune d’œuf"],
-};
-
-// Valeurs OMS/ANSES recommandées pour les enfants :
-// Ces formules sont simples et généralisées (plus détaillé possible si souhaité)
-function calcNeeds(fields: FormFields) {
-  // Conversion âge en années
-  const ageY =
-    fields.ageUnit === "années"
-      ? Number(fields.age || 0)
-      : Number(fields.age || 0) / 12;
-
-  const weightKg = Number(fields.weight || 0);
-  const heightCm = Number(fields.height || 0);
-
-  // Calcul du besoin énergétique de base (simplifié Harris-Benedict pour enfant)
-  // Coefficients enfant :  (proche OMS)
-  let kcal = 0;
-  switch (fields.activity) {
-    case "élevé":
-      kcal = fields.gender === "fille"
-        ? 88 * ageY + 35 * weightKg + 16 * heightCm + 800
-        : 90 * ageY + 40 * weightKg + 18 * heightCm + 900;
-      break;
-    case "modéré":
-      kcal = fields.gender === "fille"
-        ? 80 * ageY + 32 * weightKg + 14 * heightCm + 600
-        : 82 * ageY + 36 * weightKg + 15 * heightCm + 700;
-      break;
-    default: // bas
-      kcal = fields.gender === "fille"
-        ? 70 * ageY + 28 * weightKg + 12 * heightCm + 400
-        : 72 * ageY + 30 * weightKg + 13 * heightCm + 500;
-  }
-
-  kcal = Math.max(500, Math.round(kcal)); // Plancher
-
-  // Macro-recommandations (en % des apports totaux, source OMS/PNNS enfants : 10-15% prot ; 50-55% gluc ; 30-35% lip.)
-  const prot = Math.round((kcal * 0.12) / 4); // 4kcal/g protéine
-  const gluc = Math.round((kcal * 0.53) / 4);
-  const lip = Math.round((kcal * 0.34) / 9);
-
-  return {
-    kcal,
-    prot,
-    gluc,
-    lip,
-  };
-}
-
 export default function ChildNutritionCalculatorForm() {
-  const [fields, setFields] = useState<FormFields>({
+  const {
+    calculateNutritionalNeeds,
+    analyzeNutrition,
+    getRecommendedFoods,
+    generateMealPlan,
+    saveProfile,
+  } = useChildNutrition();
+
+  const [formData, setFormData] = useState({
     age: "",
-    ageUnit: "années",
+    ageUnit: "years" as "months" | "years",
     weight: "",
     height: "",
-    gender: "fille",
-    activity: "modéré",
+    gender: "girl" as "boy" | "girl",
+    activityLevel: "moderate" as "low" | "moderate" | "high",
   });
-  const [submitted, setSubmitted] = useState(false);
 
-  const valid =
-    !!fields.age &&
-    !!fields.weight &&
-    !!fields.height &&
-    Number(fields.age) > 0 &&
-    Number(fields.weight) > 0 &&
-    Number(fields.height) > 0;
+  const [activeTab, setActiveTab] = useState("calculator");
+  const [nutritionResults, setNutritionResults] = useState<any>(null);
+  const [mealPlan, setMealPlan] = useState<any>(null);
 
-  const needs = useMemo(() => (valid ? calcNeeds(fields) : null), [fields, valid]);
-
-  function handleChange<K extends keyof FormFields>(key: K, value: FormFields[K]) {
-    setFields(prev => ({
-      ...prev,
-      [key]: value,
-    }));
-    setSubmitted(false);
-  }
-
-  function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-  }
+    
+    const profile: ChildNutritionProfile = {
+      id: `profile-${Date.now()}`,
+      age: Number(formData.age),
+      ageUnit: formData.ageUnit,
+      weight: Number(formData.weight),
+      height: Number(formData.height),
+      gender: formData.gender,
+      activityLevel: formData.activityLevel,
+      specialConditions: [],
+      createdAt: Date.now(),
+    };
+
+    const needs = calculateNutritionalNeeds(profile);
+    const analysis = analyzeNutrition(profile, {});
+    const recommendedFoods = getRecommendedFoods(profile);
+    const generatedMealPlan = generateMealPlan(profile);
+
+    setNutritionResults({
+      profile,
+      needs,
+      analysis,
+      recommendedFoods,
+    });
+    setMealPlan(generatedMealPlan);
+    saveProfile(profile);
+    setActiveTab("results");
+  };
+
+  const isFormValid = useMemo(() => {
+    return formData.age && formData.weight && formData.height &&
+           Number(formData.age) > 0 && Number(formData.weight) > 0 && Number(formData.height) > 0;
+  }, [formData]);
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormItem>
-          <FormLabel>Âge</FormLabel>
-          <div className="flex gap-2">
-            <FormControl>
-              <Input
-                type="number"
-                min={0}
-                max={16}
-                value={fields.age}
-                onChange={e => handleChange("age", e.target.value === "" ? "" : Number(e.target.value))}
-                placeholder="ex : 3"
-                step="1"
-              />
-            </FormControl>
-            <select
-              value={fields.ageUnit}
-              className={cn(
-                "px-2 py-1 border rounded bg-muted text-base md:text-sm max-w-[80px]"
-              )}
-              onChange={e => handleChange("ageUnit", e.target.value as any)}
-            >
-              <option value="années">années</option>
-              <option value="mois">mois</option>
-            </select>
-          </div>
-        </FormItem>
-        <FormItem>
-          <FormLabel>Sexe</FormLabel>
-          <FormControl>
-            <RadioGroup
-              value={fields.gender}
-              onValueChange={v => handleChange("gender", v as any)}
-              className="flex gap-4"
-            >
-              <RadioGroupItem value="fille" id="gender-fille" />
-              <label htmlFor="gender-fille" className="mr-3 cursor-pointer">Fille</label>
-              <RadioGroupItem value="garçon" id="gender-garçon" />
-              <label htmlFor="gender-garçon" className="cursor-pointer">Garçon</label>
-            </RadioGroup>
-          </FormControl>
-        </FormItem>
-        <FormItem>
-          <FormLabel>Poids (kg)</FormLabel>
-          <FormControl>
-            <Input
-              type="number"
-              min={2}
-              max={70}
-              step="0.1"
-              value={fields.weight}
-              onChange={e => handleChange("weight", e.target.value === "" ? "" : Number(e.target.value))}
-              placeholder="ex : 14.2"
-            />
-          </FormControl>
-        </FormItem>
-        <FormItem>
-          <FormLabel>Taille (cm)</FormLabel>
-          <FormControl>
-            <Input
-              type="number"
-              min={45}
-              max={180}
-              value={fields.height}
-              onChange={e => handleChange("height", e.target.value === "" ? "" : Number(e.target.value))}
-              placeholder="ex : 98"
-            />
-          </FormControl>
-        </FormItem>
-        <FormItem className="md:col-span-2">
-          <FormLabel>Niveau d’activité physique</FormLabel>
-          <FormControl>
-            <RadioGroup
-              value={fields.activity}
-              onValueChange={v => handleChange("activity", v as ActivityLevel)}
-              className="flex gap-3"
-            >
-              <RadioGroupItem value="bas" id="activity-bas" />
-              <label htmlFor="activity-bas" className="mr-5 cursor-pointer">Bas</label>
-              <RadioGroupItem value="modéré" id="activity-modéré" />
-              <label htmlFor="activity-modéré" className="mr-5 cursor-pointer">Modéré</label>
-              <RadioGroupItem value="élevé" id="activity-élevé" />
-              <label htmlFor="activity-élevé" className="cursor-pointer">Élevé</label>
-            </RadioGroup>
-          </FormControl>
-        </FormItem>
-      </div>
-      <Button type="submit" disabled={!valid} className="w-full">
-        Calculer les besoins
-      </Button>
-      {submitted && needs && (
-        <div className="mt-6 p-4 border rounded-lg bg-accent/20">
-          <div className="font-semibold mb-1 text-lg text-center">Besoins nutritionnels estimés</div>
-          <div className="flex flex-col md:flex-row gap-4 justify-center items-center my-2">
-            <div className="px-2"><span className="font-bold">{needs.kcal}</span> kcal / jour</div>
-            <div className="px-2"><span className="font-bold">{needs.prot}</span> g protéines</div>
-            <div className="px-2"><span className="font-bold">{needs.gluc}</span> g glucides</div>
-            <div className="px-2"><span className="font-bold">{needs.lip}</span> g lipides</div>
-          </div>
-          <div className="text-muted-foreground text-sm mt-2 text-center">
-            Ces valeurs sont des estimations.<br/>
-            Un professionnel peut affiner selon pathologie/métabolisme personnel.
-          </div>
-          <div className="border-t mt-4 pt-3">
-            <div className="font-semibold mb-1">Suggestions d’aliments équilibrés :</div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-              {Object.entries(ALIMENTS).map(([macro, aliments]) => (
-                <div key={macro}>
-                  <div className="font-medium underline mb-1">{macro.charAt(0).toUpperCase()+macro.slice(1)}</div>
-                  <ul className="list-disc list-inside">
-                    {aliments.map(a => <li key={a}>{a}</li>)}
-                  </ul>
+    <div className="space-y-6">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="calculator">Calculateur</TabsTrigger>
+          <TabsTrigger value="results" disabled={!nutritionResults}>Résultats</TabsTrigger>
+          <TabsTrigger value="meal-plan" disabled={!mealPlan}>Menu Type</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="calculator" className="space-y-4">
+          <Card variant="outlined" size="md">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Calculator size={20} />
+                Profil Nutritionnel de l'Enfant
+              </h3>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormItem>
+                    <FormLabel>Âge</FormLabel>
+                    <div className="flex gap-2">
+                      <FormControl>
+                        <Input
+                          type="number"
+                          min={0}
+                          max={18}
+                          value={formData.age}
+                          onChange={e => setFormData(prev => ({ ...prev, age: e.target.value }))}
+                          placeholder="3"
+                          step="1"
+                        />
+                      </FormControl>
+                      <select
+                        value={formData.ageUnit}
+                        className="px-3 py-2 border rounded bg-background text-sm min-w-[80px]"
+                        onChange={e => setFormData(prev => ({ ...prev, ageUnit: e.target.value as any }))}
+                      >
+                        <option value="years">ans</option>
+                        <option value="months">mois</option>
+                      </select>
+                    </div>
+                  </FormItem>
+
+                  <FormItem>
+                    <FormLabel>Sexe</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        value={formData.gender}
+                        onValueChange={v => setFormData(prev => ({ ...prev, gender: v as any }))}
+                        className="flex gap-4"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="girl" id="gender-girl" />
+                          <label htmlFor="gender-girl" className="cursor-pointer">Fille</label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="boy" id="gender-boy" />
+                          <label htmlFor="gender-boy" className="cursor-pointer">Garçon</label>
+                        </div>
+                      </RadioGroup>
+                    </FormControl>
+                  </FormItem>
+
+                  <FormItem>
+                    <FormLabel>Poids (kg)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={2}
+                        max={100}
+                        step="0.1"
+                        value={formData.weight}
+                        onChange={e => setFormData(prev => ({ ...prev, weight: e.target.value }))}
+                        placeholder="14.2"
+                      />
+                    </FormControl>
+                  </FormItem>
+
+                  <FormItem>
+                    <FormLabel>Taille (cm)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={45}
+                        max={200}
+                        value={formData.height}
+                        onChange={e => setFormData(prev => ({ ...prev, height: e.target.value }))}
+                        placeholder="98"
+                      />
+                    </FormControl>
+                  </FormItem>
+
+                  <FormItem className="md:col-span-2">
+                    <FormLabel>Niveau d'activité physique</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        value={formData.activityLevel}
+                        onValueChange={v => setFormData(prev => ({ ...prev, activityLevel: v as any }))}
+                        className="flex gap-6"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="low" id="activity-low" />
+                          <label htmlFor="activity-low" className="cursor-pointer">Faible</label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="moderate" id="activity-moderate" />
+                          <label htmlFor="activity-moderate" className="cursor-pointer">Modéré</label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="high" id="activity-high" />
+                          <label htmlFor="activity-high" className="cursor-pointer">Élevé</label>
+                        </div>
+                      </RadioGroup>
+                    </FormControl>
+                  </FormItem>
                 </div>
-              ))}
+
+                <Button type="submit" disabled={!isFormValid} className="w-full">
+                  Calculer les besoins nutritionnels
+                </Button>
+              </form>
             </div>
-          </div>
-        </div>
-      )}
-    </form>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="results" className="space-y-4">
+          {nutritionResults && (
+            <>
+              {/* Besoins nutritionnels */}
+              <Card variant="outlined" size="md">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <TrendingUp size={20} />
+                    Besoins Nutritionnels Quotidiens
+                  </h3>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="text-center p-3 bg-blue-50 rounded-lg">
+                      <div className="text-2xl font-bold text-blue-600">
+                        {nutritionResults.needs.calories}
+                      </div>
+                      <div className="text-sm text-blue-800">kcal/jour</div>
+                    </div>
+                    <div className="text-center p-3 bg-red-50 rounded-lg">
+                      <div className="text-2xl font-bold text-red-600">
+                        {nutritionResults.needs.proteins}g
+                      </div>
+                      <div className="text-sm text-red-800">Protéines</div>
+                    </div>
+                    <div className="text-center p-3 bg-yellow-50 rounded-lg">
+                      <div className="text-2xl font-bold text-yellow-600">
+                        {nutritionResults.needs.carbohydrates}g
+                      </div>
+                      <div className="text-sm text-yellow-800">Glucides</div>
+                    </div>
+                    <div className="text-center p-3 bg-orange-50 rounded-lg">
+                      <div className="text-2xl font-bold text-orange-600">
+                        {nutritionResults.needs.lipids}g
+                      </div>
+                      <div className="text-sm text-orange-800">Lipides</div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                    <div className="text-center p-2 border rounded">
+                      <div className="font-semibold">{nutritionResults.needs.fiber}g</div>
+                      <div className="text-xs text-muted-foreground">Fibres</div>
+                    </div>
+                    <div className="text-center p-2 border rounded">
+                      <div className="font-semibold">{nutritionResults.needs.calcium}mg</div>
+                      <div className="text-xs text-muted-foreground">Calcium</div>
+                    </div>
+                    <div className="text-center p-2 border rounded">
+                      <div className="font-semibold">{nutritionResults.needs.iron}mg</div>
+                      <div className="text-xs text-muted-foreground">Fer</div>
+                    </div>
+                    <div className="text-center p-2 border rounded">
+                      <div className="font-semibold">{nutritionResults.needs.vitaminC}mg</div>
+                      <div className="text-xs text-muted-foreground">Vitamine C</div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Recommandations */}
+              {nutritionResults.analysis.recommendations.length > 0 && (
+                <Card variant="outlined" size="md">
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold mb-4">Recommandations Nutritionnelles</h3>
+                    <ul className="space-y-2">
+                      {nutritionResults.analysis.recommendations.map((rec: string, index: number) => (
+                        <li key={index} className="flex items-start gap-2">
+                          <span className="text-green-500 mt-1">✓</span>
+                          <span className="text-sm">{rec}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Card>
+              )}
+
+              {/* Aliments recommandés */}
+              <Card variant="outlined" size="md">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold mb-4">Aliments Recommandés</h3>
+                  <div className="grid gap-4">
+                    {Object.entries(
+                      nutritionResults.recommendedFoods.reduce((acc: any, food: any) => {
+                        if (!acc[food.category]) acc[food.category] = [];
+                        acc[food.category].push(food);
+                        return acc;
+                      }, {})
+                    ).map(([category, foods]: [string, any]) => (
+                      <div key={category} className="space-y-2">
+                        <Badge className={FOOD_CATEGORIES[category as keyof typeof FOOD_CATEGORIES].color}>
+                          {FOOD_CATEGORIES[category as keyof typeof FOOD_CATEGORIES].label}
+                        </Badge>
+                        <div className="flex flex-wrap gap-2">
+                          {foods.slice(0, 4).map((food: any) => (
+                            <span 
+                              key={food.id}
+                              className="px-2 py-1 bg-gray-100 rounded text-sm"
+                            >
+                              {food.name} ({food.typicalPortionChild}g)
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+
+              {/* Disclaimer */}
+              <Alert>
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription>
+                  Ces recommandations sont indicatives et basées sur les références ANSES/OMS. 
+                  Consultez un professionnel de santé pour un suivi personnalisé, 
+                  notamment en cas d'allergies ou de conditions particulières.
+                </AlertDescription>
+              </Alert>
+            </>
+          )}
+        </TabsContent>
+
+        <TabsContent value="meal-plan" className="space-y-4">
+          {mealPlan && nutritionResults && (
+            <>
+              <Card variant="outlined" size="md">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <UtensilsCrossed size={20} />
+                    Menu Type Journalier
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-6">
+                    Suggestion de menu équilibré pour {nutritionResults.profile.age} {nutritionResults.profile.ageUnit === 'years' ? 'ans' : 'mois'}
+                  </p>
+
+                  <div className="space-y-6">
+                    {Object.entries(mealPlan).map(([mealName, foods]: [string, any]) => (
+                      <div key={mealName} className="space-y-3">
+                        <h4 className="font-semibold text-base capitalize border-b pb-1">
+                          {mealName === 'breakfast' ? 'Petit-déjeuner' :
+                           mealName === 'lunch' ? 'Déjeuner' :
+                           mealName === 'snack' ? 'Goûter' : 'Dîner'}
+                        </h4>
+                        
+                        <div className="grid gap-2">
+                          {foods.map((food: any, index: number) => (
+                            <div key={food.id} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                              <div className="flex items-center gap-3">
+                                <Badge 
+                                  className={cn(
+                                    "text-xs",
+                                    FOOD_CATEGORIES[food.category as keyof typeof FOOD_CATEGORIES].color
+                                  )}
+                                >
+                                  {FOOD_CATEGORIES[food.category as keyof typeof FOOD_CATEGORIES].label}
+                                </Badge>
+                                <span className="font-medium">{food.name}</span>
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                {food.typicalPortionChild}g • {Math.round((food.nutritionPer100g.calories * food.typicalPortionChild) / 100)} kcal
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+
+              <Card variant="outlined" size="md">
+                <div className="p-6">
+                  <Button 
+                    className="w-full"
+                    variant="outline"
+                    onClick={() => {
+                      const mealPlanText = Object.entries(mealPlan).map(([meal, foods]: [string, any]) => {
+                        const mealTitle = meal === 'breakfast' ? 'Petit-déjeuner' :
+                                         meal === 'lunch' ? 'Déjeuner' :
+                                         meal === 'snack' ? 'Goûter' : 'Dîner';
+                        const foodsList = foods.map((f: any) => `- ${f.name} (${f.typicalPortionChild}g)`).join('\n');
+                        return `${mealTitle}:\n${foodsList}`;
+                      }).join('\n\n');
+
+                      const blob = new Blob([
+                        `Menu Type pour ${nutritionResults.profile.age} ${nutritionResults.profile.ageUnit === 'years' ? 'ans' : 'mois'}\n\n${mealPlanText}\n\nBesoins nutritionnels:\n- Calories: ${nutritionResults.needs.calories} kcal\n- Protéines: ${nutritionResults.needs.proteins}g\n- Glucides: ${nutritionResults.needs.carbohydrates}g\n- Lipides: ${nutritionResults.needs.lipids}g`
+                      ], { type: 'text/plain' });
+                      
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `menu-nutritionnel-${nutritionResults.profile.age}${nutritionResults.profile.ageUnit}.txt`;
+                      a.click();
+                    }}
+                  >
+                    <FileText className="mr-2 h-4 w-4" />
+                    Télécharger le menu type
+                  </Button>
+                </div>
+              </Card>
+            </>
+          )}
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }
