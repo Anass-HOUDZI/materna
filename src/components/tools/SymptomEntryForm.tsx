@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -18,12 +17,20 @@ interface SymptomEntryFormProps {
 export default function SymptomEntryForm({ onSubmit, onCancel }: SymptomEntryFormProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedSymptom, setSelectedSymptom] = useState<string>('');
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    date: string;
+    intensity: number;
+    duration: 'ponctuel' | 'persistant';
+    triggers: string[];
+    remediesTried: string[];
+    remedyEffectiveness: number;
+    notes: string;
+  }>({
     date: new Date().toISOString().split('T')[0],
     intensity: 5,
-    duration: 'ponctuel' as const,
-    triggers: [] as string[],
-    remediesTried: [] as string[],
+    duration: 'ponctuel',
+    triggers: [],
+    remediesTried: [],
     remedyEffectiveness: 5,
     notes: ''
   });

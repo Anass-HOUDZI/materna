@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -57,7 +56,7 @@ export default function SymptomHistory({ entries, onEdit, onDelete }: SymptomHis
 
   if (entries.length === 0) {
     return (
-      <Card variant="outline" size="md" className="text-center py-8">
+      <Card variant="outlined" size="md" className="text-center py-8">
         <div className="text-slate-500">
           <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
           <h3 className="font-medium mb-2">Aucun symptôme enregistré</h3>
@@ -124,7 +123,7 @@ export default function SymptomHistory({ entries, onEdit, onDelete }: SymptomHis
           const category = symptom ? getCategoryInfo(symptom.category) : null;
           
           return (
-            <Card key={entry.id} variant="outline" size="sm" className="hover:shadow-md transition-shadow">
+            <Card key={entry.id} variant="outlined" size="sm" className="hover:shadow-md transition-shadow">
               <Layout direction="row" gap="md" align="center" justify="between">
                 <div className="flex-1 min-w-0">
                   <Layout direction="row" gap="sm" align="center" wrap>

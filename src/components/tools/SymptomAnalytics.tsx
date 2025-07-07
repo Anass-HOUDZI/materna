@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Layout } from '@/components/ui/Layout';
@@ -101,7 +100,7 @@ export default function SymptomAnalytics({ entries, patterns }: SymptomAnalytics
 
   if (entries.length === 0) {
     return (
-      <Card variant="outline" size="md" className="text-center py-8">
+      <Card variant="outlined" size="md" className="text-center py-8">
         <div className="text-slate-500">
           <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
           <h3 className="font-medium mb-2">Pas encore d'analyse</h3>
@@ -115,19 +114,19 @@ export default function SymptomAnalytics({ entries, patterns }: SymptomAnalytics
     <div className="space-y-6">
       {/* Statistiques générales */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card variant="outline" size="sm" className="text-center">
+        <Card variant="outlined" size="sm" className="text-center">
           <div className="text-2xl font-bold text-blue-600">{analytics.totalEntries}</div>
           <div className="text-sm text-slate-600">Total symptômes</div>
         </Card>
-        <Card variant="outline" size="sm" className="text-center">
+        <Card variant="outlined" size="sm" className="text-center">
           <div className="text-2xl font-bold text-green-600">{analytics.entriesLast7Days}</div>
           <div className="text-sm text-slate-600">Cette semaine</div>
         </Card>
-        <Card variant="outline" size="sm" className="text-center">
+        <Card variant="outlined" size="sm" className="text-center">
           <div className="text-2xl font-bold text-purple-600">{analytics.entriesLast30Days}</div>
           <div className="text-sm text-slate-600">Ce mois</div>
         </Card>
-        <Card variant="outline" size="sm" className="text-center">
+        <Card variant="outlined" size="sm" className="text-center">
           <div className="text-2xl font-bold text-orange-600">{analytics.averageIntensity.toFixed(1)}</div>
           <div className="text-sm text-slate-600">Intensité moyenne</div>
         </Card>
