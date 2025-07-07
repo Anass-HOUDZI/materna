@@ -2,7 +2,6 @@
 import React from "react";
 import { AccordionSimple, AccordionSimpleItem } from "@/components/ui/accordion-simple";
 import Footer from "@/components/ui/Footer";
-import FamilyIllustration from "@/components/home/FamilyIllustration";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Layout } from "@/components/ui/Layout";
@@ -10,17 +9,29 @@ import CategoryCard from "@/components/ui/CategoryCard";
 import ToolCard from "@/components/ui/ToolCard";
 import { CATEGORIES, TOOLS_DATA } from "@/data/categories";
 import { useFavorites } from "@/hooks/useFavorites";
-import { ChevronDown, Filter } from "lucide-react";
+import { ChevronDown, Filter, Shield, Wifi, Smartphone, Lock } from "lucide-react";
 
 const HERO_CONTENT = {
   title: "MomTech Suite",
   subtitle: "Suite complète et gratuite",
   description: "50 outils santé, grossesse, bébé, sécurité et parentalité 100% offline, gratuits, privacy-first.",
   features: [
-    "Outils médicaux validés scientifiquement",
-    "100% offline et privacy-first", 
-    "Interface optimisée mobile",
-    "Données chiffrées localement"
+    {
+      icon: <Shield size={20} className="text-blue-600" />,
+      text: "Outils médicaux validés scientifiquement"
+    },
+    {
+      icon: <Wifi size={20} className="text-green-600" />,
+      text: "100% offline et privacy-first"
+    },
+    {
+      icon: <Smartphone size={20} className="text-purple-600" />,
+      text: "Interface optimisée mobile"
+    },
+    {
+      icon: <Lock size={20} className="text-orange-600" />,
+      text: "Données chiffrées localement"
+    }
   ]
 };
 
@@ -44,54 +55,52 @@ const FAQ_DATA = [
 ];
 
 const HeroSection = React.memo(() => (
-  <div className="text-center py-16 mobile-s:py-20 sm:py-24">
-    <div className="animate-fade-in mb-8">
-      <FamilyIllustration className="w-full max-w-xs mobile-s:max-w-sm sm:max-w-md mx-auto" />
-    </div>
-    
-    <Layout direction="column" gap="lg" align="center" className="animate-fade-in">
-      <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 
-                      text-blue-700 rounded-full text-sm font-semibold border border-blue-200/50 backdrop-blur-sm">
+  <div className="text-center py-12 mobile-s:py-16 sm:py-20 lg:py-24">
+    <Layout direction="column" gap="2xl" align="center" className="animate-fade-in">
+      <div className="inline-flex items-center gap-2 px-4 mobile-s:px-6 py-2 mobile-s:py-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 
+                      text-blue-700 rounded-full text-xs mobile-s:text-sm font-semibold border border-blue-200/50 backdrop-blur-sm">
         <span className="text-yellow-500" aria-hidden="true">⭐</span>
         <span>Suite complète gratuite et professionnelle</span>
       </div>
       
-      <h1 className="text-4xl mobile-s:text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-800 leading-tight tracking-tight">
+      <h1 className="text-3xl mobile-s:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-slate-800 leading-tight tracking-tight px-4">
         {HERO_CONTENT.title}
-        <span className="block text-3xl mobile-s:text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-bold mt-2">
+        <span className="block text-2xl mobile-s:text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-bold mt-2">
           {HERO_CONTENT.subtitle}
         </span>
       </h1>
       
-      <p className="text-xl mobile-s:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-medium">
+      <p className="text-lg mobile-s:text-xl sm:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-medium px-4">
         {HERO_CONTENT.description}
       </p>
       
-      <Layout direction="row" gap="md" justify="center" wrap className="mt-8">
+      <Layout direction="row" gap="md" justify="center" wrap className="mt-6 mobile-s:mt-8 px-4">
         <Button 
           size="lg"
           onClick={() => document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' })}
           icon={<span aria-hidden="true">🔍</span>}
-          className="gap-3"
+          className="gap-3 text-base mobile-s:text-lg px-6 mobile-s:px-8"
         >
           Découvrir les outils
         </Button>
-        <div className="inline-flex items-center gap-3 px-8 py-4 bg-white/80 backdrop-blur-sm border-2 border-slate-200 
-                       text-slate-700 rounded-2xl font-semibold text-lg shadow-md">
+        <div className="inline-flex items-center gap-3 px-6 mobile-s:px-8 py-3 mobile-s:py-4 bg-white/80 backdrop-blur-sm border-2 border-slate-200 
+                       text-slate-700 rounded-2xl font-semibold text-base mobile-s:text-lg shadow-md">
           <span className="text-green-500" aria-hidden="true">⚡</span>
           <span>100% Gratuit</span>
         </div>
       </Layout>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-12 max-w-2xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mobile-s:gap-4 mt-8 mobile-s:mt-12 max-w-3xl mx-auto px-4">
         {HERO_CONTENT.features.map((feature, index) => (
           <div 
             key={index}
-            className="flex items-center gap-3 p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-white/40 
-                     shadow-sm hover:bg-white/80 hover:shadow-md transition-all duration-300"
+            className="flex items-center gap-3 p-3 mobile-s:p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-white/40 
+                     shadow-sm transition-all duration-300"
           >
-            <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex-shrink-0" />
-            <span className="text-slate-700 font-medium">{feature}</span>
+            <div className="flex-shrink-0">
+              {feature.icon}
+            </div>
+            <span className="text-slate-700 font-medium text-sm mobile-s:text-base">{feature.text}</span>
           </div>
         ))}
       </div>
@@ -166,18 +175,18 @@ const Index = React.memo(() => {
 
         {/* Categories Section */}
         {CATEGORIES.length > 0 && (
-          <Layout direction="column" gap="3xl" id="categories">
+          <Layout direction="column" gap="3xl" id="categories" className="mb-16 mobile-s:mb-20 sm:mb-24">
             <Layout direction="column" gap="lg" align="center" className="text-center">
-              <h2 className="text-3xl mobile-s:text-4xl sm:text-5xl font-bold text-slate-800">
+              <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 px-4">
                 Découvrez nos catégories
               </h2>
-              <p className="text-lg mobile-s:text-xl text-slate-600 max-w-3xl font-medium">
+              <p className="text-base mobile-s:text-lg sm:text-xl text-slate-600 max-w-3xl font-medium px-4">
                 Chaque catégorie regroupe des outils spécialisés pour répondre à vos besoins spécifiques
               </p>
             </Layout>
 
             {/* Desktop Category Filter */}
-            <div className="hidden sm:flex flex-wrap gap-3 justify-center">
+            <div className="hidden sm:flex flex-wrap gap-3 justify-center px-4">
               <Button
                 variant={selectedCategory === "all" ? "primary" : "outline"}
                 onClick={() => setSelectedCategory("all")}
@@ -196,7 +205,7 @@ const Index = React.memo(() => {
               ))}
             </div>
 
-            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 mobile-s:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4">
               {CATEGORIES.map((category) => (
                 <CategoryCard
                   key={category.id}
@@ -212,19 +221,19 @@ const Index = React.memo(() => {
           </Layout>
         )}
 
-        {/* Tools Section */}
-        <Layout direction="column" gap="2xl">
+        {/* Tools Section avec plus de marge */}
+        <Layout direction="column" gap="2xl" className="my-20 mobile-s:my-24 sm:my-28 lg:my-32">
           <Layout direction="column" gap="md" align="center" className="text-center">
-            <h2 className="text-3xl mobile-s:text-4xl font-bold text-slate-800">
+            <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl font-bold text-slate-800 px-4">
               {selectedCategory === "all" ? "Tous nos outils" : 
                `Outils ${CATEGORIES.find(c => c.id === selectedCategory)?.title || ""}`}
             </h2>
-            <p className="text-slate-600 font-medium">
+            <p className="text-slate-600 font-medium px-4">
               {filteredTools.length} outil{filteredTools.length > 1 ? 's' : ''} disponible{filteredTools.length > 1 ? 's' : ''}
             </p>
           </Layout>
 
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-4 mobile-s:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4">
             {filteredTools.map((tool) => (
               <ToolCard
                 key={tool.id}
@@ -244,17 +253,17 @@ const Index = React.memo(() => {
 
         {/* Favorite Tools Section */}
         {favoriteTools.length > 0 && (
-          <Layout direction="column" gap="2xl">
+          <Layout direction="column" gap="2xl" className="mb-16 mobile-s:mb-20 sm:mb-24">
             <Layout direction="column" gap="md" align="center" className="text-center">
-              <h2 className="text-2xl mobile-s:text-3xl font-bold text-slate-800">
+              <h2 className="text-xl mobile-s:text-2xl sm:text-3xl font-bold text-slate-800 px-4">
                 Vos outils favoris
               </h2>
-              <p className="text-slate-600 font-medium">
+              <p className="text-slate-600 font-medium px-4">
                 Accédez rapidement à vos outils préférés
               </p>
             </Layout>
 
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid gap-4 mobile-s:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4">
               {favoriteTools.map((tool) => (
                 <ToolCard
                   key={tool.id}
@@ -273,13 +282,13 @@ const Index = React.memo(() => {
           </Layout>
         )}
 
-        {/* FAQ Section */}
-        <Layout direction="column" gap="2xl" className="w-full max-w-4xl mx-auto">
-          <h2 className="text-3xl mobile-s:text-4xl font-bold text-center text-slate-800">
+        {/* FAQ Section avec plus de marge */}
+        <Layout direction="column" gap="2xl" className="w-full max-w-4xl mx-auto mt-24 mobile-s:mt-28 sm:mt-32 lg:mt-36">
+          <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl font-bold text-center text-slate-800 px-4">
             Questions fréquentes
           </h2>
           
-          <Card variant="glass" size="lg" className="animate-fade-in">
+          <Card variant="glass" size="lg" className="animate-fade-in mx-4">
             <AccordionSimple>
               {FAQ_DATA.map((item, index) => (
                 <AccordionSimpleItem key={index} title={item.question}>
