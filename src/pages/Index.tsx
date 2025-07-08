@@ -9,7 +9,8 @@ import CategoryCard from "@/components/ui/CategoryCard";
 import ToolCard from "@/components/ui/ToolCard";
 import { CATEGORIES, TOOLS_DATA } from "@/data/categories";
 import { useFavorites } from "@/hooks/useFavorites";
-import { ChevronDown, Filter, Shield, Wifi, Smartphone, Lock } from "lucide-react";
+import { ChevronDown, Filter } from "lucide-react";
+import Icon from "@/components/ui/Icon";
 
 const HERO_CONTENT = {
   title: "MomTech Suite",
@@ -17,19 +18,19 @@ const HERO_CONTENT = {
   description: "50 outils santé, grossesse, bébé, sécurité et parentalité 100% offline, gratuits, privacy-first.",
   features: [
     {
-      icon: <Shield size={20} className="text-blue-600" />,
+      icon: <Icon name="health" size={20} className="text-blue-600" />,
       text: "Outils médicaux validés scientifiquement"
     },
     {
-      icon: <Wifi size={20} className="text-green-600" />,
+      icon: <Icon name="security" size={20} className="text-green-600" />,
       text: "100% offline et privacy-first"
     },
     {
-      icon: <Smartphone size={20} className="text-purple-600" />,
+      icon: <Icon name="child" size={20} className="text-purple-600" />,
       text: "Interface optimisée mobile"
     },
     {
-      icon: <Lock size={20} className="text-orange-600" />,
+      icon: <Icon name="pregnancy" size={20} className="text-orange-600" />,
       text: "Données chiffrées localement"
     }
   ]
@@ -63,14 +64,14 @@ const HeroSection = React.memo(() => (
         <span>Suite complète gratuite et professionnelle</span>
       </div>
       
-      <h1 className="text-3xl mobile-s:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-slate-800 leading-tight tracking-tight px-4">
+      <h1 className="text-3xl mobile-s:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight tracking-tight px-4">
         {HERO_CONTENT.title}
         <span className="block text-2xl mobile-s:text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-bold mt-2">
           {HERO_CONTENT.subtitle}
         </span>
       </h1>
       
-      <p className="text-lg mobile-s:text-xl sm:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-medium px-4">
+      <p className="text-lg mobile-s:text-xl sm:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-medium px-4">
         {HERO_CONTENT.description}
       </p>
       
@@ -83,8 +84,8 @@ const HeroSection = React.memo(() => (
         >
           Découvrir les outils
         </Button>
-        <div className="inline-flex items-center gap-3 px-6 mobile-s:px-8 py-3 mobile-s:py-4 bg-white/80 backdrop-blur-sm border-2 border-slate-200 
-                       text-slate-700 rounded-2xl font-semibold text-base mobile-s:text-lg shadow-md">
+        <div className="inline-flex items-center gap-3 px-6 mobile-s:px-8 py-3 mobile-s:py-4 bg-card/80 backdrop-blur-sm border-2 border-border 
+                       text-foreground rounded-2xl font-semibold text-base mobile-s:text-lg shadow-md">
           <span className="text-green-500" aria-hidden="true">⚡</span>
           <span>100% Gratuit</span>
         </div>
@@ -94,13 +95,13 @@ const HeroSection = React.memo(() => (
         {HERO_CONTENT.features.map((feature, index) => (
           <div 
             key={index}
-            className="flex items-center gap-3 p-3 mobile-s:p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-white/40 
+            className="flex items-center gap-3 p-3 mobile-s:p-4 bg-card/60 backdrop-blur-sm rounded-xl border border-border/40 
                      shadow-sm transition-all duration-300"
           >
             <div className="flex-shrink-0">
               {feature.icon}
             </div>
-            <span className="text-slate-700 font-medium text-sm mobile-s:text-base">{feature.text}</span>
+            <span className="text-foreground font-medium text-sm mobile-s:text-base">{feature.text}</span>
           </div>
         ))}
       </div>
@@ -119,7 +120,7 @@ const Index = React.memo(() => {
     : TOOLS_DATA.filter(tool => tool.category === selectedCategory);
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
+    <div className="min-h-screen bg-background">
       <div className="w-full max-w-7xl mx-auto px-4 mobile-s:px-6 sm:px-8 pt-safe-top pb-safe-bottom">
         <HeroSection />
 
@@ -149,7 +150,7 @@ const Index = React.memo(() => {
                     setSelectedCategory("all");
                     setShowMobileFilter(false);
                   }}
-                  className={selectedCategory === "all" ? "bg-blue-50 text-blue-700" : ""}
+                  className={selectedCategory === "all" ? "bg-accent text-accent-foreground" : ""}
                 >
                   Toutes les catégories
                 </Button>
@@ -162,7 +163,7 @@ const Index = React.memo(() => {
                       setSelectedCategory(category.id);
                       setShowMobileFilter(false);
                     }}
-                    className={selectedCategory === category.id ? "bg-blue-50 text-blue-700" : ""}
+                    className={selectedCategory === category.id ? "bg-accent text-accent-foreground" : ""}
                     icon={React.createElement(category.icon, { size: 18 })}
                   >
                     {category.title}
@@ -177,10 +178,10 @@ const Index = React.memo(() => {
         {CATEGORIES.length > 0 && (
           <Layout direction="column" gap="3xl" id="categories" className="mb-16 mobile-s:mb-20 sm:mb-24">
             <Layout direction="column" gap="lg" align="center" className="text-center">
-              <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 px-4">
+              <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl md:text-5xl font-bold text-foreground px-4">
                 Découvrez nos catégories
               </h2>
-              <p className="text-base mobile-s:text-lg sm:text-xl text-slate-600 max-w-3xl font-medium px-4">
+              <p className="text-base mobile-s:text-lg sm:text-xl text-muted-foreground max-w-3xl font-medium px-4">
                 Chaque catégorie regroupe des outils spécialisés pour répondre à vos besoins spécifiques
               </p>
             </Layout>
@@ -221,14 +222,14 @@ const Index = React.memo(() => {
           </Layout>
         )}
 
-        {/* Tools Section avec plus de marge */}
+        {/* Tools Section */}
         <Layout direction="column" gap="2xl" className="my-20 mobile-s:my-24 sm:my-28 lg:my-32">
           <Layout direction="column" gap="md" align="center" className="text-center">
-            <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl font-bold text-slate-800 px-4">
+            <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl font-bold text-foreground px-4">
               {selectedCategory === "all" ? "Tous nos outils" : 
                `Outils ${CATEGORIES.find(c => c.id === selectedCategory)?.title || ""}`}
             </h2>
-            <p className="text-slate-600 font-medium px-4">
+            <p className="text-muted-foreground font-medium px-4">
               {filteredTools.length} outil{filteredTools.length > 1 ? 's' : ''} disponible{filteredTools.length > 1 ? 's' : ''}
             </p>
           </Layout>
@@ -255,10 +256,10 @@ const Index = React.memo(() => {
         {favoriteTools.length > 0 && (
           <Layout direction="column" gap="2xl" className="mb-16 mobile-s:mb-20 sm:mb-24">
             <Layout direction="column" gap="md" align="center" className="text-center">
-              <h2 className="text-xl mobile-s:text-2xl sm:text-3xl font-bold text-slate-800 px-4">
+              <h2 className="text-xl mobile-s:text-2xl sm:text-3xl font-bold text-foreground px-4">
                 Vos outils favoris
               </h2>
-              <p className="text-slate-600 font-medium px-4">
+              <p className="text-muted-foreground font-medium px-4">
                 Accédez rapidement à vos outils préférés
               </p>
             </Layout>
@@ -282,9 +283,9 @@ const Index = React.memo(() => {
           </Layout>
         )}
 
-        {/* FAQ Section avec plus de marge */}
+        {/* FAQ Section */}
         <Layout direction="column" gap="2xl" className="w-full max-w-4xl mx-auto mt-24 mobile-s:mt-28 sm:mt-32 lg:mt-36">
-          <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl font-bold text-center text-slate-800 px-4">
+          <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl font-bold text-center text-foreground px-4">
             Questions fréquentes
           </h2>
           
@@ -292,7 +293,7 @@ const Index = React.memo(() => {
             <AccordionSimple>
               {FAQ_DATA.map((item, index) => (
                 <AccordionSimpleItem key={index} title={item.question}>
-                  <p className="text-slate-700 leading-relaxed font-medium">
+                  <p className="text-muted-foreground leading-relaxed font-medium">
                     {item.answer}
                   </p>
                 </AccordionSimpleItem>
