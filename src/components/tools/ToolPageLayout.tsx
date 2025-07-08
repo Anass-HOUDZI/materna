@@ -31,7 +31,7 @@ const ToolPageLayout = React.memo<ToolPageLayoutProps>(({
         <Card 
           variant="elevated" 
           size="lg" 
-          className="w-full max-w-4xl shadow-2xl border-0 bg-white/95 backdrop-blur-md"
+          className="w-full max-w-4xl shadow-2xl border-0 bg-card/95 backdrop-blur-md"
           state={loading ? "loading" : "default"}
         >
           {children}

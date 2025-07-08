@@ -1,3 +1,4 @@
+
 import React from "react";
 import { AccordionSimple, AccordionSimpleItem } from "@/components/ui/accordion-simple";
 import Footer from "@/components/ui/Footer";
@@ -56,8 +57,8 @@ const FAQ_DATA = [
 const HeroSection = React.memo(() => (
   <div className="text-center py-12 mobile-s:py-16 sm:py-20 lg:py-24">
     <Layout direction="column" gap="2xl" align="center" className="animate-fade-in">
-      <div className="inline-flex items-center gap-2 px-4 mobile-s:px-6 py-2 mobile-s:py-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 
-                      text-blue-700 dark:text-blue-300 rounded-full text-xs mobile-s:text-sm font-semibold border border-blue-200/50 backdrop-blur-sm">
+      <div className="inline-flex items-center gap-2 px-4 mobile-s:px-6 py-2 mobile-s:py-3 bg-primary/10 
+                      text-primary rounded-full text-xs mobile-s:text-sm font-semibold border border-primary/20 backdrop-blur-sm">
         <span className="text-yellow-500" aria-hidden="true">⭐</span>
         <span>Suite complète gratuite et professionnelle</span>
       </div>
@@ -172,6 +173,7 @@ const Index = React.memo(() => {
           )}
         </div>
 
+        {/* Categories Section */}
         {CATEGORIES.length > 0 && (
           <Layout direction="column" gap="3xl" id="categories" className="mb-16 mobile-s:mb-20 sm:mb-24">
             <Layout direction="column" gap="lg" align="center" className="text-center">

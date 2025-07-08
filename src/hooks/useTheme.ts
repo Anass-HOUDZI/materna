@@ -5,7 +5,6 @@ type Theme = 'dark' | 'light' | 'system';
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
-    // Récupérer le thème sauvegardé ou utiliser 'system' par défaut
     if (typeof window !== 'undefined') {
       return (localStorage.getItem('theme') as Theme) || 'system';
     }
@@ -29,7 +28,6 @@ export function useTheme() {
     applyTheme(theme);
     localStorage.setItem('theme', theme);
 
-    // Écouter les changements de préférence système
     if (theme === 'system') {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
       const handleChange = () => applyTheme('system');
@@ -39,10 +37,13 @@ export function useTheme() {
     }
   }, [theme]);
 
+  const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const isLight = theme === 'light' || (theme === 'system' && !window.matchMedia('(prefers-color-scheme: dark)').matches);
+
   return {
     theme,
     setTheme,
-    isDark: theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches),
-    isLight: theme === 'light' || (theme === 'system' && !window.matchMedia('(prefers-color-scheme: dark)').matches),
+    isDark,
+    isLight,
   };
 }

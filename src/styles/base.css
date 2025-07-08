@@ -2,7 +2,7 @@
 /* Base styles - Reset and typography */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Variables CSS pour une meilleure cohérence */
+/* Variables CSS pour les thèmes */
 :root {
   --background: 0 0% 100%;
   --foreground: 222.2 84% 4.9%;
@@ -79,6 +79,7 @@ body {
   text-rendering: optimizeLegibility;
   line-height: 1.6;
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Typography */
@@ -98,4 +99,13 @@ p, span, div {
 *:focus-visible {
   @apply outline-none ring-2 ring-ring ring-offset-2;
   border-radius: 0.5rem;
+}
+
+/* Dark mode specific styles */
+.dark {
+  color-scheme: dark;
+}
+
+.light {
+  color-scheme: light;
 }

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { cn } from "@/lib/utils";
 import PageHeader from "@/components/ui/PageHeader";
@@ -33,9 +34,9 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
   showFooter = true
 }) => {
   const backgroundClasses = {
-    default: "bg-gray-50",
-    gradient: "bg-gradient-to-br from-blue-50/40 via-white to-rose-50/40",
-    soft: "bg-gradient-to-br from-blue-50/20 via-transparent to-pink-50/20"
+    default: "bg-background",
+    gradient: "bg-gradient-to-br from-blue-50/40 via-background to-rose-50/40 dark:from-blue-950/20 dark:via-background dark:to-purple-950/10",
+    soft: "bg-gradient-to-br from-blue-50/20 via-transparent to-pink-50/20 dark:from-blue-950/10 dark:via-transparent dark:to-purple-950/5"
   };
 
   const maxWidthClasses = {
@@ -49,7 +50,7 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
 
   return (
     <div className={cn(
-      "min-h-screen flex flex-col",
+      "min-h-screen flex flex-col transition-colors duration-300",
       backgroundClasses[background],
       className
     )}>
@@ -57,7 +58,7 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
       {showHeader && (
         <div className="w-full py-2">
           <div className={cn("mx-auto px-4 mobile-s:px-6 sm:px-8", maxWidthClasses[maxWidth])}>
-            <div className="text-sm text-slate-500">
+            <div className="text-sm text-muted-foreground">
               <PageHeader crumbs={crumbs} />
             </div>
           </div>
@@ -66,7 +67,7 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
 
       {/* Title Section */}
       {(title || description) && (
-        <div className="w-full bg-gradient-to-br from-blue-50/50 via-white to-purple-50/50 py-12 mobile-s:py-16 sm:py-20">
+        <div className="w-full bg-gradient-to-br from-blue-50/50 via-background to-purple-50/50 dark:from-blue-950/20 dark:via-background dark:to-purple-950/10 py-12 mobile-s:py-16 sm:py-20">
           <div className={cn("mx-auto px-4 mobile-s:px-6 sm:px-8", maxWidthClasses[maxWidth])}>
             <Layout 
               direction="column" 
@@ -76,29 +77,29 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
             >
               {title && (
                 <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100/80 text-blue-700 rounded-full text-sm font-medium">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium border border-primary/20">
                     🛠️ Outil professionnel
                   </div>
                   <h1 className="text-4xl mobile-s:text-5xl sm:text-6xl lg:text-7xl font-bold 
-                                 text-slate-900 leading-tight tracking-tight max-w-5xl">
+                                 text-foreground leading-tight tracking-tight max-w-5xl">
                     {title}
                   </h1>
                 </div>
               )}
               {description && (
-                <p className="text-xl mobile-s:text-2xl sm:text-3xl text-slate-600 max-w-4xl 
+                <p className="text-xl mobile-s:text-2xl sm:text-3xl text-muted-foreground max-w-4xl 
                               leading-relaxed font-medium">
                   {description}
                 </p>
               )}
               <div className="flex flex-wrap gap-4 justify-center mt-8">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-sm font-medium">
                   ⚡ Rapide et Efficace
                 </div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium">
                   🔒 Sécurisé et Privé
                 </div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">
                   ⭐ Qualité Professionnelle
                 </div>
               </div>
