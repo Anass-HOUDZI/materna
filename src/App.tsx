@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -24,7 +23,7 @@ import ChildNutritionCalculator from "./pages/ChildNutritionCalculator";
 import BreastfeedingGuide from "./pages/BreastfeedingGuide";
 import TeethingCalculator from "./pages/TeethingCalculator";
 import CryingMoodTracker from "./pages/CryingMoodTracker";
-import PwaStatusIndicator from "./components/ui/PwaStatusIndicator";
+import PwaStatusIndicator from "@/components/ui/PwaStatusIndicator";
 
 const queryClient = new QueryClient();
 
