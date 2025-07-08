@@ -1,12 +1,22 @@
 
+export interface ChildProfile {
+  id: string;
+  name: string;
+  birthDate: string;
+  isPremature: boolean;
+  gestationalAge?: number;
+  familyHistory: string[];
+  createdAt: number;
+}
+
 export interface MotorMilestone {
   id: string;
+  domain: string;
   label: string;
-  domain: 'motricite-globale' | 'motricite-fine' | 'cognitif' | 'social-communication' | 'autonomie';
+  description: string;
   minAgeMonths: number;
   maxAgeMonths: number;
-  description: string;
-  videoExample?: string;
+  isEssential: boolean;
 }
 
 export interface MotorEvaluation {
@@ -25,7 +35,7 @@ export interface MotorEvaluation {
   createdAt: number;
 }
 
-export interface StimululusActivity {
+export interface StimulusActivity {
   id: string;
   title: string;
   domain: string;
@@ -33,15 +43,5 @@ export interface StimululusActivity {
   duration: string;
   materials: string[];
   instructions: string[];
-  objectives: string[];
-}
-
-export interface ChildProfile {
-  id: string;
-  name: string;
-  birthDate: string;
-  isPremature: boolean;
-  gestationalAge?: number;
-  familyHistory: string[];
-  createdAt: number;
+  developmentGoals: string[];
 }

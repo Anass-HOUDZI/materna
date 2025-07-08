@@ -201,7 +201,6 @@ export default function ChildNutritionCalculatorForm() {
         <TabsContent value="results" className="space-y-4">
           {nutritionResults && (
             <>
-              {/* Besoins nutritionnels */}
               <Card variant="outlined" size="md">
                 <div className="p-6">
                   <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
@@ -210,29 +209,29 @@ export default function ChildNutritionCalculatorForm() {
                   </h3>
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <div className="text-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
                       <div className="text-2xl font-bold text-blue-600">
                         {nutritionResults.needs.calories}
                       </div>
-                      <div className="text-sm text-blue-800">kcal/jour</div>
+                      <div className="text-sm text-blue-800 dark:text-blue-200">kcal/jour</div>
                     </div>
-                    <div className="text-center p-3 bg-red-50 rounded-lg">
+                    <div className="text-center p-3 bg-red-50 dark:bg-red-950/30 rounded-lg">
                       <div className="text-2xl font-bold text-red-600">
                         {nutritionResults.needs.proteins}g
                       </div>
-                      <div className="text-sm text-red-800">Protéines</div>
+                      <div className="text-sm text-red-800 dark:text-red-200">Protéines</div>
                     </div>
-                    <div className="text-center p-3 bg-yellow-50 rounded-lg">
+                    <div className="text-center p-3 bg-yellow-50 dark:bg-yellow-950/30 rounded-lg">
                       <div className="text-2xl font-bold text-yellow-600">
                         {nutritionResults.needs.carbohydrates}g
                       </div>
-                      <div className="text-sm text-yellow-800">Glucides</div>
+                      <div className="text-sm text-yellow-800 dark:text-yellow-200">Glucides</div>
                     </div>
-                    <div className="text-center p-3 bg-orange-50 rounded-lg">
+                    <div className="text-center p-3 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
                       <div className="text-2xl font-bold text-orange-600">
                         {nutritionResults.needs.lipids}g
                       </div>
-                      <div className="text-sm text-orange-800">Lipides</div>
+                      <div className="text-sm text-orange-800 dark:text-orange-200">Lipides</div>
                     </div>
                   </div>
 
@@ -257,7 +256,6 @@ export default function ChildNutritionCalculatorForm() {
                 </div>
               </Card>
 
-              {/* Recommandations */}
               {nutritionResults.analysis.recommendations.length > 0 && (
                 <Card variant="outlined" size="md">
                   <div className="p-6">
@@ -274,7 +272,6 @@ export default function ChildNutritionCalculatorForm() {
                 </Card>
               )}
 
-              {/* Aliments recommandés */}
               <Card variant="outlined" size="md">
                 <div className="p-6">
                   <h3 className="text-lg font-semibold mb-4">Aliments Recommandés</h3>
@@ -294,7 +291,7 @@ export default function ChildNutritionCalculatorForm() {
                           {foods.slice(0, 4).map((food: any) => (
                             <span 
                               key={food.id}
-                              className="px-2 py-1 bg-gray-100 rounded text-sm"
+                              className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-sm"
                             >
                               {food.name} ({food.typicalPortionChild}g)
                             </span>
@@ -306,7 +303,6 @@ export default function ChildNutritionCalculatorForm() {
                 </div>
               </Card>
 
-              {/* Disclaimer */}
               <Alert>
                 <AlertTriangle className="h-4 w-4" />
                 <AlertDescription>
@@ -342,8 +338,8 @@ export default function ChildNutritionCalculatorForm() {
                         </h4>
                         
                         <div className="grid gap-2">
-                          {foods.map((food: any, index: number) => (
-                            <div key={food.id} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                          {foods.map((food: any) => (
+                            <div key={food.id} className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded">
                               <div className="flex items-center gap-3">
                                 <Badge 
                                   className={cn(

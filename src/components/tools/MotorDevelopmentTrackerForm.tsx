@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { FormItem, FormLabel, FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -66,7 +66,6 @@ export default function MotorDevelopmentTrackerForm() {
   
   const relevantMilestones = currentAge > 0 ? getMilestonesForAge(currentAge) : [];
   
-  // Grouper par domaine
   const milestonesByDomain = relevantMilestones.reduce((acc, milestone) => {
     if (!acc[milestone.domain]) acc[milestone.domain] = [];
     acc[milestone.domain].push(milestone);
@@ -157,92 +156,89 @@ export default function MotorDevelopmentTrackerForm() {
 
         <TabsContent value="evaluation" className="space-y-4">
           {childProfile && (
-            <>
-              <Card variant="outlined" size="md">
-                <div className="p-4 bg-blue-50 border-b">
-                  <h3 className="font-semibold text-blue-900">
-                    Évaluation pour {childProfile.name} - {currentAge} mois
-                  </h3>
-                  {childProfile.isPremature && (
-                    <p className="text-sm text-blue-700">
-                      Âge corrigé pris en compte pour l'évaluation
-                    </p>
-                  )}
-                </div>
-                
-                <div className="p-6 space-y-6">
-                  {Object.entries(milestonesByDomain).map(([domain, milestones]) => (
-                    <div key={domain} className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <Badge className={DOMAIN_COLORS[domain as keyof typeof DOMAIN_COLORS]}>
-                          {DOMAIN_LABELS[domain as keyof typeof DOMAIN_LABELS]}
-                        </Badge>
-                        <span className="text-sm text-muted-foreground">
-                          ({milestones.length} étape{milestones.length > 1 ? 's' : ''})
-                        </span>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        {milestones.map(milestone => (
-                          <FormItem key={milestone.id} className="flex items-start space-x-3 space-y-0">
-                            <FormControl>
-                              <Checkbox
-                                checked={selectedMilestones.includes(milestone.id)}
-                                onCheckedChange={(checked) => {
-                                  if (checked) {
-                                    setSelectedMilestones(prev => [...prev, milestone.id]);
-                                  } else {
-                                    setSelectedMilestones(prev => prev.filter(id => id !== milestone.id));
-                                  }
-                                }}
-                                id={milestone.id}
-                              />
-                            </FormControl>
-                            <div className="space-y-1">
-                              <FormLabel 
-                                htmlFor={milestone.id} 
-                                className="text-sm font-medium cursor-pointer"
-                              >
-                                {milestone.label}
-                              </FormLabel>
-                              <p className="text-xs text-muted-foreground">
-                                {milestone.description}
-                              </p>
-                              <p className="text-xs text-blue-600">
-                                Âge typique: {milestone.minAgeMonths}-{milestone.maxAgeMonths} mois
-                              </p>
-                            </div>
-                          </FormItem>
-                        ))}
-                      </div>
+            <Card variant="outlined" size="md">
+              <div className="p-4 bg-blue-50 dark:bg-blue-950/30 border-b">
+                <h3 className="font-semibold text-blue-900 dark:text-blue-100">
+                  Évaluation pour {childProfile.name} - {currentAge} mois
+                </h3>
+                {childProfile.isPremature && (
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    Âge corrigé pris en compte pour l'évaluation
+                  </p>
+                )}
+              </div>
+              
+              <div className="p-6 space-y-6">
+                {Object.entries(milestonesByDomain).map(([domain, milestones]) => (
+                  <div key={domain} className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <Badge className={DOMAIN_COLORS[domain as keyof typeof DOMAIN_COLORS]}>
+                        {DOMAIN_LABELS[domain as keyof typeof DOMAIN_LABELS]}
+                      </Badge>
+                      <span className="text-sm text-muted-foreground">
+                        ({milestones.length} étape{milestones.length > 1 ? 's' : ''})
+                      </span>
                     </div>
-                  ))}
+                    
+                    <div className="space-y-2">
+                      {milestones.map(milestone => (
+                        <FormItem key={milestone.id} className="flex items-start space-x-3 space-y-0">
+                          <FormControl>
+                            <Checkbox
+                              checked={selectedMilestones.includes(milestone.id)}
+                              onCheckedChange={(checked) => {
+                                if (checked) {
+                                  setSelectedMilestones(prev => [...prev, milestone.id]);
+                                } else {
+                                  setSelectedMilestones(prev => prev.filter(id => id !== milestone.id));
+                                }
+                              }}
+                              id={milestone.id}
+                            />
+                          </FormControl>
+                          <div className="space-y-1">
+                            <FormLabel 
+                              htmlFor={milestone.id} 
+                              className="text-sm font-medium cursor-pointer"
+                            >
+                              {milestone.label}
+                            </FormLabel>
+                            <p className="text-xs text-muted-foreground">
+                              {milestone.description}
+                            </p>
+                            <p className="text-xs text-blue-600 dark:text-blue-400">
+                              Âge typique: {milestone.minAgeMonths}-{milestone.maxAgeMonths} mois
+                            </p>
+                          </div>
+                        </FormItem>
+                      ))}
+                    </div>
+                  </div>
+                ))}
 
-                  {relevantMilestones.length === 0 && (
-                    <Alert>
-                      <AlertDescription>
-                        Aucune étape de développement n'est évaluée pour cet âge dans notre base de données.
-                      </AlertDescription>
-                    </Alert>
-                  )}
+                {relevantMilestones.length === 0 && (
+                  <Alert>
+                    <AlertDescription>
+                      Aucune étape de développement n'est évaluée pour cet âge dans notre base de données.
+                    </AlertDescription>
+                  </Alert>
+                )}
 
-                  <Button 
-                    onClick={handleEvaluation}
-                    className="w-full"
-                    disabled={relevantMilestones.length === 0}
-                  >
-                    Générer l'évaluation
-                  </Button>
-                </div>
-              </Card>
-            </>
+                <Button 
+                  onClick={handleEvaluation}
+                  className="w-full"
+                  disabled={relevantMilestones.length === 0}
+                >
+                  Générer l'évaluation
+                </Button>
+              </div>
+            </Card>
           )}
         </TabsContent>
 
         <TabsContent value="results" className="space-y-4">
           {evaluation && (
             <>
-              {/* Score global */}
               <Card variant="outlined" size="md">
                 <div className="p-6 text-center">
                   <div className="mb-4">
@@ -267,11 +263,10 @@ export default function MotorDevelopmentTrackerForm() {
                 </div>
               </Card>
 
-              {/* Alertes */}
               {evaluation.alertFlags.length > 0 && (
-                <Alert className="border-orange-200 bg-orange-50">
+                <Alert className="border-orange-200 bg-orange-50 dark:bg-orange-950/30">
                   <AlertTriangle className="h-4 w-4 text-orange-600" />
-                  <AlertDescription className="text-orange-800">
+                  <AlertDescription className="text-orange-800 dark:text-orange-200">
                     <strong>Points d'attention :</strong>
                     <ul className="list-disc list-inside mt-2">
                       {evaluation.alertFlags.map((flag: string, index: number) => (
@@ -282,44 +277,6 @@ export default function MotorDevelopmentTrackerForm() {
                 </Alert>
               )}
 
-              {/* Score par domaine */}
-              <Card variant="outlined" size="md">
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <TrendingUp size={20} />
-                    Détail par domaine
-                  </h3>
-                  
-                  <div className="space-y-3">
-                    {Object.entries(evaluation.scoreByDomain).map(([domain, score]: [string, any]) => {
-                      const percentage = score.total > 0 ? Math.round((score.completed / score.total) * 100) : 0;
-                      return (
-                        <div key={domain} className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <Badge className={DOMAIN_COLORS[domain as keyof typeof DOMAIN_COLORS]}>
-                              {DOMAIN_LABELS[domain as keyof typeof DOMAIN_LABELS]}
-                            </Badge>
-                            <span className="text-sm font-medium">
-                              {score.completed}/{score.total} ({percentage}%)
-                            </span>
-                          </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div 
-                              className={`h-2 rounded-full ${
-                                percentage >= 80 ? 'bg-green-500' : 
-                                percentage >= 60 ? 'bg-yellow-500' : 'bg-red-500'
-                              }`}
-                              style={{ width: `${percentage}%` }}
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </Card>
-
-              {/* Recommandations */}
               <Card variant="outlined" size="md">
                 <div className="p-6">
                   <h3 className="text-lg font-semibold mb-4">Recommandations</h3>
@@ -334,38 +291,6 @@ export default function MotorDevelopmentTrackerForm() {
                 </div>
               </Card>
 
-              {/* Activités recommandées */}
-              {recommendedActivities.length > 0 && (
-                <Card variant="outlined" size="md">
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold mb-4">Activités de stimulation</h3>
-                    <div className="space-y-4">
-                      {recommendedActivities.map(activity => (
-                        <div key={activity.id} className="border rounded-lg p-4 bg-blue-50">
-                          <h4 className="font-semibold text-blue-900">{activity.title}</h4>
-                          <p className="text-sm text-blue-700 mb-2">{activity.duration}</p>
-                          <div className="space-y-2">
-                            <div>
-                              <strong className="text-xs">Matériel :</strong>
-                              <span className="text-xs ml-1">{activity.materials.join(", ")}</span>
-                            </div>
-                            <div>
-                              <strong className="text-xs">Instructions :</strong>
-                              <ul className="text-xs list-disc list-inside mt-1">
-                                {activity.instructions.map((instruction, i) => (
-                                  <li key={i}>{instruction}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </Card>
-              )}
-
-              {/* Export */}
               <Card variant="outlined" size="md">
                 <div className="p-6">
                   <Button 
