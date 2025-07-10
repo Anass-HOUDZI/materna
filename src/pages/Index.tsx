@@ -2,38 +2,15 @@
 import React from "react";
 import { AccordionSimple, AccordionSimpleItem } from "@/components/ui/accordion-simple";
 import Footer from "@/components/ui/Footer";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
 import { Layout } from "@/components/ui/Layout";
-import CategoryCard from "@/components/ui/CategoryCard";
+import PremiumCategoryCard from "@/components/ui/PremiumCategoryCard";
 import ToolCard from "@/components/ui/ToolCard";
+import HeroSection from "@/components/ui/HeroSection";
+import ModernCard from "@/components/ui/ModernCard";
 import { CATEGORIES, TOOLS_DATA } from "@/data/categories";
 import { useFavorites } from "@/hooks/useFavorites";
-import { ChevronDown, Filter, Shield, Wifi, Smartphone, Lock } from "lucide-react";
-
-const HERO_CONTENT = {
-  title: "MomTech Suite",
-  subtitle: "Suite complète et gratuite",
-  description: "50 outils santé, grossesse, bébé, sécurité et parentalité 100% offline, gratuits, privacy-first.",
-  features: [
-    {
-      icon: <Shield size={20} className="text-blue-600" />,
-      text: "Outils médicaux validés scientifiquement"
-    },
-    {
-      icon: <Wifi size={20} className="text-green-600" />,
-      text: "100% offline et privacy-first"
-    },
-    {
-      icon: <Smartphone size={20} className="text-purple-600" />,
-      text: "Interface optimisée mobile"
-    },
-    {
-      icon: <Lock size={20} className="text-orange-600" />,
-      text: "Données chiffrées localement"
-    }
-  ]
-};
+import { ChevronDown, Filter } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 const FAQ_DATA = [
   {
@@ -54,75 +31,49 @@ const FAQ_DATA = [
   }
 ];
 
-const HeroSection = React.memo(() => (
-  <div className="text-center py-12 mobile-s:py-16 sm:py-20 lg:py-24">
-    <Layout direction="column" gap="2xl" align="center" className="animate-fade-in">
-      <div className="inline-flex items-center gap-2 px-4 mobile-s:px-6 py-2 mobile-s:py-3 bg-primary/10 
-                      text-primary rounded-full text-xs mobile-s:text-sm font-semibold border border-primary/20 backdrop-blur-sm">
-        <span className="text-yellow-500" aria-hidden="true">⭐</span>
-        <span>Suite complète gratuite et professionnelle</span>
-      </div>
-      
-      <h1 className="text-3xl mobile-s:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight tracking-tight px-4">
-        {HERO_CONTENT.title}
-        <span className="block text-2xl mobile-s:text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-bold mt-2">
-          {HERO_CONTENT.subtitle}
-        </span>
-      </h1>
-      
-      <p className="text-lg mobile-s:text-xl sm:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-medium px-4">
-        {HERO_CONTENT.description}
-      </p>
-      
-      <Layout direction="row" gap="md" justify="center" wrap className="mt-6 mobile-s:mt-8 px-4">
-        <Button 
-          size="lg"
-          onClick={() => document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' })}
-          icon={<span aria-hidden="true">🔍</span>}
-          className="gap-3 text-base mobile-s:text-lg px-6 mobile-s:px-8"
-        >
-          Découvrir les outils
-        </Button>
-        <div className="inline-flex items-center gap-3 px-6 mobile-s:px-8 py-3 mobile-s:py-4 bg-card/80 backdrop-blur-sm border-2 border-border 
-                       text-foreground rounded-2xl font-semibold text-base mobile-s:text-lg shadow-md">
-          <span className="text-green-500" aria-hidden="true">⚡</span>
-          <span>100% Gratuit</span>
-        </div>
-      </Layout>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mobile-s:gap-4 mt-8 mobile-s:mt-12 max-w-3xl mx-auto px-4">
-        {HERO_CONTENT.features.map((feature, index) => (
-          <div 
-            key={index}
-            className="flex items-center gap-3 p-3 mobile-s:p-4 bg-card/60 backdrop-blur-sm rounded-xl border border-border/40 
-                     shadow-sm transition-all duration-300"
-          >
-            <div className="flex-shrink-0">
-              {feature.icon}
-            </div>
-            <span className="text-foreground font-medium text-sm mobile-s:text-base">{feature.text}</span>
-          </div>
-        ))}
-      </div>
-    </Layout>
-  </div>
-));
+// Images Unsplash pour chaque catégorie
+const CATEGORY_IMAGES = {
+  grossesse: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
+  enfant: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop",
+  sante: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop",
+  securite: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=300&fit=crop",
+  technique: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop"
+};
 
 const Index = React.memo(() => {
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const [selectedCategory, setSelectedCategory] = React.useState<string>("all");
   const [showMobileFilter, setShowMobileFilter] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
   
   const favoriteTools = TOOLS_DATA.filter(tool => favorites.includes(tool.link)).slice(0, 8);
-  const filteredTools = selectedCategory === "all" 
+  
+  // Filtrage par catégorie et recherche
+  let filteredTools = selectedCategory === "all" 
     ? TOOLS_DATA 
     : TOOLS_DATA.filter(tool => tool.category === selectedCategory);
-  
+    
+  if (searchQuery) {
+    filteredTools = filteredTools.filter(tool => 
+      tool.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tool.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    setSelectedCategory("all");
+    // Scroll vers la section des outils
+    document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      <div className="w-full max-w-7xl mx-auto px-4 mobile-s:px-6 sm:px-8 pt-safe-top pb-safe-bottom">
-        <HeroSection />
+      {/* Hero Section Révolutionnaire */}
+      <HeroSection onSearch={handleSearch} className="mb-20" />
 
+      <div className="w-full max-w-7xl mx-auto px-4 mobile-s:px-6 sm:px-8 pb-safe-bottom">
+        
         {/* Mobile Filter */}
         <div className="block sm:hidden mb-6">
           <Button
@@ -140,7 +91,7 @@ const Index = React.memo(() => {
           </Button>
           
           {showMobileFilter && (
-            <Card variant="glass" size="sm" className="mt-2 animate-scale-in">
+            <ModernCard variant="glass" className="mt-2 p-4 animate-scale-in">
               <Layout direction="column" gap="xs">
                 <Button
                   variant="ghost"
@@ -169,27 +120,28 @@ const Index = React.memo(() => {
                   </Button>
                 ))}
               </Layout>
-            </Card>
+            </ModernCard>
           )}
         </div>
 
-        {/* Categories Section */}
+        {/* Categories Section Premium */}
         {CATEGORIES.length > 0 && (
-          <Layout direction="column" gap="3xl" id="categories" className="mb-16 mobile-s:mb-20 sm:mb-24">
+          <Layout direction="column" gap="3xl" id="categories" className="mb-20">
             <Layout direction="column" gap="lg" align="center" className="text-center">
-              <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl md:text-5xl font-bold text-foreground px-4">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Découvrez nos catégories
               </h2>
-              <p className="text-base mobile-s:text-lg sm:text-xl text-muted-foreground max-w-3xl font-medium px-4">
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl font-medium">
                 Chaque catégorie regroupe des outils spécialisés pour répondre à vos besoins spécifiques
               </p>
             </Layout>
 
             {/* Desktop Category Filter */}
-            <div className="hidden sm:flex flex-wrap gap-3 justify-center px-4">
+            <div className="hidden sm:flex flex-wrap gap-3 justify-center">
               <Button
                 variant={selectedCategory === "all" ? "primary" : "outline"}
                 onClick={() => setSelectedCategory("all")}
+                className="hover:scale-105 transition-transform duration-200"
               >
                 Toutes les catégories
               </Button>
@@ -199,15 +151,16 @@ const Index = React.memo(() => {
                   variant={selectedCategory === category.id ? "primary" : "outline"}
                   onClick={() => setSelectedCategory(category.id)}
                   icon={React.createElement(category.icon, { size: 18 })}
+                  className="hover:scale-105 transition-transform duration-200"
                 >
                   {category.title}
                 </Button>
               ))}
             </div>
 
-            <div className="grid gap-6 mobile-s:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4">
-              {CATEGORIES.map((category) => (
-                <CategoryCard
+            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {CATEGORIES.map((category, index) => (
+                <PremiumCategoryCard
                   key={category.id}
                   title={category.title}
                   description={category.description}
@@ -215,6 +168,9 @@ const Index = React.memo(() => {
                   icon={React.createElement(category.icon, { size: 32 })}
                   toolCount={category.tools.length}
                   gradient={category.gradient}
+                  imageUrl={CATEGORY_IMAGES[category.id as keyof typeof CATEGORY_IMAGES]}
+                  featured={index === 0} // Première catégorie en vedette
+                  badge={category.tools.length > 10 ? "RICHE" : undefined}
                 />
               ))}
             </div>
@@ -222,48 +178,64 @@ const Index = React.memo(() => {
         )}
 
         {/* Tools Section */}
-        <Layout direction="column" gap="2xl" className="my-20 mobile-s:my-24 sm:my-28 lg:my-32">
+        <Layout direction="column" gap="2xl" id="tools-section" className="my-20">
           <Layout direction="column" gap="md" align="center" className="text-center">
-            <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl font-bold text-foreground px-4">
-              {selectedCategory === "all" ? "Tous nos outils" : 
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              {searchQuery ? `Résultats pour "${searchQuery}"` : 
+               selectedCategory === "all" ? "Tous nos outils" : 
                `Outils ${CATEGORIES.find(c => c.id === selectedCategory)?.title || ""}`}
             </h2>
-            <p className="text-muted-foreground font-medium px-4">
+            <p className="text-muted-foreground font-medium">
               {filteredTools.length} outil{filteredTools.length > 1 ? 's' : ''} disponible{filteredTools.length > 1 ? 's' : ''}
             </p>
           </Layout>
 
-          <div className="grid gap-4 mobile-s:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4">
-            {filteredTools.map((tool) => (
-              <ToolCard
-                key={tool.id}
-                title={tool.label}
-                description={tool.description}
-                href={tool.link}
-                icon={React.createElement(tool.icon, { size: 24 })}
-                gradient={tool.gradient}
-                isFavorite={isFavorite(tool.link)}
-                onToggleFavorite={() => toggleFavorite(tool.link)}
-                difficulty={tool.difficulty}
-                rating={tool.rating}
-              />
-            ))}
-          </div>
+          {filteredTools.length > 0 ? (
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {filteredTools.map((tool) => (
+                <ToolCard
+                  key={tool.id}
+                  title={tool.label}
+                  description={tool.description}
+                  href={tool.link}
+                  icon={React.createElement(tool.icon, { size: 24 })}
+                  gradient={tool.gradient}
+                  isFavorite={isFavorite(tool.link)}
+                  onToggleFavorite={() => toggleFavorite(tool.link)}
+                  difficulty={tool.difficulty}
+                  rating={tool.rating}
+                />
+              ))}
+            </div>
+          ) : (
+            <ModernCard variant="glass" className="p-12 text-center">
+              <div className="space-y-4">
+                <div className="text-6xl">🔍</div>
+                <h3 className="text-xl font-semibold">Aucun outil trouvé</h3>
+                <p className="text-muted-foreground">
+                  Essayez avec d'autres mots-clés ou explorez nos catégories
+                </p>
+                <Button onClick={() => setSearchQuery("")} variant="outline">
+                  Effacer la recherche
+                </Button>
+              </div>
+            </ModernCard>
+          )}
         </Layout>
 
         {/* Favorite Tools Section */}
         {favoriteTools.length > 0 && (
-          <Layout direction="column" gap="2xl" className="mb-16 mobile-s:mb-20 sm:mb-24">
+          <Layout direction="column" gap="2xl" className="mb-20">
             <Layout direction="column" gap="md" align="center" className="text-center">
-              <h2 className="text-xl mobile-s:text-2xl sm:text-3xl font-bold text-foreground px-4">
-                Vos outils favoris
+              <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
+                ⭐ Vos outils favoris
               </h2>
-              <p className="text-muted-foreground font-medium px-4">
+              <p className="text-muted-foreground font-medium">
                 Accédez rapidement à vos outils préférés
               </p>
             </Layout>
 
-            <div className="grid gap-4 mobile-s:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {favoriteTools.map((tool) => (
                 <ToolCard
                   key={tool.id}
@@ -283,12 +255,12 @@ const Index = React.memo(() => {
         )}
 
         {/* FAQ Section */}
-        <Layout direction="column" gap="2xl" className="w-full max-w-4xl mx-auto mt-24 mobile-s:mt-28 sm:mt-32 lg:mt-36">
-          <h2 className="text-2xl mobile-s:text-3xl sm:text-4xl font-bold text-center text-foreground px-4">
+        <Layout direction="column" gap="2xl" className="w-full max-w-4xl mx-auto mt-24">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
             Questions fréquentes
           </h2>
           
-          <Card variant="glass" size="lg" className="animate-fade-in mx-4">
+          <ModernCard variant="premium" className="p-8 animate-fade-in">
             <AccordionSimple>
               {FAQ_DATA.map((item, index) => (
                 <AccordionSimpleItem key={index} title={item.question}>
@@ -298,7 +270,7 @@ const Index = React.memo(() => {
                 </AccordionSimpleItem>
               ))}
             </AccordionSimple>
-          </Card>
+          </ModernCard>
         </Layout>
       </div>
       

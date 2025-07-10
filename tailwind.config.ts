@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -19,7 +18,6 @@ export default {
 			}
 		},
 		screens: {
-			// Breakpoints standards étendus
 			'xs': '375px',
 			'sm': '640px',
 			'md': '768px',
@@ -27,18 +25,12 @@ export default {
 			'xl': '1280px',
 			'2xl': '1536px',
 			'3xl': '1920px',
-			
-			// Breakpoints mobiles spécifiques
 			'mobile-xs': '320px',
 			'mobile-sm': '375px',
 			'mobile-md': '414px',
 			'mobile-lg': '480px',
-			
-			// Breakpoints tablettes
 			'tablet-sm': '768px',
 			'tablet-lg': '1024px',
-			
-			// Breakpoints legacy pour compatibilité
 			'mobile-s': '320px',
 			'mobile-m': '375px',
 			'mobile-l': '425px',
@@ -46,16 +38,10 @@ export default {
 			'laptop': '1024px',
 			'laptop-l': '1440px',
 			'desktop': '1920px',
-			
-			// Breakpoints orientation
 			'portrait': {'raw': '(orientation: portrait)'},
 			'landscape': {'raw': '(orientation: landscape)'},
-			
-			// Breakpoints capacités tactiles
 			'touch': {'raw': '(hover: none) and (pointer: coarse)'},
 			'no-touch': {'raw': '(hover: hover) and (pointer: fine)'},
-			
-			// Breakpoints résolution
 			'retina': {'raw': '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)'},
 		},
 		extend: {
@@ -111,13 +97,13 @@ export default {
 			},
 			fontFamily: {
 				playfair: ['Playfair Display', 'serif'],
+				grotesk: ['Space Grotesk', 'sans-serif'],
 			},
 			spacing: {
 				'safe-top': 'env(safe-area-inset-top)',
 				'safe-bottom': 'env(safe-area-inset-bottom)',
 				'safe-left': 'env(safe-area-inset-left)',
 				'safe-right': 'env(safe-area-inset-right)',
-				// Touch targets optimaux
 				'touch-min': '44px',
 				'touch-lg': '56px',
 			},
@@ -174,7 +160,6 @@ export default {
 						transform: 'translateY(-2px)'
 					}
 				},
-				// Animations tactiles
 				'touch-feedback': {
 					'0%': { transform: 'scale(1)' },
 					'50%': { transform: 'scale(0.95)' },
@@ -188,6 +173,28 @@ export default {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.8' }
 				},
+				'shine': {
+					'0%': { transform: 'translateX(-100%) skewX(-12deg)' },
+					'100%': { transform: 'translateX(200%) skewX(-12deg)' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+					'33%': { transform: 'translateY(-10px) rotate(1deg)' },
+					'66%': { transform: 'translateY(5px) rotate(-1deg)' }
+				},
+				'pulse-glow': {
+					'0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)' },
+					'50%': { boxShadow: '0 0 40px rgba(59, 130, 246, 0.6)' }
+				},
+				'gradient-shift': {
+					'0%': { backgroundPosition: '0% 50%' },
+					'50%': { backgroundPosition: '100% 50%' },
+					'100%': { backgroundPosition: '0% 50%' }
+				},
+				'scale-in': {
+					'0%': { transform: 'scale(0.95)', opacity: '0' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
+				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -198,6 +205,16 @@ export default {
 				'touch-feedback': 'touch-feedback 0.15s ease-out',
 				'shimmer': 'shimmer 2s ease-in-out infinite',
 				'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
+				'shine': 'shine 2s ease-in-out infinite',
+				'float': 'float 6s ease-in-out infinite',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+				'gradient-shift': 'gradient-shift 3s ease infinite',
+				'scale-in': 'scale-in 0.3s ease-out',
+			},
+			boxShadow: {
+				'3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.25)',
+				'glow-blue': '0 0 30px rgba(59, 130, 246, 0.3)',
+				'glow-purple': '0 0 30px rgba(147, 51, 234, 0.3)',
 			}
 		}
 	},
