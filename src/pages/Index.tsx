@@ -77,27 +77,7 @@ const Index = React.memo(() => {
         
         {/* Categories Section */}
         <Layout direction="column" gap="2xl" className="mb-20">
-          <Layout direction="column" gap="md" align="center" className="text-center">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
-              Tous nos outils
-            </h2>
-            <p className="text-muted-foreground font-medium">
-              {CATEGORIES.reduce((total, cat) => total + cat.tools.length, 0)} outils disponibles
-            </p>
-          </Layout>
-
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {/* Tous nos outils - Card principale */}
-            <CategoryCard
-              title="Tous nos outils"
-              description="Accédez à l'ensemble de nos outils pour grossesse, développement enfant et santé familiale"
-              href="#tools-section"
-              icon={<Grid size={28} />}
-              toolCount={TOOLS_DATA.length}
-              gradient="from-slate-50 to-slate-100"
-              className="lg:col-span-3 md:col-span-2"
-            />
-            
             {/* Categories individuelles */}
             {CATEGORIES.map((category) => (
               <CategoryCard
