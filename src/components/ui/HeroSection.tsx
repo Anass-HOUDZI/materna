@@ -73,7 +73,7 @@ const HeroSection = React.memo<HeroSectionProps>(({
                   <Search className="w-6 h-6 text-muted-foreground ml-4" />
                   <input
                     type="text"
-                    placeholder="Rechercher un outil (ex: calculateur terme, tracker contractions...)"
+                    placeholder="Rechercher un outil"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="flex-1 bg-transparent border-none outline-none text-lg placeholder:text-muted-foreground/70 py-4"
