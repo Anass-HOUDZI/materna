@@ -45,18 +45,20 @@ const HeroSection = React.memo<HeroSectionProps>(({
             </span>
           </div>
 
-          {/* Logo */}
-          <img 
-            src="/lovable-uploads/9b95e222-c695-4858-89c2-a70b7e40a4e4.png" 
-            alt="Materna" 
-            className="h-16 w-auto mx-auto mb-8"
-          />
-
           {/* Main Title */}
           <div className="space-y-4">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
+                Materna
+              </span>
+              <span className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-muted-foreground block mt-2">
+                | Votre maternité calculée avec précision
+              </span>
+            </h1>
+            
             <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-medium">
               15 outils santé, grossesse, bébé, sécurité et parentalité 
-              <span className="bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent font-bold">
+              <span className="font-bold" style={{ color: '#ff4ab9' }}>
                  &nbsp;100% offline, gratuits, privacy-first
               </span>
             </p>
