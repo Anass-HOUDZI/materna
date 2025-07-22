@@ -32,7 +32,7 @@ const CategoryCard = React.memo<CategoryCardProps>(({
       className={cn(
         "group relative overflow-hidden rounded-3xl cursor-pointer",
         "bg-white/90 backdrop-blur-sm border border-slate-200 shadow-lg",
-        "hover:shadow-2xl hover:border-blue-300/50 hover:bg-white",
+        "hover:shadow-2xl hover:border-blue-300/50 hover:bg-transparent",
         "transition-all duration-500 ease-out transform-gpu",
         "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/50 focus-visible:ring-offset-2",
         "active:scale-[0.98] active:shadow-xl",
@@ -52,7 +52,7 @@ const CategoryCard = React.memo<CategoryCardProps>(({
       <div 
         className={cn(
           "absolute inset-0 bg-gradient-to-br opacity-40",
-          "group-hover:opacity-60 transition-all duration-500",
+          "group-hover:opacity-0 transition-all duration-500",
           gradient
         )}
       />
@@ -106,9 +106,6 @@ const CategoryCard = React.memo<CategoryCardProps>(({
         </div>
       </div>
 
-      {/* Enhanced hover effect overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/8 to-indigo-500/0 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
     </div>
   );
 });

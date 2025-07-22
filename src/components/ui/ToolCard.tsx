@@ -45,7 +45,7 @@ const ToolCard = React.memo<ToolCardProps>(({
       className={cn(
         "group relative overflow-hidden rounded-3xl cursor-pointer",
         "bg-white/90 backdrop-blur-sm border border-slate-200 shadow-lg",
-        "hover:shadow-2xl hover:border-blue-300/50 hover:bg-white",
+        "hover:shadow-2xl hover:border-blue-300/50 hover:bg-transparent",
         "transition-all duration-500 ease-out transform-gpu",
         "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/50 focus-visible:ring-offset-2",
         "active:scale-[0.98] active:shadow-xl",
@@ -75,7 +75,7 @@ const ToolCard = React.memo<ToolCardProps>(({
       <div 
         className={cn(
           "absolute inset-0 bg-gradient-to-br opacity-40",
-          "group-hover:opacity-60 transition-all duration-500",
+          "group-hover:opacity-0 transition-all duration-500",
           gradient
         )}
       />
@@ -138,10 +138,21 @@ const ToolCard = React.memo<ToolCardProps>(({
         {/* Enhanced action button */}
         <button 
           className="w-full text-white py-3.5 px-6 rounded-2xl font-semibold text-sm transition-all duration-300 
-                   hover:shadow-xl transform group-hover:shadow-pink-500/30
+                   hover:bg-white hover:shadow-xl transform group-hover:shadow-pink-500/30
                    focus:outline-none focus:ring-4 focus:ring-pink-500/50 focus:ring-offset-2 focus:ring-offset-white
                    active:scale-95"
-          style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)' }}
+          style={{ 
+            background: 'linear-gradient(to right, #f953c6, #b91d73)',
+            '--hover-color': '#f953c6'
+          } as React.CSSProperties}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'white';
+            e.currentTarget.style.color = '#f953c6';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'linear-gradient(to right, #f953c6, #b91d73)';
+            e.currentTarget.style.color = 'white';
+          }}
           onClick={(e) => {
             e.stopPropagation();
             handleClick();
@@ -155,9 +166,6 @@ const ToolCard = React.memo<ToolCardProps>(({
         </button>
       </div>
 
-      {/* Enhanced hover effect overlay */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" 
-           style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)' }} />
     </div>
   );
 });
