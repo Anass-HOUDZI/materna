@@ -68,7 +68,7 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
       {/* Title Section */}
       {(title || description) && (
         <div className="w-full bg-gradient-to-br from-blue-50/50 via-background to-purple-50/50 dark:from-blue-950/20 dark:via-background dark:to-purple-950/10 py-12 mobile-s:py-16 sm:py-20">
-          <div className={cn("mx-auto md:px-4 mobile-s:md:px-6 sm:md:px-8", maxWidthClasses[maxWidth])}>
+          <div className={cn("mx-auto", maxWidthClasses[maxWidth])}>
             <Layout 
               direction="column" 
               gap="lg" 
