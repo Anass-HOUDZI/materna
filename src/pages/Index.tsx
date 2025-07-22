@@ -7,9 +7,10 @@ import PremiumCategoryCard from "@/components/ui/PremiumCategoryCard";
 import ToolCard from "@/components/ui/ToolCard";
 import HeroSection from "@/components/ui/HeroSection";
 import ModernCard from "@/components/ui/ModernCard";
+import CategoryCard from "@/components/ui/CategoryCard";
 import { CATEGORIES, TOOLS_DATA } from "@/data/categories";
 import { useFavorites } from "@/hooks/useFavorites";
-import { ChevronDown, Filter } from "lucide-react";
+import { ChevronDown, Filter, Grid } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 const FAQ_DATA = [
@@ -73,6 +74,44 @@ const Index = React.memo(() => {
       <HeroSection onSearch={handleSearch} className="mb-20" />
 
       <div className="w-full max-w-7xl mx-auto px-4 mobile-s:px-6 sm:px-8 pb-safe-bottom">
+        
+        {/* Categories Section */}
+        <Layout direction="column" gap="2xl" className="mb-20">
+          <Layout direction="column" gap="md" align="center" className="text-center">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Tous nos outils
+            </h2>
+            <p className="text-muted-foreground font-medium">
+              {CATEGORIES.reduce((total, cat) => total + cat.tools.length, 0)} outils disponibles
+            </p>
+          </Layout>
+
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {/* Tous nos outils - Card principale */}
+            <CategoryCard
+              title="Tous nos outils"
+              description="Accédez à l'ensemble de nos outils pour grossesse, développement enfant et santé familiale"
+              href="#tools-section"
+              icon={<Grid size={28} />}
+              toolCount={TOOLS_DATA.length}
+              gradient="from-slate-50 to-slate-100"
+              className="lg:col-span-3 md:col-span-2"
+            />
+            
+            {/* Categories individuelles */}
+            {CATEGORIES.map((category) => (
+              <CategoryCard
+                key={category.id}
+                title={category.title}
+                description={category.description}
+                href={category.href}
+                icon={React.createElement(category.icon, { size: 28 })}
+                toolCount={category.tools.length}
+                gradient={category.gradient}
+              />
+            ))}
+          </div>
+        </Layout>
         
         {/* Mobile Filter */}
         <div className="block sm:hidden mb-6">
