@@ -113,7 +113,7 @@ Généré par MomTech Suite - ${new Date().toLocaleDateString()}
               variant="interactive" 
               size="lg"
               onClick={() => handleScenarioSelect(scenario)}
-              className="cursor-pointer hover:scale-105 transition-transform"
+              className="cursor-pointer transition-transform"
             >
               <Layout direction="column" gap="md" align="center">
                 <div className="text-center">

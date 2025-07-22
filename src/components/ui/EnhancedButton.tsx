@@ -32,7 +32,7 @@ const EnhancedButton = React.memo(({
         "rounded-2xl font-semibold text-base mobile-s:text-lg",
         "px-6 mobile-s:px-8 py-3 mobile-s:py-4",
         "min-h-touch transition-all duration-300 ease-out",
-        "transform hover:scale-105 active:scale-95",
+        "transform",
         "focus:ring-4 focus:ring-offset-2 focus:ring-offset-white/50",
         "shadow-lg hover:shadow-xl",
         gradientClasses[gradient],

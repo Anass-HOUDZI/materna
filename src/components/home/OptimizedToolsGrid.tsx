@@ -135,7 +135,7 @@ const OptimizedToolsGrid = React.memo(() => {
             <Card
               variant="interactive"
               size="md"
-              className="relative overflow-hidden hover:-translate-y-2 transition-all duration-500 ease-out"
+              className="relative overflow-hidden transition-all duration-500 ease-out"
             >
               {/* Favorite Button */}
               <FavoriteButton
@@ -146,8 +146,8 @@ const OptimizedToolsGrid = React.memo(() => {
               {/* Icon Container */}
               <div className="relative z-10 mb-6">
                 <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient.replace('50/80', '500').replace('100/80', '600')} 
-                                flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <div className="text-white transform group-hover:scale-110 transition-transform duration-300">
+                                flex items-center justify-center shadow-lg transition-transform duration-300`}>
+                  <div className="text-white transform transition-transform duration-300">
                     {React.cloneElement(icon, { className: "text-white", size: 32 })}
                   </div>
                 </div>
@@ -168,7 +168,7 @@ const OptimizedToolsGrid = React.memo(() => {
                 </div>
                 <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 
                                  text-white py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-300 
-                                 hover:shadow-lg transform hover:scale-105">
+                                 hover:shadow-lg transform">
                   Utiliser l'outil →
                 </button>
               </div>
@@ -176,7 +176,7 @@ const OptimizedToolsGrid = React.memo(() => {
               {/* Background decoration */}
               <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${gradient} 
                               opacity-20 rounded-full transform translate-x-8 -translate-y-8 
-                              group-hover:scale-125 transition-transform duration-500`} />
+                              transition-transform duration-500`} />
             </Card>
           </div>
         ))}

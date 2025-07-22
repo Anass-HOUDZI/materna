@@ -95,7 +95,7 @@ export function PregnancyWeeklyCalendarView() {
               className={`min-w-[3rem] px-3 py-2 rounded-xl font-semibold transition-all duration-300 ${
                 week === w.num 
                   ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md scale-105" 
-                  : "bg-white/80 text-slate-600 hover:bg-blue-50 hover:scale-105 shadow-sm"
+                  : "bg-white/80 text-slate-600 hover:bg-blue-50 shadow-sm"
               }`}
               variant={week === w.num ? "default" : "ghost"}
               onClick={() => setWeek(w.num)}

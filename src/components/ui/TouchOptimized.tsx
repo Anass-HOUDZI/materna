@@ -32,15 +32,15 @@ export default function TouchOptimized({
       isTouch && "min-h-touch min-w-touch",
       // Feedback animations
       "active:scale-95 active:brightness-95",
-      "hover:scale-[1.02] focus:scale-[1.02]",
+      "",
       // Disabled on touch for hover effects
-      isTouch && "hover:scale-100 focus:scale-100"
+      ""
     ),
     card: cn(
       isTouch && "min-h-touch", 
       "active:scale-[0.98] active:brightness-95",
-      "hover:scale-[1.01] focus:scale-[1.01]",
-      isTouch && "hover:scale-100 focus:scale-100"
+      "",
+      ""
     ), 
     link: cn(
       isTouch && "min-h-[32px] py-2",

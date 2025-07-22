@@ -39,7 +39,7 @@ export default function PageHeader({ crumbs }: PageHeaderProps) {
             className="px-5 mobile-s:px-7 py-3 mobile-s:py-4 font-semibold flex items-center gap-3 
                        rounded-2xl text-slate-700 bg-white/95 border-2 border-blue-200/70 
                        shadow-md hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 
-                       hover:border-blue-400/80 hover:shadow-lg hover:scale-105
+                       hover:border-blue-400/80 hover:shadow-lg
                        transition-all duration-300 ease-out text-base mobile-s:text-lg
                        focus-visible:ring-4 focus-visible:ring-blue-400/50 focus-visible:ring-offset-2
                        min-h-touch"

@@ -28,8 +28,8 @@ const ModernCard = React.memo<ModernCardProps>(({
   };
 
   const hoverClasses = hover3d 
-    ? "hover:scale-105 hover:-translate-y-2 hover:rotate-1 hover:shadow-3xl" 
-    : "hover:scale-102";
+    ? "hover:shadow-3xl" 
+    : "";
 
   return (
     <div

@@ -44,7 +44,7 @@ const Card = React.memo<CardProps>(({
 
   const stateStyles = {
     default: "",
-    hover: "hover:-translate-y-1 hover:scale-[1.02]",
+    hover: "",
     loading: "animate-pulse opacity-75",
     disabled: "opacity-50 cursor-not-allowed",
     success: "border-green-300 bg-green-50/50",

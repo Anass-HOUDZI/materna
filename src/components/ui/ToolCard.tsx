@@ -45,7 +45,7 @@ const ToolCard = React.memo<ToolCardProps>(({
       className={cn(
         "group relative overflow-hidden rounded-3xl cursor-pointer",
         "bg-white/90 backdrop-blur-sm border border-slate-200 shadow-lg",
-        "hover:shadow-2xl hover:-translate-y-3 hover:border-blue-300/50 hover:bg-white",
+        "hover:shadow-2xl hover:border-blue-300/50 hover:bg-white",
         "transition-all duration-500 ease-out transform-gpu",
         "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/50 focus-visible:ring-offset-2",
         "active:scale-[0.98] active:shadow-xl",
@@ -86,7 +86,7 @@ const ToolCard = React.memo<ToolCardProps>(({
         {icon && (
           <div className="mb-6">
             <div className="w-16 h-16 rounded-2xl bg-white/95 backdrop-blur-sm shadow-lg flex items-center justify-center 
-                          group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-xl 
+                          group-hover:shadow-xl 
                           transition-all duration-500 ease-out border border-white/50">
               <div className="text-blue-600 group-hover:text-blue-700 transition-colors duration-300">
                 {React.cloneElement(icon as React.ReactElement, { 
@@ -112,7 +112,7 @@ const ToolCard = React.memo<ToolCardProps>(({
         {/* Enhanced badges with gradients */}
         <div className="flex items-center gap-3 mb-6">
           <span className={cn(
-            "px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-300 hover:scale-105",
+            "px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-300",
             difficultyColors[difficulty]
           )}>
             {difficulty}
@@ -139,7 +139,7 @@ const ToolCard = React.memo<ToolCardProps>(({
         <button 
           className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 
                    text-white py-3.5 px-6 rounded-2xl font-semibold text-sm transition-all duration-300 
-                   hover:shadow-xl transform hover:scale-[1.02] group-hover:shadow-blue-500/30
+                   hover:shadow-xl transform group-hover:shadow-blue-500/30
                    focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-white
                    active:scale-95"
           onClick={(e) => {

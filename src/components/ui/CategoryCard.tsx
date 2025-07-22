@@ -32,7 +32,7 @@ const CategoryCard = React.memo<CategoryCardProps>(({
       className={cn(
         "group relative overflow-hidden rounded-3xl cursor-pointer",
         "bg-white/90 backdrop-blur-sm border border-slate-200 shadow-lg",
-        "hover:shadow-2xl hover:-translate-y-3 hover:border-blue-300/50 hover:bg-white",
+        "hover:shadow-2xl hover:border-blue-300/50 hover:bg-white",
         "transition-all duration-500 ease-out transform-gpu",
         "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/50 focus-visible:ring-offset-2",
         "active:scale-[0.98] active:shadow-xl",
@@ -63,7 +63,7 @@ const CategoryCard = React.memo<CategoryCardProps>(({
         <div className="flex items-start justify-between mb-6">
           {icon && (
             <div className="flex-shrink-0 p-4 rounded-2xl bg-white/95 backdrop-blur-sm shadow-lg 
-                          group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-xl 
+                          group-hover:shadow-xl 
                           transition-all duration-500 ease-out border border-white/50">
               <div className="text-blue-600 group-hover:text-blue-700 transition-colors duration-300">
                 {React.cloneElement(icon as React.ReactElement, { size: 28 })}
@@ -94,7 +94,7 @@ const CategoryCard = React.memo<CategoryCardProps>(({
           </span>
           <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/95 shadow-lg 
                         group-hover:bg-gradient-to-r group-hover:from-blue-50 group-hover:to-indigo-50 
-                        group-hover:shadow-xl group-hover:scale-110 
+                        group-hover:shadow-xl 
                         transition-all duration-500 border border-white/50">
             <ArrowRight 
               size={20} 

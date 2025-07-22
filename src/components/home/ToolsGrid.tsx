@@ -125,7 +125,7 @@ export default function ToolsGrid({}: ToolsGridProps) {
         <a
           key={link}
           href={link}
-          className="group relative rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] 
+          className="group relative rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-out 
                      bg-white/90 backdrop-blur-sm border border-white/20 ring-1 ring-gray-200/50 hover:ring-blue-300/50
                      flex flex-col items-center gap-6 p-8 mobile-s:p-10 sm:p-12 lg:p-14 
                      overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
@@ -155,9 +155,9 @@ export default function ToolsGrid({}: ToolsGridProps) {
           <div className="relative z-10 flex items-center justify-center w-20 h-20 mobile-s:w-24 mobile-s:h-24 
                           rounded-2xl bg-gradient-to-br from-white/95 via-white/90 to-gray-50/95 
                           shadow-lg border border-white/30 ring-1 ring-gray-100/50
-                          group-hover:shadow-xl group-hover:scale-110 transition-all duration-300 ease-out
+                          group-hover:shadow-xl transition-all duration-300 ease-out
                           mt-6">
-            <div className="transform group-hover:scale-110 transition-transform duration-300 ease-out">
+            <div className="transform transition-transform duration-300 ease-out">
               {icon}
             </div>
           </div>
