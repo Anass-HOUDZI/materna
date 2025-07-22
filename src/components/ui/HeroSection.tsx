@@ -40,7 +40,7 @@ const HeroSection = React.memo<HeroSectionProps>(({
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 backdrop-blur-xl">
             <Sparkles className="w-5 h-5 text-yellow-500 animate-pulse" />
-            <span className="text-sm font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-sm font-semibold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
               Suite complète gratuite et professionnelle
             </span>
           </div>
@@ -76,7 +76,8 @@ const HeroSection = React.memo<HeroSectionProps>(({
                   />
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold transition-transform duration-200"
+                    className="px-6 py-3 text-white rounded-xl font-semibold transition-transform duration-200"
+                    style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)' }}
                   >
                     Rechercher
                   </button>

@@ -166,9 +166,8 @@ const OptimizedToolsGrid = React.memo(() => {
                     Facile
                   </span>
                 </div>
-                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 
-                                 text-white py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-300 
-                                 hover:shadow-lg transform">
+                <button className="w-full text-white py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-300 
+                                 hover:shadow-lg transform" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)' }}>
                   Utiliser l'outil →
                 </button>
               </div>
