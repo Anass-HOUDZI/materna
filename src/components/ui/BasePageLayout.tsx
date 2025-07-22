@@ -81,7 +81,8 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
                     🛠️ Outil professionnel
                   </div>
                   <h1 className="text-4xl mobile-s:text-5xl sm:text-6xl lg:text-7xl font-bold 
-                                 text-foreground leading-tight tracking-tight max-w-5xl">
+                                 leading-tight tracking-tight max-w-5xl bg-clip-text text-transparent"
+                      style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
                     {title}
                   </h1>
                 </div>
