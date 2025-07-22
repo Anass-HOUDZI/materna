@@ -105,31 +105,6 @@ const HeroSection = React.memo<HeroSectionProps>(({
           </div>
         </div>
 
-        {/* Stats Section */}
-        <div className="mt-20 max-w-6xl mx-auto">
-          <ModernCard variant="premium" className="p-8 md:p-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-              <StatsCounter
-                value={50}
-                label="Outils Disponibles"
-                suffix="+"
-                gradient="from-blue-600 to-indigo-600"
-              />
-              <StatsCounter
-                value={100}
-                label="Privacy Protection"
-                suffix="%"
-                gradient="from-green-600 to-teal-600"
-              />
-              <StatsCounter
-                value={0}
-                label="Coût d'Utilisation"
-                prefix="€"
-                gradient="from-purple-600 to-pink-600"
-              />
-            </div>
-          </ModernCard>
-        </div>
       </div>
     </div>
   );
