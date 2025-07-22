@@ -58,9 +58,9 @@ const HeroSection = React.memo<HeroSectionProps>(({
             </h1>
             
             <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-medium">
-              50 outils santé, grossesse, bébé, sécurité et parentalité 
+              15 outils santé, grossesse, bébé, sécurité et parentalité 
               <span className="bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent font-bold">
-                100% offline, gratuits, privacy-first
+                 &nbsp;100% offline, gratuits, privacy-first
               </span>
             </p>
           </div>

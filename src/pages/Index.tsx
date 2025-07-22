@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/Button";
 const FAQ_DATA = [
   {
     question: "Comment fonctionne la suite ?",
-    answer: "50 outils entièrement offline, gratuits, permettant de gérer santé, grossesse et parentalité avec des algorithmes validés médicalement."
+    answer: "15 outils entièrement offline, gratuits, permettant de gérer santé, grossesse et parentalité avec des algorithmes validés médicalement."
   },
   {
     question: "Mes données sont-elles privées ?",
