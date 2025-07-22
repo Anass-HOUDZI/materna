@@ -1,7 +1,7 @@
 
 {
-  "name": "MomTech Suite",
-  "short_name": "MomTech",
+  "name": "Materna",
+  "short_name": "Materna",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#f0f7ff",
@@ -9,7 +9,7 @@
   "categories": [
     "health", "pregnancy", "family", "productivity", "tools"
   ],
-  "description": "Suite PWA famille : 50 outils santé, grossesse, bébé & sécurité, utilisables 100% hors ligne, privacy-first.",
+  "description": "Votre maternité calculée avec précision : 15 outils santé, grossesse, bébé & sécurité, utilisables 100% hors ligne, privacy-first.",
   "icons": [
     {
       "src": "/favicon.ico",

@@ -1,6 +1,6 @@
 
 /**
- * Types partagés pour MomTech Suite
+ * Types partagés pour Materna
  */
 
 export type ToolCategory = "pregnancy" | "security" | "health" | "education" | "reports";

@@ -61,7 +61,7 @@ Simulation budgétaire:
 Détail par poste:
 ${simulation.categories.map(cat => `- ${cat.name}: ${cat.yearTotal.toLocaleString()}€`).join('\n')}
 
-Généré par MomTech Suite - ${new Date().toLocaleDateString()}
+Généré par Materna - ${new Date().toLocaleDateString()}
     `;
     
     const file = new Blob([reportContent], { type: 'text/plain' });
