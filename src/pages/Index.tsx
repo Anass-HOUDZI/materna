@@ -194,7 +194,7 @@ const Index = React.memo(() => {
         {favoriteTools.length > 0 && (
           <Layout direction="column" gap="2xl" className="mb-20">
             <Layout direction="column" gap="md" align="center" className="text-center">
-              <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
+              <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
                 ⭐ Vos outils favoris
               </h2>
               <p className="text-muted-foreground font-medium">

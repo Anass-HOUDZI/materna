@@ -38,7 +38,7 @@ const Toolbar = React.memo<ToolbarProps>(({
           {/* Left Section - Title & Status */}
           <div className="flex items-center gap-4">
             <div>
-              <h2 className="text-lg font-bold text-slate-900">{title}</h2>
+              <h2 className="text-lg font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>{title}</h2>
               {lastUpdated && (
                 <div className="flex items-center gap-1 text-xs text-slate-500 mt-1">
                   <Clock size={12} />

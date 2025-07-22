@@ -77,7 +77,7 @@ Généré par Materna - ${new Date().toLocaleDateString()}
       <Layout direction="column" gap="xl" align="center">
         <div className="text-center max-w-2xl">
           <Calculator className="h-16 w-16 mx-auto text-blue-600 mb-6" />
-          <h1 className="text-3xl font-bold text-slate-800 mb-4">
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent mb-4" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
             Simulateur Budget Bébé Année 1
           </h1>
           <p className="text-lg text-slate-600 leading-relaxed">
@@ -98,7 +98,7 @@ Généré par Materna - ${new Date().toLocaleDateString()}
       <Layout direction="column" gap="xl" align="center">
         <div className="text-center">
           <FileBarChart2 className="h-16 w-16 mx-auto text-blue-600 mb-6" />
-          <h2 className="text-3xl font-bold text-slate-800 mb-4">
+          <h2 className="text-3xl font-bold bg-clip-text text-transparent mb-4" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
             Choisissez votre scénario
           </h2>
           <p className="text-lg text-slate-600">
@@ -156,7 +156,7 @@ Généré par Materna - ${new Date().toLocaleDateString()}
       <Layout direction="column" gap="xl">
         <div className="text-center">
           <Lightbulb className="h-16 w-16 mx-auto text-blue-600 mb-6" />
-          <h2 className="text-3xl font-bold text-slate-800 mb-4">
+          <h2 className="text-3xl font-bold bg-clip-text text-transparent mb-4" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
             Votre simulation budgétaire
           </h2>
         </div>

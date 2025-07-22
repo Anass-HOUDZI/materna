@@ -117,7 +117,7 @@ const OptimizedToolsGrid = React.memo(() => {
   return (
     <div className="w-full max-w-7xl mx-auto px-4 mobile-s:px-6 sm:px-8">
       <div className="text-center mb-12">
-        <h2 className="text-3xl mobile-s:text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
+        <h2 className="text-3xl mobile-s:text-4xl sm:text-5xl font-bold bg-clip-text text-transparent mb-4" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
           Découvrez nos outils
         </h2>
         <p className="text-lg mobile-s:text-xl text-slate-600 max-w-3xl mx-auto">

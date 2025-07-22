@@ -178,7 +178,7 @@ export default function MedicalReportGenerator({ onGenerateReport }: MedicalRepo
           <Layout direction="column" gap="lg">
             {/* En-tête */}
             <div className="border-b border-slate-200 pb-4">
-              <h2 className="text-xl font-bold text-slate-800">Rapport médical</h2>
+              <h2 className="text-xl font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>Rapport médical</h2>
               <div className="text-sm text-slate-600 mt-1">
                 <div>Période: {new Date(report.period.start).toLocaleDateString('fr-FR')} - {new Date(report.period.end).toLocaleDateString('fr-FR')}</div>
                 <div>Généré le: {new Date(report.generatedAt).toLocaleDateString('fr-FR')} à {new Date(report.generatedAt).toLocaleTimeString('fr-FR')}</div>

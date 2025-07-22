@@ -136,7 +136,7 @@ export default function MobileLayout({
               {/* Sidebar Header */}
               {(isMobile || isTablet) && (
                 <div className="flex items-center justify-between p-4 border-b border-border">
-                  <h2 className="font-semibold">Menu</h2>
+                  <h2 className="font-semibold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>Menu</h2>
                   <TouchOptimized variant="button" size="sm">
                     <button
                       onClick={closeSidebar}

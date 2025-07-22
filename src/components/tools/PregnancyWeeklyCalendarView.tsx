@@ -79,7 +79,7 @@ export function PregnancyWeeklyCalendarView() {
   return (
     <div className="w-full space-y-8">
       <div className="text-center space-y-4">
-        <h2 className="text-2xl font-bold text-slate-800">Semaine {week}</h2>
+        <h2 className="text-2xl font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>Semaine {week}</h2>
         <p className="text-slate-600 text-sm">
           Accédez semaine par semaine à votre suivi personnalisé
         </p>

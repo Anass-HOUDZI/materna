@@ -66,7 +66,7 @@ export default function BudgetSimulationResults({
       <Card variant="elevated" size="lg" className="text-center">
         <Layout direction="column" gap="lg">
           <div>
-            <h2 className="text-3xl font-bold text-slate-800 mb-2">
+            <h2 className="text-3xl font-bold bg-clip-text text-transparent mb-2" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
               Budget Bébé Année 1
             </h2>
             <Badge variant="secondary" className="text-base px-4 py-2">

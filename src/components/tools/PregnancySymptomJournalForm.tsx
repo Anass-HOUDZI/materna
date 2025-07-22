@@ -163,7 +163,7 @@ export default function PregnancySymptomJournalForm() {
           <div className="space-y-6">
             <div className="text-center">
               <BookOpen className="h-12 w-12 mx-auto mb-4 text-blue-600" />
-              <h2 className="text-xl font-semibold text-slate-800 mb-2">Guide d'utilisation</h2>
+              <h2 className="text-xl font-semibold bg-clip-text text-transparent mb-2" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>Guide d'utilisation</h2>
               <p className="text-slate-600">Conseils pour optimiser votre suivi</p>
             </div>
 

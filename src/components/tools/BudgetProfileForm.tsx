@@ -53,7 +53,7 @@ export default function BudgetProfileForm({ onSubmit, loading }: BudgetProfileFo
       <form onSubmit={handleSubmit} className="space-y-8">
         <div className="text-center">
           <Baby className="h-12 w-12 mx-auto text-blue-600 mb-4" />
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">
+          <h2 className="text-2xl font-bold bg-clip-text text-transparent mb-2" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
             Profil Familial
           </h2>
           <p className="text-slate-600">

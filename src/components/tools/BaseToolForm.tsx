@@ -31,7 +31,7 @@ const BaseToolForm = React.memo<BaseToolFormProps>(({
           {(title || description) && (
             <Layout direction="column" gap="md" align="center" className="text-center border-b border-border pb-8">
               {title && (
-                <h2 className="text-3xl mobile-s:text-4xl sm:text-5xl font-bold text-foreground">
+                <h2 className="text-3xl mobile-s:text-4xl sm:text-5xl font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
                   {title}
                 </h2>
               )}
