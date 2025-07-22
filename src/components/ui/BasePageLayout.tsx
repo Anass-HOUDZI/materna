@@ -99,7 +99,7 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
 
       {/* Main Content */}
       <main className="flex-1 w-full">
-        <div className={cn("mx-auto px-4 mobile-s:px-6 sm:px-8 py-8 mobile-s:py-12", "max-w-full")}>
+        <div className={cn("mx-auto py-8 mobile-s:py-12", "max-w-full", "px-4 mobile-s:px-6 sm:px-8 md:px-0")}>
           <div className="animate-fade-in w-full">
             {children}
           </div>

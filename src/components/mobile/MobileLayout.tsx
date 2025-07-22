@@ -70,8 +70,8 @@ export default function MobileLayout({
               </TouchOptimized>
             )}
 
-            {/* Search */}
-            {showSearch && (
+            {/* Search - Hidden on mobile */}
+            {showSearch && !isMobile && (
               <div className="flex-1 relative">
                 <div className="relative">
                   <Search 

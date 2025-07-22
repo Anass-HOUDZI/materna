@@ -18,6 +18,30 @@
   .mobile-s\:p-8 { padding: 2rem; }
 }
 
+/* Mobile responsiveness improvements */
+@media (max-width: 768px) {
+  .mobile\:px-0 { padding-left: 0; padding-right: 0; }
+  .mobile\:px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+  .mobile\:px-4 { padding-left: 1rem; padding-right: 1rem; }
+  .mobile\:text-sm { font-size: 0.875rem; }
+  .mobile\:text-base { font-size: 1rem; }
+  .mobile\:text-lg { font-size: 1.125rem; }
+  .mobile\:text-xl { font-size: 1.25rem; }
+  .mobile\:text-2xl { font-size: 1.5rem; }
+  .mobile\:text-3xl { font-size: 1.875rem; }
+  .mobile\:py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+  .mobile\:py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+  .mobile\:py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+}
+
+/* Extra responsive utilities */
+@media (max-width: 640px) {
+  .sm\:px-0 { padding-left: 0; padding-right: 0; }
+  .sm\:text-sm { font-size: 0.875rem; }
+  .sm\:text-base { font-size: 1rem; }
+  .sm\:text-lg { font-size: 1.125rem; }
+}
+
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
   button, a, [role="button"], [tabindex] {
