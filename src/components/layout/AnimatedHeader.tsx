@@ -55,7 +55,7 @@ export function AnimatedHeader() {
           className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
         >
           <img 
-            src="/lovable-uploads/70f0ce7b-d0bb-4e2c-9179-e97890853d75.png" 
+            src="/lovable-uploads/9b95e222-c695-4858-89c2-a70b7e40a4e4.png" 
             alt="Materna" 
             className="h-8 w-auto"
           />
