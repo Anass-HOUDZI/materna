@@ -45,9 +45,10 @@ export default function BabyMovementHistory({ history, method }: Props) {
             key={date}
             className={`flex flex-col items-center px-3 py-3 rounded-2xl transition-all duration-300 shadow-sm min-w-[56px] ${
               isToday(new Date(date))
-                ? "bg-gradient-to-b from-blue-500 to-blue-600 text-white shadow-md scale-105"
+                ? "text-white shadow-md scale-105"
                 : "bg-gradient-to-b from-slate-100 to-slate-200 text-slate-700 hover:from-blue-50 hover:to-blue-100 hover:shadow-md"
             }`}
+            style={isToday(new Date(date)) ? { background: 'linear-gradient(to bottom, #f953c6, #b91d73)' } : {}}
           >
             <span className="font-bold text-lg">{total}</span>
             <span className="text-xs opacity-80 font-medium">{format(new Date(date), "EE")}</span>

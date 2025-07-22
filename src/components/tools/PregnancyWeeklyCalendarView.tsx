@@ -94,9 +94,10 @@ export function PregnancyWeeklyCalendarView() {
               size="sm"
               className={`min-w-[3rem] px-3 py-2 rounded-xl font-semibold transition-all duration-300 ${
                 week === w.num 
-                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md scale-105" 
+                  ? "text-white shadow-md scale-105" 
                   : "bg-white/80 text-slate-600 hover:bg-blue-50 shadow-sm"
               }`}
+              style={week === w.num ? { background: 'linear-gradient(to right, #f953c6, #b91d73)' } : {}}
               variant={week === w.num ? "default" : "ghost"}
               onClick={() => setWeek(w.num)}
               aria-label={`Semaine ${w.num}`}

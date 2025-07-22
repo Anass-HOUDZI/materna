@@ -28,9 +28,9 @@ const Button = React.memo<ButtonProps>(({
   const baseStyles = "inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-300 ease-out focus:outline-none focus:ring-4 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform";
 
   const variantStyles = {
-    primary: "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl focus:ring-blue-400",
+    primary: "text-white shadow-lg hover:shadow-xl focus:ring-pink-400",
     secondary: "bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white shadow-lg hover:shadow-xl focus:ring-slate-400",
-    outline: "border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-400",
+    outline: "border-2 hover:bg-white/20 focus:ring-pink-400",
     ghost: "text-slate-700 hover:bg-slate-100 focus:ring-slate-400",
     danger: "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg hover:shadow-xl focus:ring-red-400",
     success: "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl focus:ring-green-400"
@@ -64,6 +64,11 @@ const Button = React.memo<ButtonProps>(({
         className
       )}
       disabled={disabled || loading}
+      style={{
+        ...(variant === "primary" && { background: 'linear-gradient(to right, #f953c6, #b91d73)' }),
+        ...(variant === "outline" && { borderColor: '#f953c6', color: '#f953c6' }),
+        ...props.style
+      }}
       {...props}
     >
       {loading ? (

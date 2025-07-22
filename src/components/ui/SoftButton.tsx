@@ -16,7 +16,7 @@ export default function SoftButton({
   ...props 
 }: SoftButtonProps) {
   const gradientClasses = {
-    blue: "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white",
+    blue: "text-white",
     rose: "bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white",
     mint: "bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white",
     lavender: "bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white",
@@ -43,6 +43,10 @@ export default function SoftButton({
         
         className
       )}
+      style={{
+        ...(gradient === "blue" && { background: 'linear-gradient(to right, #f953c6, #b91d73)' }),
+        ...props.style
+      }}
       {...props}
     >
       {children}

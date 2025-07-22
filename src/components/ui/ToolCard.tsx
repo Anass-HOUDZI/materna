@@ -137,11 +137,11 @@ const ToolCard = React.memo<ToolCardProps>(({
 
         {/* Enhanced action button */}
         <button 
-          className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 
-                   text-white py-3.5 px-6 rounded-2xl font-semibold text-sm transition-all duration-300 
-                   hover:shadow-xl transform group-hover:shadow-blue-500/30
-                   focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-white
+          className="w-full text-white py-3.5 px-6 rounded-2xl font-semibold text-sm transition-all duration-300 
+                   hover:shadow-xl transform group-hover:shadow-pink-500/30
+                   focus:outline-none focus:ring-4 focus:ring-pink-500/50 focus:ring-offset-2 focus:ring-offset-white
                    active:scale-95"
+          style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)' }}
           onClick={(e) => {
             e.stopPropagation();
             handleClick();
@@ -156,8 +156,8 @@ const ToolCard = React.memo<ToolCardProps>(({
       </div>
 
       {/* Enhanced hover effect overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-indigo-500/0 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" 
+           style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)' }} />
     </div>
   );
 });
