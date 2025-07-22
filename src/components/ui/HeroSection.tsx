@@ -48,14 +48,14 @@ const HeroSection = React.memo<HeroSectionProps>(({
           {/* Main Title */}
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight">
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
+              <span className="bg-clip-text text-transparent animate-pulse" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
                 Materna
               </span>
             </h1>
             
             <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-medium">
               15 outils santé, grossesse, bébé, sécurité et parentalité 
-               <span className="font-bold" style={{ color: '#ff4ab9' }}>
+               <span className="font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
                  &nbsp;100% offline, gratuits, privacy-first
                </span>
             </p>

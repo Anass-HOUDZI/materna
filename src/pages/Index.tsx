@@ -78,7 +78,7 @@ const Index = React.memo(() => {
         {/* Categories Section */}
         <Layout direction="column" gap="2xl" className="mb-20">
           <Layout direction="column" gap="md" align="center" className="text-center">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
               Tous nos outils
             </h2>
             <p className="text-muted-foreground font-medium">
@@ -167,7 +167,7 @@ const Index = React.memo(() => {
         {/* Tools Section */}
         <Layout direction="column" gap="2xl" id="tools-section" className="my-20">
           <Layout direction="column" gap="md" align="center" className="text-center">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
               {searchQuery ? `Résultats pour "${searchQuery}"` : 
                selectedCategory === "all" ? "Tous nos outils" : 
                `Outils ${CATEGORIES.find(c => c.id === selectedCategory)?.title || ""}`}
@@ -243,7 +243,7 @@ const Index = React.memo(() => {
 
         {/* FAQ Section */}
         <Layout direction="column" gap="2xl" className="w-full max-w-4xl mx-auto mt-24">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
             Questions fréquentes
           </h2>
           
