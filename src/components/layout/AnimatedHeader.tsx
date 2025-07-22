@@ -54,14 +54,11 @@ export function AnimatedHeader() {
           to="/" 
           className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
         >
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">MT</span>
-          </div>
-          <div className="hidden sm:block">
-            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Materna
-            </h1>
-          </div>
+          <img 
+            src="/lovable-uploads/70f0ce7b-d0bb-4e2c-9179-e97890853d75.png" 
+            alt="Materna" 
+            className="h-8 w-auto"
+          />
         </Link>
 
         {/* Desktop Navigation */}
