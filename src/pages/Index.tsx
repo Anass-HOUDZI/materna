@@ -124,58 +124,6 @@ const Index = React.memo(() => {
           )}
         </div>
 
-        {/* Categories Section Premium */}
-        {CATEGORIES.length > 0 && (
-          <Layout direction="column" gap="3xl" id="categories" className="mb-20">
-            <Layout direction="column" gap="lg" align="center" className="text-center">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Découvrez nos catégories
-              </h2>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl font-medium">
-                Chaque catégorie regroupe des outils spécialisés pour répondre à vos besoins spécifiques
-              </p>
-            </Layout>
-
-            {/* Desktop Category Filter */}
-            <div className="hidden sm:flex flex-wrap gap-3 justify-center">
-              <Button
-                variant={selectedCategory === "all" ? "primary" : "outline"}
-                onClick={() => setSelectedCategory("all")}
-                className="hover:scale-105 transition-transform duration-200"
-              >
-                Toutes les catégories
-              </Button>
-              {CATEGORIES.map((category) => (
-                <Button
-                  key={category.id}
-                  variant={selectedCategory === category.id ? "primary" : "outline"}
-                  onClick={() => setSelectedCategory(category.id)}
-                  icon={React.createElement(category.icon, { size: 18 })}
-                  className="hover:scale-105 transition-transform duration-200"
-                >
-                  {category.title}
-                </Button>
-              ))}
-            </div>
-
-            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              {CATEGORIES.map((category, index) => (
-                <PremiumCategoryCard
-                  key={category.id}
-                  title={category.title}
-                  description={category.description}
-                  href={category.href}
-                  icon={React.createElement(category.icon, { size: 32 })}
-                  toolCount={category.tools.length}
-                  gradient={category.gradient}
-                  imageUrl={CATEGORY_IMAGES[category.id as keyof typeof CATEGORY_IMAGES]}
-                  featured={index === 0} // Première catégorie en vedette
-                  badge={category.tools.length > 10 ? "RICHE" : undefined}
-                />
-              ))}
-            </div>
-          </Layout>
-        )}
 
         {/* Tools Section */}
         <Layout direction="column" gap="2xl" id="tools-section" className="my-20">
