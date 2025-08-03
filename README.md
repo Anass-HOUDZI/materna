@@ -1,6 +1,6 @@
 # Materna
 
-MomTech Suite est une collection de 15 outils gratuits conçus pour accompagner les familles à chaque étape de la parentalité, de la grossesse à l'éducation des enfants.
+Materna est une collection de 15 outils gratuits conçus pour accompagner les familles à chaque étape de la parentalité, de la grossesse à l'éducation des enfants.
 
 **Lien du Projet** : [Materna](https://maternna.netlify.app/)
 
