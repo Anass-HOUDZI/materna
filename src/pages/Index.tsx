@@ -1,4 +1,3 @@
-
 import React from "react";
 import { AccordionSimple, AccordionSimpleItem } from "@/components/ui/accordion-simple";
 import Footer from "@/components/ui/Footer";
@@ -45,33 +44,18 @@ const Index = React.memo(() => {
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const [selectedCategory, setSelectedCategory] = React.useState<string>("all");
   const [showMobileFilter, setShowMobileFilter] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState("");
   
   const favoriteTools = TOOLS_DATA.filter(tool => favorites.includes(tool.link)).slice(0, 8);
   
-  // Filtrage par catégorie et recherche
-  let filteredTools = selectedCategory === "all" 
+  // Filtrage par catégorie uniquement (barre de recherche supprimée)
+  const filteredTools = selectedCategory === "all" 
     ? TOOLS_DATA 
     : TOOLS_DATA.filter(tool => tool.category === selectedCategory);
-    
-  if (searchQuery) {
-    filteredTools = filteredTools.filter(tool => 
-      tool.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tool.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }
-
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    setSelectedCategory("all");
-    // Scroll vers la section des outils
-    document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section Révolutionnaire */}
-      <HeroSection onSearch={handleSearch} className="mb-20" />
+      {/* Hero Section */}
+      <HeroSection className="mb-20" />
 
       <div className="w-full max-w-7xl mx-auto px-4 mobile-s:px-6 sm:px-8 pb-safe-bottom">
         
@@ -143,13 +127,11 @@ const Index = React.memo(() => {
           )}
         </div>
 
-
         {/* Tools Section */}
         <Layout direction="column" gap="2xl" id="tools-section" className="my-20">
           <Layout direction="column" gap="md" align="center" className="text-center">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
-              {searchQuery ? `Résultats pour "${searchQuery}"` : 
-               selectedCategory === "all" ? "Tous nos outils" : 
+              {selectedCategory === "all" ? "Tous nos outils" : 
                `Outils ${CATEGORIES.find(c => c.id === selectedCategory)?.title || ""}`}
             </h2>
             <p className="text-muted-foreground font-medium">
@@ -180,11 +162,8 @@ const Index = React.memo(() => {
                 <div className="text-6xl">🔍</div>
                 <h3 className="text-xl font-semibold">Aucun outil trouvé</h3>
                 <p className="text-muted-foreground">
-                  Essayez avec d'autres mots-clés ou explorez nos catégories
+                  Essayez une autre catégorie ou explorez nos sections
                 </p>
-                <Button onClick={() => setSearchQuery("")} variant="outline">
-                  Effacer la recherche
-                </Button>
               </div>
             </ModernCard>
           )}

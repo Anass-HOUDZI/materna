@@ -1,3 +1,4 @@
+
 import React, { useMemo } from "react";
 import { Activity, BarChart3, TrendingUp, Search } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -5,6 +6,7 @@ import FavoriteButton from "@/components/home/FavoriteButton";
 import { Card } from "@/components/ui/Card";
 import FlexibleLayout from "@/components/ui/FlexibleLayout";
 import Typography from "@/components/ui/Typography";
+import { Link } from "react-router-dom";
 
 const ICONS = [
   <Activity className="text-blue-600" size={42} />,
@@ -127,21 +129,24 @@ const OptimizedToolsGrid = React.memo(() => {
 
       <div className="grid gap-6 mobile-s:gap-8 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {sortedTools.map(({ label, link, icon, gradient }) => (
-          <div
+          <Link
             key={link}
-            className="group cursor-pointer transform-gpu will-change-transform"
-            onClick={() => window.location.href = link}
+            to={link}
+            className="group block cursor-pointer transform-gpu will-change-transform focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-2xl"
+            aria-label={label}
           >
             <Card
               variant="interactive"
               size="md"
               className="relative overflow-hidden transition-all duration-500 ease-out"
             >
-              {/* Favorite Button */}
-              <FavoriteButton
-                isActive={isFavorite(link)}
-                onClick={() => toggleFavorite(link)}
-              />
+              {/* Favorite Button - prevent navigation */}
+              <div className="absolute top-4 right-4 z-20" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(link); }}>
+                <FavoriteButton
+                  isActive={isFavorite(link)}
+                  onClick={() => {}}
+                />
+              </div>
               
               {/* Icon Container */}
               <div className="relative z-10 mb-6">
@@ -166,10 +171,10 @@ const OptimizedToolsGrid = React.memo(() => {
                     Facile
                   </span>
                 </div>
-                <button className="w-full text-white py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-300 
-                                 hover:shadow-lg transform" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)' }}>
+                <div className="w-full text-white py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-300 
+                                 hover:shadow-lg transform text-center" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)' }}>
                   Utiliser l'outil →
-                </button>
+                </div>
               </div>
               
               {/* Background decoration */}
@@ -177,7 +182,7 @@ const OptimizedToolsGrid = React.memo(() => {
                               opacity-20 rounded-full transform translate-x-8 -translate-y-8 
                               transition-transform duration-500`} />
             </Card>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

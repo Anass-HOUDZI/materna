@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import FavoriteButton from "@/components/home/FavoriteButton";
 import { useFavorites } from "@/hooks/useFavorites";
 import {
@@ -122,9 +123,9 @@ export default function ToolsGrid({}: ToolsGridProps) {
   return (
     <div className="grid gap-8 mobile-s:gap-10 sm:gap-12 lg:gap-14 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl px-4 mobile-s:px-6 sm:px-8">
       {sorted.map(({ label, link, icon, color }) => (
-        <a
+        <Link
           key={link}
-          href={link}
+          to={link}
           className="group relative rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-out 
                      bg-white/90 backdrop-blur-sm border border-white/20 ring-1 ring-gray-200/50 hover:ring-blue-300/50
                      flex flex-col items-center gap-6 p-8 mobile-s:p-10 sm:p-12 lg:p-14 
@@ -132,19 +133,17 @@ export default function ToolsGrid({}: ToolsGridProps) {
                      touch-manipulation transform-gpu will-change-transform"
           style={{ minHeight: 220 }}
           aria-label={label}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              window.location.href = link;
-            }
-          }}
         >
-          <FavoriteButton
-            isActive={isFavorite(link)}
-            onClick={() => toggleFavorite(link)}
-          />
+          {/* Empêcher la navigation lors du toggle favori */}
+          <div
+            className="absolute top-4 right-4 z-20"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(link); }}
+          >
+            <FavoriteButton
+              isActive={isFavorite(link)}
+              onClick={() => {}}
+            />
+          </div>
           
           {/* Gradient background with blur effect */}
           <div
@@ -174,7 +173,7 @@ export default function ToolsGrid({}: ToolsGridProps) {
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-400/0 to-purple-400/0 
                           group-hover:from-blue-400/5 group-hover:to-purple-400/5 
                           transition-all duration-500 ease-out pointer-events-none" />
-        </a>
+        </Link>
       ))}
     </div>
   );

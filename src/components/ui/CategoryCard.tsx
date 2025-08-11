@@ -2,6 +2,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface CategoryCardProps {
   title: string;
@@ -13,7 +14,7 @@ interface CategoryCardProps {
   className?: string;
 }
 
-const CategoryCard = React.memo<CategoryCardProps>(({
+const CategoryCard = React.memo<CategoryCardProps>(({ 
   title,
   description,
   href,
@@ -22,15 +23,11 @@ const CategoryCard = React.memo<CategoryCardProps>(({
   gradient = "from-blue-50 to-blue-100",
   className
 }) => {
-  const handleClick = () => {
-    window.location.href = href;
-  };
-
   return (
-    <div
-      onClick={handleClick}
+    <Link
+      to={href}
       className={cn(
-        "group relative overflow-hidden rounded-3xl cursor-pointer",
+        "group relative overflow-hidden rounded-3xl block",
         "bg-white/90 backdrop-blur-sm border border-slate-200 shadow-lg",
         "hover:shadow-2xl hover:border-blue-300/50 hover:bg-transparent",
         "transition-all duration-500 ease-out transform-gpu",
@@ -38,15 +35,7 @@ const CategoryCard = React.memo<CategoryCardProps>(({
         "active:scale-[0.98] active:shadow-xl",
         className
       )}
-      tabIndex={0}
-      role="button"
       aria-label={`Accéder à la catégorie ${title}`}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleClick();
-        }
-      }}
     >
       {/* Enhanced Background Gradient */}
       <div 
@@ -106,7 +95,7 @@ const CategoryCard = React.memo<CategoryCardProps>(({
         </div>
       </div>
 
-    </div>
+    </Link>
   );
 });
 
