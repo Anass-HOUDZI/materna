@@ -25,6 +25,7 @@ import BreastfeedingGuide from "./pages/BreastfeedingGuide";
 import TeethingCalculator from "./pages/TeethingCalculator";
 import CryingMoodTracker from "./pages/CryingMoodTracker";
 import PwaStatusIndicator from "./components/ui/PwaStatusIndicator";
+import ScrollToTop from "./components/layout/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <div className="min-h-screen flex w-full flex-col">
             <AnimatedHeader />
             <div className="pt-16"> {/* Offset pour le header fixe */}
