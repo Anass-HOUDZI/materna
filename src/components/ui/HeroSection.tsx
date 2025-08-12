@@ -1,5 +1,5 @@
 import React from "react";
-import ModernCard from "./ModernCard";
+import HeroQuickCard from "./HeroQuickCard";
 import StatsCounter from "./StatsCounter";
 import { cn } from "@/lib/utils";
 
@@ -47,10 +47,10 @@ const HeroSection = React.memo<HeroSectionProps>(({ className }) => {
 
           {/* Features */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <ModernCard title="Grossesse" description="Suivi de grossesse, calcul de date d'accouchement, etc." icon="calendar" href="/grossesse" />
-            <ModernCard title="Bébé" description="Suivi de bébé, suivi de croissance, etc." icon="baby" href="/bebe" />
-            <ModernCard title="Santé" description="Conseils santé, suivi de santé, etc." icon="heart" href="/sante" />
-            <ModernCard title="Sécurité" description="Conseils sécurité, suivi de sécurité, etc." icon="shield" href="/securite" />
+            <HeroQuickCard title="Grossesse" description="Suivi de grossesse, calcul de date d'accouchement, etc." icon="calendar" href="/grossesse" />
+            <HeroQuickCard title="Bébé" description="Suivi de bébé, suivi de croissance, etc." icon="baby" href="/bebe" />
+            <HeroQuickCard title="Santé" description="Conseils santé, suivi de santé, etc." icon="heart" href="/sante" />
+            <HeroQuickCard title="Sécurité" description="Conseils sécurité, suivi de sécurité, etc." icon="shield" href="/securite" />
           </div>
         </div>
 
