@@ -56,7 +56,7 @@ const App = () => (
                 <Route path="/enfant/developpement-moteur" element={<MotorDevelopmentTracker />} />
                 <Route path="/enfant/besoins-nutritionnels" element={<ChildNutritionCalculator />} />
                 <Route path="/sante/guide-allaitement" element={<BreastfeedingGuide />} />
-                <Route path="/grossesse/calculateur-dents" element={<TeethingCalculator />} />
+                <Route path="/enfant/calculateur-dents" element={<TeethingCalculator />} />
                 <Route path="/enfant/tracker-pleurs-humeur" element={<CryingMoodTracker />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

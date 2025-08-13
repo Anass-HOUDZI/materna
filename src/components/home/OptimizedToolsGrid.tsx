@@ -1,119 +1,17 @@
 
 import React, { useMemo } from "react";
-import { Activity, BarChart3, TrendingUp, Search } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import FavoriteButton from "@/components/home/FavoriteButton";
 import { Card } from "@/components/ui/Card";
-import FlexibleLayout from "@/components/ui/FlexibleLayout";
-import Typography from "@/components/ui/Typography";
 import { Link } from "react-router-dom";
-
-const ICONS = [
-  <Activity className="text-blue-600" size={42} />,
-  <BarChart3 className="text-pink-600" size={42} />,
-  <TrendingUp className="text-green-600" size={42} />,
-  <Search className="text-violet-600" size={42} />,
-];
-
-const TOOLS = [
-  {
-    label: "Calculateur de date d'accouchement",
-    link: "/grossesse/calculateur-terme",
-    icon: ICONS[0],
-    gradient: "from-blue-50/80 to-blue-100/80",
-  },
-  {
-    label: "Tracker Contractions",
-    link: "/grossesse/tracker-contractions", 
-    icon: ICONS[1],
-    gradient: "from-pink-50/80 to-pink-100/80",
-  },
-  {
-    label: "Calculateur Prise de Poids",
-    link: "/grossesse/calculateur-poids",
-    icon: ICONS[2],
-    gradient: "from-green-50/80 to-green-100/80",
-  },
-  {
-    label: "Calendrier Grossesse Semaine/Semaine",
-    link: "/grossesse/calendrier-semaine",
-    icon: ICONS[3],
-    gradient: "from-violet-50/80 to-violet-100/80",
-  },
-  {
-    label: "Tracker Mouvements Bébé",
-    link: "/grossesse/tracker-mouvements-bebe",
-    icon: ICONS[1],
-    gradient: "from-rose-50/80 to-pink-100/80",
-  },
-  {
-    label: "Journal Symptômes",
-    link: "/grossesse/journal-symptomes",
-    icon: ICONS[2],
-    gradient: "from-yellow-50/80 to-orange-50/80",
-  },
-  {
-    label: "Calculateur Sexe Bébé (fun)",
-    link: "/grossesse/calculateur-sexe-bebe",
-    icon: ICONS[3],
-    gradient: "from-fuchsia-50/80 to-pink-100/80",
-  },
-  {
-    label: "Simulateur Budget Bébé Année 1",
-    link: "/grossesse/simulateur-budget-bebe",
-    icon: ICONS[0],
-    gradient: "from-sky-50/80 to-blue-100/80",
-  },
-  {
-    label: "Calculateur Poussées Dentaires",
-    link: "/grossesse/calculateur-dents",
-    icon: ICONS[2],
-    gradient: "from-emerald-50/80 to-green-100/80",
-  },
-  {
-    label: "Courbes Croissance OMS",
-    link: "/enfant/courbes-croissance",
-    icon: ICONS[0],
-    gradient: "from-blue-50/80 to-indigo-50/80",
-  },
-  {
-    label: "Guide Diversification Alimentaire",
-    link: "/enfant/guide-diversification",
-    icon: ICONS[3],
-    gradient: "from-lime-50/80 to-lime-100/80",
-  },
-  {
-    label: "Tracker Développement Moteur 0-3 ans",
-    link: "/enfant/developpement-moteur",
-    icon: ICONS[1],
-    gradient: "from-orange-50/80 to-yellow-50/80",
-  },
-  {
-    label: "Calculateur Besoins Nutritionnels Enfant",
-    link: "/enfant/besoins-nutritionnels",
-    icon: ICONS[2],
-    gradient: "from-teal-50/80 to-blue-50/80",
-  },
-  {
-    label: "Tracker Pleurs & Humeur Bébé",
-    link: "/enfant/tracker-pleurs-humeur",
-    icon: ICONS[0],
-    gradient: "from-purple-50/80 to-indigo-50/80",
-  },
-  {
-    label: "Guide Allaitement Complet",
-    link: "/sante/guide-allaitement",
-    icon: ICONS[3],
-    gradient: "from-pink-50/80 to-pink-100/80",
-  },
-];
+import { TOOLS_DATA } from "@/data/categories";
 
 const OptimizedToolsGrid = React.memo(() => {
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   
   const sortedTools = useMemo(() => [
-    ...TOOLS.filter(tool => favorites.includes(tool.link)),
-    ...TOOLS.filter(tool => !favorites.includes(tool.link)),
+    ...TOOLS_DATA.filter(tool => favorites.includes(tool.link)),
+    ...TOOLS_DATA.filter(tool => !favorites.includes(tool.link)),
   ], [favorites]);
 
   return (
@@ -128,12 +26,12 @@ const OptimizedToolsGrid = React.memo(() => {
       </div>
 
       <div className="grid gap-6 mobile-s:gap-8 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {sortedTools.map(({ label, link, icon, gradient }) => (
+        {sortedTools.map((tool) => (
           <Link
-            key={link}
-            to={link}
+            key={tool.link}
+            to={tool.link}
             className="group block cursor-pointer transform-gpu will-change-transform focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-2xl"
-            aria-label={label}
+            aria-label={tool.label}
           >
             <Card
               variant="interactive"
@@ -141,19 +39,19 @@ const OptimizedToolsGrid = React.memo(() => {
               className="relative overflow-hidden transition-all duration-500 ease-out"
             >
               {/* Favorite Button - prevent navigation */}
-              <div className="absolute top-4 right-4 z-20" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(link); }}>
+              <div className="absolute top-4 right-4 z-20" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(tool.link); }}>
                 <FavoriteButton
-                  isActive={isFavorite(link)}
+                  isActive={isFavorite(tool.link)}
                   onClick={() => {}}
                 />
               </div>
               
               {/* Icon Container */}
               <div className="relative z-10 mb-6">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient.replace('50/80', '500').replace('100/80', '600')} 
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${tool.gradient.replace('50', '500').replace('100', '600')} 
                                 flex items-center justify-center shadow-lg transition-transform duration-300`}>
                   <div className="text-white transform transition-transform duration-300">
-                    {React.cloneElement(icon, { className: "text-white", size: 32 })}
+                    {React.createElement(tool.icon, { className: "text-white", size: 32 })}
                   </div>
                 </div>
               </div>
@@ -161,14 +59,14 @@ const OptimizedToolsGrid = React.memo(() => {
               {/* Content */}
               <div className="relative z-10">
                 <h3 className="text-lg mobile-s:text-xl font-semibold text-slate-900 mb-3 leading-tight">
-                  {label}
+                  {tool.label}
                 </h3>
                 <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
                   <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
                     ⭐ Excellent
                   </span>
                   <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
-                    Facile
+                    {tool.difficulty}
                   </span>
                 </div>
                 <div className="w-full text-white py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-300 
@@ -178,7 +76,7 @@ const OptimizedToolsGrid = React.memo(() => {
               </div>
               
               {/* Background decoration */}
-              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${gradient} 
+              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${tool.gradient} 
                               opacity-20 rounded-full transform translate-x-8 -translate-y-8 
                               transition-transform duration-500`} />
             </Card>

@@ -1,3 +1,4 @@
+
 import { Baby, Heart, Shield, Activity, Calculator, BarChart3, TrendingUp, Search, Stethoscope, Smile } from "lucide-react";
 
 export interface Tool {
@@ -170,7 +171,7 @@ export const TOOLS_DATA: Tool[] = [
     id: "teething-calculator",
     label: "Calculateur Poussées Dentaires",
     description: "Prédisez les poussées dentaires de votre bébé",
-    link: "/grossesse/calculateur-dents",
+    link: "/enfant/calculateur-dents",
     icon: Smile,
     gradient: "from-emerald-50 to-green-100",
     difficulty: "Facile",

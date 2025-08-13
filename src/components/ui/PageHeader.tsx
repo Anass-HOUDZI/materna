@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -44,14 +45,14 @@ export default function PageHeader({ crumbs }: PageHeaderProps) {
                        focus-visible:ring-4 focus-visible:ring-blue-400/50 focus-visible:ring-offset-2
                        min-h-touch"
           >
-            <a 
-              href="/" 
+            <Link 
+              to="/" 
               aria-label="Retour à l'accueil"
               className="flex items-center gap-3"
             >
               <HomeIcon className="w-5 h-5 mobile-s:w-6 mobile-s:h-6" />
               <span>Accueil</span>
-            </a>
+            </Link>
           </Button>
           
           <Breadcrumb className="flex-1">
@@ -61,11 +62,13 @@ export default function PageHeader({ crumbs }: PageHeaderProps) {
                   {idx > 0 && <BreadcrumbSeparator className="text-slate-400" />}
                   <BreadcrumbItem>
                     {crumb.href && idx < displayCrumbs.length - 1 ? (
-                      <BreadcrumbLink 
-                        href={crumb.href}
-                        className="text-slate-600 hover:text-slate-800 font-medium text-sm mobile-s:text-base transition-colors duration-200"
-                      >
-                        {crumb.label}
+                      <BreadcrumbLink asChild>
+                        <Link 
+                          to={crumb.href}
+                          className="text-slate-600 hover:text-slate-800 font-medium text-sm mobile-s:text-base transition-colors duration-200"
+                        >
+                          {crumb.label}
+                        </Link>
                       </BreadcrumbLink>
                     ) : (
                       <BreadcrumbPage className="text-slate-800 font-semibold text-sm mobile-s:text-base">
