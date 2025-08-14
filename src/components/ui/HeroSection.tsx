@@ -44,6 +44,14 @@ const HeroSection = React.memo<HeroSectionProps>(({ className }) => {
                  &nbsp;100% offline, gratuits, privacy-first
                </span>
             </p>
+
+            {/* New Description Paragraph */}
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mt-6">
+              Votre grossesse est un moment unique. Elle mérite mieux qu'une app 
+              qui vous espionne. <strong>On vous accompagne sans vous juger, 
+              sans vous traquer.</strong> Des outils validés par des professionnels 
+              de santé pour vivre sereinement chaque étape.
+            </p>
           </div>
 
           {/* Features - Correction des routes */}
