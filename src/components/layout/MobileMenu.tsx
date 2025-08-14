@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,7 +26,7 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
 
   const categoryColors = {
     'grossesse': 'from-pink-500 to-rose-500',
-    'enfant': 'from-emerald-500 to-green-500',
+    'enfant': 'from-emerald-500 to-green-500',  
     'sante': 'from-blue-500 to-cyan-500',
     'securite': 'from-violet-500 to-purple-500',
     'outils': 'from-orange-500 to-amber-500',
@@ -38,25 +37,15 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
       <SheetContent 
         side="right" 
         className={cn(
-          "w-full sm:w-96 p-0",
+          "w-full sm:max-w-md p-0",
           "bg-background/95 backdrop-blur-xl border-l border-border/60"
         )}
       >
-        {/* Header */}
+        {/* Header sans croix personnalisée */}
         <SheetHeader className="px-6 py-6 border-b border-border/40">
-          <div className="flex items-center justify-between">
-            <SheetTitle className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              Navigation
-            </SheetTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => onOpenChange(false)}
-              className="w-8 h-8 p-0 rounded-full hover:bg-accent/60"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
+          <SheetTitle className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent text-left">
+            Navigation
+          </SheetTitle>
         </SheetHeader>
 
         {/* Content */}
