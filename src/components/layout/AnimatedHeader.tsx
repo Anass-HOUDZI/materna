@@ -1,29 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Menu, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
-import { CATEGORIES } from '@/data/categories';
+import { CategoriesDropdown } from './CategoriesDropdown';
+import { MobileMenu } from './MobileMenu';
 
 export function AnimatedHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,17 +21,12 @@ export function AnimatedHeader() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleCategoryClick = (categoryHref: string) => {
-    navigate(categoryHref);
-    setIsMobileMenuOpen(false);
-  };
-
   return (
     <header 
       className={cn(
-        'fixed top-0 w-full z-50 transition-all duration-300 ease-in-out',
+        'fixed top-0 w-full z-50 transition-all duration-500 ease-out',
         isScrolled 
-          ? 'bg-background/80 backdrop-blur-md border-b border-border/40 shadow-sm' 
+          ? 'bg-background/80 backdrop-blur-xl border-b border-border/60 shadow-xl shadow-black/5' 
           : 'bg-transparent'
       )}
     >
@@ -52,43 +34,27 @@ export function AnimatedHeader() {
         {/* Logo */}
         <Link 
           to="/" 
-          className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
+          className={cn(
+            "flex items-center space-x-3 group",
+            "hover:opacity-80 transition-all duration-300 ease-out"
+          )}
         >
-          <img 
-            src="/lovable-uploads/9b95e222-c695-4858-89c2-a70b7e40a4e4.png" 
-            alt="Materna" 
-            className="h-8 w-auto"
-          />
+          <div className="relative">
+            <img 
+              src="/lovable-uploads/9b95e222-c695-4858-89c2-a70b7e40a4e4.png" 
+              alt="Materna" 
+              className={cn(
+                "h-8 w-auto transition-all duration-300",
+                "group-hover:scale-105"
+              )}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex items-center space-x-1">
-                <span>Catégories</span>
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              {CATEGORIES.map((category) => (
-                <DropdownMenuItem 
-                  key={category.id}
-                  onClick={() => handleCategoryClick(category.href)}
-                  className="flex items-center space-x-3 cursor-pointer"
-                >
-                  {React.createElement(category.icon, { className: "h-4 w-4" })}
-                  <div>
-                    <div className="font-medium">{category.title}</div>
-                    <div className="text-xs text-muted-foreground">
-                      {category.tools.length} outils
-                    </div>
-                  </div>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
+        <nav className="hidden md:flex items-center space-x-3">
+          <CategoriesDropdown />
           <ThemeToggle />
         </nav>
 
@@ -96,43 +62,26 @@ export function AnimatedHeader() {
         <div className="md:hidden flex items-center space-x-2">
           <ThemeToggle />
           
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="sm" className="w-9 px-0">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-80">
-              <SheetHeader>
-                <SheetTitle>Navigation</SheetTitle>
-              </SheetHeader>
-              
-              <div className="mt-6 space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                    Catégories
-                  </h3>
-                  {CATEGORIES.map((category) => (
-                    <Button
-                      key={category.id}
-                      variant="ghost"
-                      className="w-full justify-start space-x-3"
-                      onClick={() => handleCategoryClick(category.href)}
-                    >
-                      {React.createElement(category.icon, { className: "h-5 w-5" })}
-                      <div className="text-left">
-                        <div className="font-medium">{category.title}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {category.tools.length} outils
-                        </div>
-                      </div>
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => setIsMobileMenuOpen(true)}
+            className={cn(
+              "w-10 h-10 p-0 rounded-xl",
+              "bg-background/80 backdrop-blur-sm border border-border/40",
+              "hover:bg-accent/80 hover:border-border/60 hover:shadow-md",
+              "transition-all duration-300 ease-out",
+              "focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2"
+            )}
+          >
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">Ouvrir le menu</span>
+          </Button>
+          
+          <MobileMenu 
+            open={isMobileMenuOpen} 
+            onOpenChange={setIsMobileMenuOpen} 
+          />
         </div>
       </div>
     </header>
