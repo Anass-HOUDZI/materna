@@ -2,6 +2,7 @@
 import React from "react";
 import { BabyMovementTrackerForm } from "@/components/tools/BabyMovementTrackerForm";
 import BasePageLayout from "@/components/ui/BasePageLayout";
+import BaseToolForm from "@/components/tools/BaseToolForm";
 
 export default function BabyMovementTracker() {
   return (
@@ -11,11 +12,14 @@ export default function BabyMovementTracker() {
       ]}
       title="Tracker Mouvements Bébé"
       description="Suivez les mouvements fœtaux selon les méthodes médicales reconnues (Cardiff, Sadovsky, Moore) pour votre tranquillité d'esprit."
-      maxWidth="full"
+      maxWidth="xl"
     >
-      <div className="w-full">
+      <BaseToolForm
+        title="Suivi des Mouvements"
+        description="Comptabilisez et analysez les mouvements de votre bébé"
+      >
         <BabyMovementTrackerForm />
-      </div>
+      </BaseToolForm>
     </BasePageLayout>
   );
 }
