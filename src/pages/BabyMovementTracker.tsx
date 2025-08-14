@@ -12,7 +12,6 @@ export default function BabyMovementTracker() {
       title="Tracker Mouvements Bébé"
       description="Suivez les mouvements fœtaux selon les méthodes médicales reconnues (Cardiff, Sadovsky, Moore) pour votre tranquillité d'esprit."
       maxWidth="full"
-      padding="md"
     >
       <div className="w-full">
         <BabyMovementTrackerForm />

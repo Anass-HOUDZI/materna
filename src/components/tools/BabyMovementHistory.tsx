@@ -57,7 +57,7 @@ export default function BabyMovementHistory({ history, method }: BabyMovementHis
             if (!data) return null;
 
             return (
-              <Card key={entry.id || index} variant="outline" className="w-full">
+              <Card key={entry.id || index} className="w-full border-2">
                 <CardContent className="p-4 space-y-3">
                   {/* Date et badge méthode */}
                   <div className="flex flex-wrap items-center justify-between gap-2">
