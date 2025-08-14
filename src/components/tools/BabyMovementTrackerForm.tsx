@@ -10,12 +10,14 @@ import type { EncryptedToolData } from "@/types/models";
 import BabyMovementHistory from "./BabyMovementHistory";
 import type { BabyMovementEntry } from "@/types/movement-entry";
 import { isBabyMovementTool, getBabyMovementData, wrapBabyMovementEntry } from "@/utils/baby-movement";
+import ResponsiveGrid from "@/components/ui/ResponsiveGrid";
+import ResponsiveContainer from "@/components/ui/ResponsiveContainer";
 
 export type TrackingMethod = "Cardiff" | "Moore" | "Sadovsky";
 const METHODS = [
-  { value: "Cardiff", label: "Méthode Cardiff (10 mouvements / 24h)" },
-  { value: "Moore", label: "Méthode Moore (3 mouvements / 30 min)" },
-  { value: "Sadovsky", label: "Méthode Sadovsky (4 mouvements / 1h)" },
+  { value: "Cardiff", label: "Cardiff", description: "10 mouvements / 24h" },
+  { value: "Moore", label: "Moore", description: "3 mouvements / 30 min" },
+  { value: "Sadovsky", label: "Sadovsky", description: "4 mouvements / 1h" },
 ];
 
 // Utilitaire pour mouvements du jour
@@ -121,89 +123,141 @@ export function BabyMovementTrackerForm() {
   };
 
   return (
-    <div>
-      <Card className="max-w-lg mx-auto">
-        <CardHeader>
-          <CardTitle>🦶 Tracker Mouvements Bébé</CardTitle>
-          <CardDescription>
+    <ResponsiveContainer maxWidth="full" padding="none">
+      <Card className="w-full shadow-lg">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl xs:text-3xl font-bold">
+            🦶 Tracker Mouvements Bébé
+          </CardTitle>
+          <CardDescription className="text-base xs:text-lg leading-relaxed">
             Sélectionnez la méthode. Démarrez la session, cliquez à chaque mouvement ressenti, arrêtez pour enregistrer.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="mb-4">
-            <label className="font-medium text-sm mb-1 block">Méthode de comptage</label>
-            <div className="flex gap-2 flex-wrap">
-              {METHODS.map(m =>
+        <CardContent className="w-full space-y-6">
+          {/* Sélection de méthode avec grille responsive */}
+          <div className="w-full">
+            <label className="font-medium text-sm xs:text-base mb-3 block">
+              Méthode de comptage
+            </label>
+            <ResponsiveGrid 
+              minItemWidth={120}
+              gap="sm"
+              className="w-full"
+            >
+              {METHODS.map(m => (
                 <Button
                   key={m.value}
                   variant={method === m.value ? "default" : "outline"}
                   size="sm"
                   onClick={() => setMethod(m.value as TrackingMethod)}
                   disabled={isTiming}
-                  className="flex-1"
+                  className="w-full min-h-[60px] xs:min-h-[68px] p-3 flex flex-col items-center justify-center text-center touch-target"
                 >
-                  {m.label}
+                  <span className="font-semibold text-xs xs:text-sm leading-tight">
+                    {m.label}
+                  </span>
+                  <span className="text-xs opacity-80 mt-1 leading-tight break-words">
+                    {m.description}
+                  </span>
                 </Button>
-              )}
+              ))}
+            </ResponsiveGrid>
+          </div>
+
+          {/* Date actuelle */}
+          <div className="w-full">
+            <div className="flex gap-2 items-center justify-center xs:justify-start">
+              <Calendar className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+              <span className="text-sm xs:text-base">Semaine du </span>
+              <span className="font-mono text-sm xs:text-base">
+                {format(new Date(), "dd/MM/yyyy")}
+              </span>
             </div>
           </div>
-          <div className="my-4">
-            <div className="flex gap-2 items-center">
-              <Calendar className="w-4 h-4 text-muted-foreground" />
-              <span>Semaine du </span>
-              <span className="font-mono">{format(new Date(), "dd/MM/yyyy")}</span>
-            </div>
-          </div>
-          <div className="border rounded-lg p-3 mb-3 bg-accent flex flex-col gap-2">
-            <div className="flex flex-wrap gap-2 justify-between items-center">
-              <div>
-                <span className="text-xs text-muted-foreground">Mouvements :</span>{" "}
-                <span className="font-bold text-lg">{movements}</span>
+
+          {/* Session de tracking */}
+          <div className="w-full border rounded-lg p-4 xs:p-6 bg-accent">
+            {/* Compteurs */}
+            <div className="flex flex-wrap gap-4 justify-between items-center mb-4">
+              <div className="flex-1 min-w-[120px]">
+                <span className="text-xs text-muted-foreground block">Mouvements :</span>
+                <span className="font-bold text-2xl xs:text-3xl">{movements}</span>
               </div>
-              <div>
-                <span className="text-xs text-muted-foreground">Durée :</span>{" "}
-                <span className="font-mono">{Math.floor(timer/60)}:{(timer%60).toString().padStart(2,"0")}</span>
+              <div className="flex-1 min-w-[120px]">
+                <span className="text-xs text-muted-foreground block">Durée :</span>
+                <span className="font-mono text-xl xs:text-2xl">
+                  {Math.floor(timer/60)}:{(timer%60).toString().padStart(2,"0")}
+                </span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Button variant="secondary" onClick={() => setMovements(m => m+1)} disabled={!isTiming}>
-                Ajouter un mouvement
-              </Button>
-              {!isTiming ? (
-                <Button variant="default" onClick={startSession}>
-                  Commencer une session
+
+            {/* Boutons d'action */}
+            <div className="w-full space-y-3">
+              <ResponsiveGrid minItemWidth={160} gap="sm" className="w-full">
+                <Button 
+                  variant="secondary" 
+                  onClick={() => setMovements(m => m+1)} 
+                  disabled={!isTiming}
+                  className="w-full touch-target min-h-[48px]"
+                >
+                  Ajouter un mouvement
                 </Button>
-              ) : (
-                <Button variant="destructive" onClick={stopSession}>
-                  Arrêter & Enregistrer
-                </Button>
-              )}
+                {!isTiming ? (
+                  <Button 
+                    variant="default" 
+                    onClick={startSession}
+                    className="w-full touch-target min-h-[48px]"
+                  >
+                    Commencer une session
+                  </Button>
+                ) : (
+                  <Button 
+                    variant="destructive" 
+                    onClick={stopSession}
+                    className="w-full touch-target min-h-[48px]"
+                  >
+                    Arrêter & Enregistrer
+                  </Button>
+                )}
+              </ResponsiveGrid>
+
+              {/* Note contextuelle */}
+              <Textarea
+                className="w-full text-xs xs:text-sm resize-none"
+                placeholder="Note contexte (activité, position, etc - optionnel)"
+                value={note}
+                onChange={e => setNote(e.target.value)}
+                disabled={!isTiming}
+                rows={3}
+              />
             </div>
-            <Textarea
-              className="mt-2 text-xs"
-              placeholder="Note contexte (activité, position, etc - optionnel)"
-              value={note}
-              onChange={e => setNote(e.target.value)}
-              disabled={!isTiming}
-              rows={2}
-            />
           </div>
+
+          {/* Alertes */}
           {alert && (
-            <div className="flex items-center text-destructive gap-2 my-2 text-sm">
-              <AlertCircle className="w-4 h-4" />
-              <span>{alert}</span>
+            <div className="w-full flex items-start text-destructive gap-3 p-4 bg-destructive/10 rounded-lg">
+              <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+              <span className="text-sm xs:text-base leading-relaxed break-words">
+                {alert}
+              </span>
             </div>
           )}
+          
           {!alert && isTiming && (
-            <div className="flex items-center text-green-700 gap-2 my-2 text-sm">
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Mouvements dans la norme pour cette méthode.</span>
+            <div className="w-full flex items-start text-green-700 gap-3 p-4 bg-green-50 rounded-lg">
+              <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
+              <span className="text-sm xs:text-base leading-relaxed">
+                Mouvements dans la norme pour cette méthode.
+              </span>
             </div>
           )}
-          {/* Historique - composant dédié */}
-          <BabyMovementHistory history={history} method={method} />
+
+          {/* Historique */}
+          <div className="w-full">
+            <BabyMovementHistory history={history} method={method} />
+          </div>
         </CardContent>
       </Card>
-    </div>
+    </ResponsiveContainer>
   );
 }

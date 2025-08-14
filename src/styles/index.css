@@ -1,59 +1,52 @@
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Import modular styles */
 @import './base.css';
+@import './breakpoints.css';
+@import './responsive.css';
+@import './mobile-optimizations.css';
 @import './components.css';
 @import './utilities.css';
 @import './animations.css';
-@import './responsive.css';
 @import './modern-animations.css';
-@import './breakpoints.css';
 
-/* Global mobile-first improvements */
+/* Additional mobile-first base styles */
+html {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ensure consistent box-sizing */
 * {
   box-sizing: border-box;
 }
 
-html {
-  /* Prevent zoom on mobile when focusing inputs */
-  font-size: 16px;
-  -webkit-text-size-adjust: 100%;
+/* Mobile-first responsive utilities */
+.container-full {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-body {
-  /* Improved touch scrolling */
-  -webkit-overflow-scrolling: touch;
-  /* Better font rendering */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* Prevent horizontal scroll */
-  overflow-x: hidden;
+@media (min-width: 640px) {
+  .container-full {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 
-/* Improved focus for accessibility */
-:focus-visible {
-  outline: 2px solid hsl(var(--primary));
-  outline-offset: 2px;
-}
-
-/* Better button defaults for touch */
-button, [role="button"] {
-  touch-action: manipulation;
-  user-select: none;
-}
-
-/* Improved input handling */
-input, textarea, select {
-  font-size: 16px; /* Prevent zoom on iOS */
-}
-
-/* Safe area inset variables for CSS */
-:root {
-  --safe-area-inset-top: env(safe-area-inset-top);
-  --safe-area-inset-bottom: env(safe-area-inset-bottom);
-  --safe-area-inset-left: env(safe-area-inset-left);
-  --safe-area-inset-right: env(safe-area-inset-right);
+@media (min-width: 1024px) {
+  .container-full {
+    max-width: 1280px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
