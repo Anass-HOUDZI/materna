@@ -54,42 +54,48 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
       backgroundClasses[background],
       className
     )}>
-      {/* Header */}
+      {/* Header - Mobile optimized */}
       {showHeader && (
-        <div className="w-full py-2">
-          <div className={cn("mx-auto px-4 mobile-s:px-6 sm:px-8", maxWidthClasses[maxWidth])}>
-            <div className="text-sm text-muted-foreground">
+        <div className="w-full py-2 xs:py-3 safe-area-padding">
+          <div className={cn(
+            "mx-auto responsive-container",
+            maxWidthClasses[maxWidth]
+          )}>
+            <div className="text-xs xs:text-sm text-muted-foreground">
               <PageHeader crumbs={crumbs} />
             </div>
           </div>
         </div>
       )}
 
-      {/* Title Section */}
+      {/* Title Section - Mobile-first typography */}
       {(title || description) && (
-        <div className="w-full bg-gradient-to-br from-blue-50/50 via-background to-purple-50/50 dark:from-blue-950/20 dark:via-background dark:to-purple-950/10 py-12 mobile-s:py-16 sm:py-20">
-          <div className={cn("mx-auto", maxWidthClasses[maxWidth])}>
+        <div className="w-full bg-gradient-to-br from-blue-50/50 via-background to-purple-50/50 dark:from-blue-950/20 dark:via-background dark:to-purple-950/10 py-8 xs:py-12 sm:py-16 md:py-20 safe-area-padding">
+          <div className={cn(
+            "mx-auto responsive-container",
+            maxWidthClasses[maxWidth]
+          )}>
             <Layout 
               direction="column" 
-              gap="lg" 
+              gap="md" 
               align="center" 
               className="text-center animate-fade-in"
             >
               {title && (
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium border border-primary/20">
+                <div className="space-y-3 xs:space-y-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 xs:px-4 xs:py-2 bg-primary/10 text-primary rounded-full text-xs xs:text-sm font-medium border border-primary/20">
                     🛠️ Outil professionnel
                   </div>
-                  <h1 className="text-4xl mobile-s:text-5xl sm:text-6xl lg:text-7xl font-bold 
-                                 leading-tight tracking-tight max-w-5xl bg-clip-text text-transparent"
+                  <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold 
+                                 leading-tight tracking-tight max-w-5xl bg-clip-text text-transparent px-4 xs:px-0"
                       style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
                     {title}
                   </h1>
                 </div>
               )}
               {description && (
-                <p className="text-xl mobile-s:text-2xl sm:text-3xl text-muted-foreground max-w-4xl 
-                              leading-relaxed font-medium">
+                <p className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl text-muted-foreground max-w-4xl 
+                              leading-relaxed font-medium px-4 xs:px-0">
                   {description}
                 </p>
               )}
@@ -98,9 +104,12 @@ const BasePageLayout = React.memo<BasePageLayoutProps>(({
         </div>
       )}
 
-      {/* Main Content */}
-      <main className="flex-1 w-full">
-        <div className={cn("mx-auto py-8 mobile-s:py-12", "max-w-full", "px-4 mobile-s:px-6 sm:px-8 md:px-0")}>
+      {/* Main Content - Mobile-first container */}
+      <main className="flex-1 w-full safe-area-padding">
+        <div className={cn(
+          "mx-auto responsive-container py-6 xs:py-8 sm:py-12",
+          "max-w-full"
+        )}>
           <div className="animate-fade-in w-full">
             {children}
           </div>

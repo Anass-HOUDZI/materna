@@ -1,63 +1,173 @@
 
-/* Responsive utilities */
+/* Mobile-first responsive utilities */
 
-/* Mobile breakpoints */
-@media (max-width: 320px) {
-  .mobile-s\:text-xs { font-size: 0.75rem; }
-  .mobile-s\:text-sm { font-size: 0.875rem; }
-  .mobile-s\:text-base { font-size: 1rem; }
-  .mobile-s\:text-lg { font-size: 1.125rem; }
-  .mobile-s\:text-xl { font-size: 1.25rem; }
-  .mobile-s\:text-2xl { font-size: 1.5rem; }
-  .mobile-s\:text-3xl { font-size: 1.875rem; }
-  .mobile-s\:text-4xl { font-size: 2.25rem; }
-  .mobile-s\:text-5xl { font-size: 3rem; }
+/* Base styles (mobile) - no media query needed */
+.responsive-text {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.responsive-padding {
+  padding: 1rem;
+}
+
+.responsive-container {
+  width: 100%;
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Small screens and up (480px+) */
+@media (min-width: 480px) {
+  .responsive-text {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
   
-  .mobile-s\:p-4 { padding: 1rem; }
-  .mobile-s\:p-6 { padding: 1.5rem; }
-  .mobile-s\:p-8 { padding: 2rem; }
+  .responsive-padding {
+    padding: 1.5rem;
+  }
+  
+  .responsive-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .xs\:text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+  .xs\:text-base { font-size: 1rem; line-height: 1.5rem; }
+  .xs\:text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+  .xs\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+  .xs\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+  .xs\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+  .xs\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+  
+  .xs\:p-4 { padding: 1rem; }
+  .xs\:p-6 { padding: 1.5rem; }
+  .xs\:p-8 { padding: 2rem; }
+  .xs\:px-4 { padding-left: 1rem; padding-right: 1rem; }
+  .xs\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .xs\:py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+  .xs\:py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
 }
 
-/* Mobile responsiveness improvements */
-@media (max-width: 768px) {
-  .mobile\:px-0 { padding-left: 0; padding-right: 0; }
-  .mobile\:px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
-  .mobile\:px-4 { padding-left: 1rem; padding-right: 1rem; }
-  .mobile\:text-sm { font-size: 0.875rem; }
-  .mobile\:text-base { font-size: 1rem; }
-  .mobile\:text-lg { font-size: 1.125rem; }
-  .mobile\:text-xl { font-size: 1.25rem; }
-  .mobile\:text-2xl { font-size: 1.5rem; }
-  .mobile\:text-3xl { font-size: 1.875rem; }
-  .mobile\:py-4 { padding-top: 1rem; padding-bottom: 1rem; }
-  .mobile\:py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-  .mobile\:py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+/* Medium screens and up (640px+) */
+@media (min-width: 640px) {
+  .responsive-text {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+  
+  .responsive-padding {
+    padding: 2rem;
+  }
+  
+  .responsive-container {
+    max-width: 640px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .sm\:text-base { font-size: 1rem; line-height: 1.5rem; }
+  .sm\:text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+  .sm\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+  .sm\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+  .sm\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+  .sm\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+  .sm\:text-5xl { font-size: 3rem; line-height: 1; }
+  .sm\:text-6xl { font-size: 3.75rem; line-height: 1; }
+  
+  .sm\:p-6 { padding: 1.5rem; }
+  .sm\:p-8 { padding: 2rem; }
+  .sm\:p-12 { padding: 3rem; }
+  .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .sm\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+  .sm\:py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+  .sm\:py-8 { padding-top: 2rem; padding-bottom: 2rem; }
 }
 
-/* Extra responsive utilities */
-@media (max-width: 640px) {
-  .sm\:px-0 { padding-left: 0; padding-right: 0; }
-  .sm\:text-sm { font-size: 0.875rem; }
-  .sm\:text-base { font-size: 1rem; }
-  .sm\:text-lg { font-size: 1.125rem; }
+/* Large screens and up (768px+) */
+@media (min-width: 768px) {
+  .responsive-container {
+    max-width: 768px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+  
+  .md\:text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+  .md\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+  .md\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+  .md\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+  .md\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+  .md\:text-5xl { font-size: 3rem; line-height: 1; }
+  .md\:text-6xl { font-size: 3.75rem; line-height: 1; }
+  .md\:text-7xl { font-size: 4.5rem; line-height: 1; }
+}
+
+/* Extra large screens and up (1024px+) */
+@media (min-width: 1024px) {
+  .responsive-container {
+    max-width: 1024px;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  
+  .lg\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+  .lg\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+  .lg\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+  .lg\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+  .lg\:text-5xl { font-size: 3rem; line-height: 1; }
+  .lg\:text-6xl { font-size: 3.75rem; line-height: 1; }
+  .lg\:text-7xl { font-size: 4.5rem; line-height: 1; }
+  .lg\:text-8xl { font-size: 6rem; line-height: 1; }
+}
+
+/* 2XL screens and up (1280px+) */
+@media (min-width: 1280px) {
+  .responsive-container {
+    max-width: 1280px;
+  }
+  
+  .xl\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+  .xl\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+  .xl\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+  .xl\:text-5xl { font-size: 3rem; line-height: 1; }
+  .xl\:text-6xl { font-size: 3.75rem; line-height: 1; }
+  .xl\:text-7xl { font-size: 4.5rem; line-height: 1; }
+  .xl\:text-8xl { font-size: 6rem; line-height: 1; }
+  .xl\:text-9xl { font-size: 8rem; line-height: 1; }
 }
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
   button, a, [role="button"], [tabindex] {
-    @apply touch-feedback;
-  }
-  
-  button, a, input, select, textarea {
     min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem;
   }
   
+  .touch-feedback {
+    transition: all 0.15s ease-out;
+  }
+  
+  .touch-feedback:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  
+  /* Remove hover effects on touch devices */
   .hover\:scale-105:hover {
     transform: none;
   }
+  
+  .hover\:shadow-lg:hover {
+    box-shadow: none;
+  }
 }
 
-/* Reduced motion */
+/* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -66,7 +176,7 @@
   }
 }
 
-/* High contrast */
+/* High contrast preferences */
 @media (prefers-contrast: high) {
   * {
     border-color: ButtonText !important;
@@ -74,5 +184,56 @@
   
   button, [role="button"] {
     border: 2px solid ButtonText !important;
+    background-color: ButtonFace !important;
+    color: ButtonText !important;
+  }
+}
+
+/* Safe area handling for mobile devices */
+.safe-area-padding {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Utility classes for better touch interaction */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.touch-target-large {
+  min-height: 56px;
+  min-width: 56px;
+}
+
+/* Grid optimizations for mobile */
+.mobile-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 480px) {
+  .mobile-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
