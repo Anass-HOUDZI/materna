@@ -38,12 +38,12 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
         side="right" 
         className={cn(
           "w-full sm:max-w-md p-0",
-          "bg-background/95 backdrop-blur-xl border-l border-border/60"
+          "bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-700"
         )}
       >
         {/* Header sans croix personnalisée */}
-        <SheetHeader className="px-6 py-6 border-b border-border/40">
-          <SheetTitle className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent text-left">
+        <SheetHeader className="px-6 py-6 border-b border-gray-200 dark:border-gray-700">
+          <SheetTitle className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent text-left">
             Navigation
           </SheetTitle>
         </SheetHeader>
@@ -53,10 +53,10 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
           {/* Categories Section */}
           <div className="flex-1 px-6 py-6">
             <div className="mb-6">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
                 Catégories
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600 dark:text-gray-300">
                 Explorez nos outils par domaine d'expertise
               </p>
             </div>
@@ -73,8 +73,8 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
                     onClick={() => handleCategoryClick(category.href)}
                     className={cn(
                       "w-full p-4 h-auto rounded-2xl justify-start",
-                      "bg-background/50 border border-border/40",
-                      "hover:bg-accent/60 hover:border-border/60 hover:shadow-lg",
+                      "bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700",
+                      "hover:bg-gray-100 dark:hover:bg-gray-700 hover:shadow-lg",
                       "transition-all duration-300 ease-out",
                       "group relative overflow-hidden"
                     )}
@@ -108,14 +108,14 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
                       {/* Content */}
                       <div className="flex-1 text-left">
                         <div className="flex items-center justify-between mb-1">
-                          <h4 className="font-semibold text-foreground">
+                          <h4 className="font-semibold text-gray-900 dark:text-white">
                             {category.title}
                           </h4>
-                          <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full font-medium border border-primary/20">
+                          <span className="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full font-medium border border-blue-200 dark:border-blue-700">
                             {category.tools.length}
                           </span>
                         </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed">
                           {category.description}
                         </p>
                       </div>
@@ -127,8 +127,8 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
           </div>
 
           {/* Footer */}
-          <div className="px-6 py-4 border-t border-border/40 bg-muted/20">
-            <p className="text-xs text-muted-foreground text-center">
+          <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+            <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
               Suite complète d'outils pour la famille
             </p>
           </div>
