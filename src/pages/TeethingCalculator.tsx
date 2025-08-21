@@ -15,8 +15,6 @@ export default function TeethingCalculator() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Calendrier Dentaire"
-        description="Suivez l'évolution dentaire de votre bébé étape par étape"
       >
         <TeethingTable />
       </BaseToolForm>

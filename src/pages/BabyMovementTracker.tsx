@@ -15,8 +15,6 @@ export default function BabyMovementTracker() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Suivi des Mouvements"
-        description="Comptabilisez et analysez les mouvements de votre bébé"
       >
         <BabyMovementTrackerForm />
       </BaseToolForm>

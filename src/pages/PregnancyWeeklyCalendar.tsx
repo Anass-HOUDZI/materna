@@ -15,8 +15,6 @@ export default function PregnancyWeeklyCalendar() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Votre Grossesse Semaine par Semaine"
-        description="Découvrez les étapes clés de votre grossesse"
       >
         <PregnancyWeeklyCalendarView />
       </BaseToolForm>

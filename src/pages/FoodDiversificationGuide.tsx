@@ -15,8 +15,6 @@ export default function FoodDiversificationGuide() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Diversification Réussie"
-        description="Introduisez les aliments en toute sécurité et avec plaisir"
       >
         <FoodDiversificationTabs />
       </BaseToolForm>

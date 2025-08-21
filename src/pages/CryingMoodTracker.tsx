@@ -15,8 +15,6 @@ export default function CryingMoodTracker() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Suivi Émotionnel"
-        description="Comprendre et accompagner les émotions de votre bébé"
       >
         <CryingMoodTabs />
       </BaseToolForm>

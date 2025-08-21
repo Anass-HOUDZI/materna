@@ -30,8 +30,6 @@ export default function SexPredictionCalculator() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Prédiction Amusante"
-        description="Un moment de détente et de plaisir en attendant l'échographie officielle"
       >
         <Layout direction="column" gap="lg" align="center" className="text-center">
           <div className="p-8 bg-gradient-to-r from-pink-50 to-blue-50 rounded-2xl">

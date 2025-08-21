@@ -15,8 +15,6 @@ export default function PregnancySymptomJournal() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Votre Journal Personnel"
-        description="Suivez et analysez vos symptômes tout au long de votre grossesse"
       >
         <PregnancySymptomJournalForm />
       </BaseToolForm>

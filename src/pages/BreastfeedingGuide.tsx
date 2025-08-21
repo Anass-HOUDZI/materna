@@ -15,8 +15,6 @@ export default function BreastfeedingGuide() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Votre Compagnon Allaitement"
-        description="Tout ce dont vous avez besoin pour allaiter en confiance"
       >
         <BreastfeedingTabs />
       </BaseToolForm>

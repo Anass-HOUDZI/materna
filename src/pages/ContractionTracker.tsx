@@ -15,8 +15,6 @@ export default function ContractionTracker() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Suivi des Contractions"
-        description="Enregistrez la durée et l'intensité de vos contractions pour une analyse précise"
       >
         <ContractionTrackerForm />
       </BaseToolForm>

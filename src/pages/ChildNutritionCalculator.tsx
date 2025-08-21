@@ -15,8 +15,6 @@ export default function ChildNutritionCalculator() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Nutrition Personnalisée"
-        description="Évaluez les besoins nutritionnels spécifiques de votre enfant"
       >
         <ChildNutritionCalculatorForm />
       </BaseToolForm>

@@ -15,8 +15,6 @@ export default function PregnancyWeightGainCalculator() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Suivi Personnalisé"
-        description="Surveillez votre prise de poids selon les recommandations médicales"
       >
         <PregnancyWeightGainCalculatorForm />
       </BaseToolForm>

@@ -15,8 +15,6 @@ export default function PregnancyDueDateCalculator() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Calcul Personnalisé"
-        description="Renseignez vos informations pour obtenir une estimation précise de votre date d'accouchement"
       >
         <DueDateCalculatorForm />
       </BaseToolForm>

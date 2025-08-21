@@ -15,8 +15,6 @@ export default function MotorDevelopmentTracker() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Évaluation du Développement"
-        description="Suivez les étapes clés du développement moteur de votre enfant"
       >
         <MotorDevelopmentTrackerForm />
       </BaseToolForm>

@@ -15,8 +15,6 @@ export default function BabyBudgetSimulator() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Planification Budgétaire"
-        description="Préparez sereinement l'arrivée de votre bébé"
       >
         <BudgetSimulatorForm />
       </BaseToolForm>

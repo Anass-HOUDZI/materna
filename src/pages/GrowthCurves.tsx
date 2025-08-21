@@ -15,8 +15,6 @@ export default function GrowthCurves() {
       maxWidth="xl"
     >
       <BaseToolForm
-        title="Suivi de Croissance"
-        description="Visualisez les courbes de croissance de votre enfant selon les standards internationaux"
       >
         <GrowthCurvesForm />
       </BaseToolForm>
