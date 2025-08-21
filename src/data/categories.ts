@@ -195,7 +195,7 @@ export const CATEGORIES: Category[] = [
   {
     id: "grossesse",
     title: "Grossesse & Suivi",
-    description: "Outils complets pour suivre votre grossesse semaine par semaine avec précision médicale",
+    description: "Outils complets pour suivre votre grossesse avec précision médicale",
     href: "/categorie/grossesse",
     icon: Baby,
     gradient: "from-blue-50 to-blue-100",
@@ -204,7 +204,7 @@ export const CATEGORIES: Category[] = [
   {
     id: "enfant", 
     title: "Développement Enfant",
-    description: "Suivez et optimisez le développement de votre enfant de 0 à 6 ans",
+    description: "Suivez et optimisez le développement de votre enfant",
     href: "/categorie/enfant",
     icon: Activity,
     gradient: "from-green-50 to-green-100", 
