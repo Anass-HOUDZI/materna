@@ -37,13 +37,13 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
       <SheetContent 
         side="right" 
         className={cn(
-          "w-full sm:max-w-sm p-0",
-          "bg-background border-l border-border"
+          "w-full sm:max-w-md p-0",
+          "bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-700"
         )}
       >
         {/* Header sans croix personnalisée */}
-        <SheetHeader className="px-4 py-4 border-b border-border">
-          <SheetTitle className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent text-left">
+        <SheetHeader className="px-6 py-6 border-b border-gray-200 dark:border-gray-700">
+          <SheetTitle className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent text-left">
             Navigation
           </SheetTitle>
         </SheetHeader>
@@ -51,12 +51,12 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
         {/* Content */}
         <div className="flex flex-col h-full">
           {/* Categories Section */}
-          <div className="flex-1 px-4 py-4">
-            <div className="mb-4">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+          <div className="flex-1 px-6 py-6">
+            <div className="mb-6">
+              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
                 Catégories
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600 dark:text-gray-300">
                 Explorez nos outils par domaine d'expertise
               </p>
             </div>
@@ -72,9 +72,9 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
                     variant="ghost"
                     onClick={() => handleCategoryClick(category.href)}
                     className={cn(
-                      "w-full p-3 h-auto rounded-xl justify-start",
-                      "bg-card border border-border",
-                      "hover:bg-accent hover:shadow-md",
+                      "w-full p-4 h-auto rounded-2xl justify-start",
+                      "bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700",
+                      "hover:bg-gray-100 dark:hover:bg-gray-700 hover:shadow-lg",
                       "transition-all duration-300 ease-out",
                       "group relative overflow-hidden"
                     )}
@@ -90,32 +90,32 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
                       gradientClass
                     )} />
                     
-                    <div className="flex items-start gap-3 relative z-10">
+                    <div className="flex items-center gap-4 relative z-10">
                       {/* Icon */}
                       <div className={cn(
-                        "flex items-center justify-center w-10 h-10 rounded-lg flex-shrink-0",
-                        "bg-gradient-to-r text-white shadow-md",
-                        "group-hover:shadow-lg group-hover:scale-105",
+                        "flex items-center justify-center w-12 h-12 rounded-xl",
+                        "bg-gradient-to-r text-white shadow-lg",
+                        "group-hover:shadow-xl group-hover:scale-110",
                         "transition-all duration-300",
                         gradientClass
                       )}>
                         {React.createElement(category.icon, { 
-                          className: "h-5 w-5",
+                          className: "h-6 w-6",
                           strokeWidth: 1.5
                         })}
                       </div>
                       
                       {/* Content */}
-                      <div className="flex-1 text-left min-w-0">
-                        <div className="flex items-start justify-between gap-2 mb-1">
-                          <h4 className="font-semibold text-foreground text-sm leading-tight">
+                      <div className="flex-1 text-left">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="font-semibold text-gray-900 dark:text-white">
                             {category.title}
                           </h4>
-                          <span className="text-xs px-1.5 py-0.5 bg-primary/10 text-primary rounded-full font-medium border border-primary/20 flex-shrink-0">
+                          <span className="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full font-medium border border-blue-200 dark:border-blue-700">
                             {category.tools.length}
                           </span>
                         </div>
-                        <p className="text-xs text-muted-foreground leading-relaxed break-words">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed">
                           {category.description}
                         </p>
                       </div>
@@ -127,8 +127,8 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
           </div>
 
           {/* Footer */}
-          <div className="px-4 py-3 border-t border-border bg-muted/30">
-            <p className="text-xs text-muted-foreground text-center">
+          <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+            <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
               Suite complète d'outils pour la famille
             </p>
           </div>
