@@ -30,7 +30,7 @@ export function AnimatedHeader() {
           : 'bg-transparent'
       )}
     >
-      <div className="container mx-auto px-4 h-16 flex items-center justify-center gap-8 md:gap-16">
+      <div className="max-w-4xl mx-auto px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link 
           to="/" 
