@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useMemo, lazy, Suspense } from "react";
 import { AccordionSimple, AccordionSimpleItem } from "@/components/ui/accordion-simple";
 import Footer from "@/components/ui/Footer";
 import { Layout } from "@/components/ui/Layout";
-import PremiumCategoryCard from "@/components/ui/PremiumCategoryCard";
-import ToolCard from "@/components/ui/ToolCard";
-import HeroSection from "@/components/ui/HeroSection";
 import ModernCard from "@/components/ui/ModernCard";
 import CategoryCard from "@/components/ui/CategoryCard";
 import { CATEGORIES, TOOLS_DATA } from "@/data/categories";
 import { useFavorites } from "@/hooks/useFavorites";
-import { ChevronDown, Filter, Grid } from "lucide-react";
+import { ChevronDown, Filter } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { GRADIENT_STYLES } from "@/utils/performance";
+
+// Lazy load heavy components
+const HeroSection = lazy(() => import("@/components/ui/HeroSection"));
+const ToolCard = lazy(() => import("@/components/ui/ToolCard"));
 
 const FAQ_DATA = [
   {
@@ -31,31 +33,40 @@ const FAQ_DATA = [
   }
 ];
 
-// Images Unsplash pour chaque catégorie
-const CATEGORY_IMAGES = {
-  grossesse: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
-  enfant: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop",
-  sante: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop",
-  securite: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=300&fit=crop",
-  technique: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop"
-};
+// Optimized gradient styles
+const GRADIENT_CLASS = "bg-gradient-to-r from-primary to-primary-foreground bg-clip-text text-transparent";
 
 const Index = React.memo(() => {
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const [selectedCategory, setSelectedCategory] = React.useState<string>("all");
   const [showMobileFilter, setShowMobileFilter] = React.useState(false);
   
-  const favoriteTools = TOOLS_DATA.filter(tool => favorites.includes(tool.link)).slice(0, 8);
+  // Memoized computations for better performance
+  const favoriteTools = useMemo(() => 
+    TOOLS_DATA.filter(tool => favorites.includes(tool.link)).slice(0, 8),
+    [favorites]
+  );
   
-  // Filtrage par catégorie uniquement (barre de recherche supprimée)
-  const filteredTools = selectedCategory === "all" 
-    ? TOOLS_DATA 
-    : TOOLS_DATA.filter(tool => tool.category === selectedCategory);
+  const filteredTools = useMemo(() => 
+    selectedCategory === "all" 
+      ? TOOLS_DATA 
+      : TOOLS_DATA.filter(tool => tool.category === selectedCategory),
+    [selectedCategory]
+  );
+
+  const categoryTitle = useMemo(() => 
+    selectedCategory === "all" 
+      ? "Tous nos outils" 
+      : `Outils ${CATEGORIES.find(c => c.id === selectedCategory)?.title || ""}`,
+    [selectedCategory]
+  );
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <HeroSection className="mb-20" />
+      {/* Hero Section with Suspense */}
+      <Suspense fallback={<div className="h-64 animate-pulse bg-muted rounded-lg mb-20" />}>
+        <HeroSection className="mb-20" />
+      </Suspense>
 
       <div className="w-full max-w-7xl mx-auto px-4 mobile-s:px-6 sm:px-8 pb-safe-bottom">
         
@@ -130,9 +141,8 @@ const Index = React.memo(() => {
         {/* Tools Section */}
         <Layout direction="column" gap="2xl" id="tools-section" className="my-20">
           <Layout direction="column" gap="md" align="center" className="text-center">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
-              {selectedCategory === "all" ? "Tous nos outils" : 
-               `Outils ${CATEGORIES.find(c => c.id === selectedCategory)?.title || ""}`}
+            <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold ${GRADIENT_CLASS}`}>
+              {categoryTitle}
             </h2>
             <p className="text-muted-foreground font-medium">
               {filteredTools.length} outil{filteredTools.length > 1 ? 's' : ''} disponible{filteredTools.length > 1 ? 's' : ''}
@@ -141,20 +151,28 @@ const Index = React.memo(() => {
 
           {filteredTools.length > 0 ? (
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {filteredTools.map((tool) => (
-                <ToolCard
-                  key={tool.id}
-                  title={tool.label}
-                  description={tool.description}
-                  href={tool.link}
-                  icon={React.createElement(tool.icon, { size: 24 })}
-                  gradient={tool.gradient}
-                  isFavorite={isFavorite(tool.link)}
-                  onToggleFavorite={() => toggleFavorite(tool.link)}
-                  difficulty={tool.difficulty}
-                  rating={tool.rating}
-                />
-              ))}
+              <Suspense fallback={
+                <div className="col-span-full grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <div key={i} className="h-64 animate-pulse bg-muted rounded-lg" />
+                  ))}
+                </div>
+              }>
+                {filteredTools.map((tool) => (
+                  <ToolCard
+                    key={tool.id}
+                    title={tool.label}
+                    description={tool.description}
+                    href={tool.link}
+                    icon={React.createElement(tool.icon, { size: 24 })}
+                    gradient={tool.gradient}
+                    isFavorite={isFavorite(tool.link)}
+                    onToggleFavorite={() => toggleFavorite(tool.link)}
+                    difficulty={tool.difficulty}
+                    rating={tool.rating}
+                  />
+                ))}
+              </Suspense>
             </div>
           ) : (
             <ModernCard variant="glass" className="p-12 text-center">
@@ -173,7 +191,7 @@ const Index = React.memo(() => {
         {favoriteTools.length > 0 && (
           <Layout direction="column" gap="2xl" className="mb-20">
             <Layout direction="column" gap="md" align="center" className="text-center">
-              <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
+              <h2 className={`text-2xl md:text-3xl font-bold ${GRADIENT_CLASS}`}>
                 ⭐ Vos outils favoris
               </h2>
               <p className="text-muted-foreground font-medium">
@@ -202,7 +220,7 @@ const Index = React.memo(() => {
 
         {/* FAQ Section */}
         <Layout direction="column" gap="2xl" className="w-full max-w-4xl mx-auto mt-24">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
+          <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold text-center ${GRADIENT_CLASS}`}>
             Questions fréquentes
           </h2>
           

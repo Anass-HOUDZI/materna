@@ -27,7 +27,14 @@ import CryingMoodTracker from "./pages/CryingMoodTracker";
 import PwaStatusIndicator from "./components/ui/PwaStatusIndicator";
 import ScrollToTop from "./components/layout/ScrollToTop";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (replaced cacheTime)
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

@@ -1,0 +1,154 @@
+/* Performance-optimized CSS for critical rendering path */
+
+/* Critical styles - loaded first */
+.critical-above-fold {
+  /* Reduce layout shift */
+  contain: layout;
+  content-visibility: auto;
+}
+
+/* Optimized gradients using CSS custom properties */
+:root {
+  --gradient-primary: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary-foreground)));
+  --gradient-accent: linear-gradient(to right, hsl(var(--accent)), hsl(var(--accent-foreground)));
+  --gradient-secondary: linear-gradient(to right, hsl(var(--secondary)), hsl(var(--secondary-foreground)));
+}
+
+.gradient-text-primary {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-accent {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* GPU-accelerated transforms */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Optimized animations with reduce-motion support */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-slide-up {
+    animation: none;
+  }
+}
+
+/* Optimized keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Skeleton loading optimization */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--accent) / 0.1) 50%,
+    hsl(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Performance optimizations for images */
+.optimized-image {
+  content-visibility: auto;
+  contain: layout size;
+}
+
+/* Lazy loading placeholder */
+.lazy-placeholder {
+  background-color: hsl(var(--muted));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+/* Critical resource hints for fonts */
+.font-optimized {
+  font-display: swap;
+}
+
+/* Reduce reflow and repaint */
+.layout-stable {
+  contain: layout;
+}
+
+.paint-stable {
+  contain: paint;
+}
+
+.style-stable {
+  contain: style;
+}
+
+/* Container queries optimization */
+@container (min-width: 640px) {
+  .container-optimized {
+    font-size: 1.125rem;
+  }
+}
+
+/* Critical mobile optimizations */
+@media (max-width: 640px) {
+  .mobile-optimized {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    /* Reduce paint operations on mobile */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
