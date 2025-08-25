@@ -29,7 +29,7 @@ const HeroSection = React.memo<HeroSectionProps>(({ className }) => {
         <div className="text-center max-w-5xl mx-auto space-y-6 xs:space-y-8 sm:space-y-10">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 xs:px-6 xs:py-3 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 backdrop-blur-xl">
-            <span className={`text-xs xs:text-sm font-semibold ${gradientClass}`}>
+            <span className="text-xs xs:text-sm font-semibold bg-clip-text text-transparent" style={{ background: 'linear-gradient(to right, #f953c6, #b91d73)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
               Suite complète gratuite et professionnelle
             </span>
           </div>
