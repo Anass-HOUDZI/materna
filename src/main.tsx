@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import React from 'react'
-import App from './App.tsx'
+import OptimizedApp from './components/optimized/OptimizedApp.tsx'
 import './index.css'
 
 // Create root with optimization
@@ -13,9 +13,9 @@ const root = createRoot(container);
 if (process.env.NODE_ENV === 'development') {
   root.render(
     <React.StrictMode>
-      <App />
+      <OptimizedApp />
     </React.StrictMode>
   );
 } else {
-  root.render(<App />);
+  root.render(<OptimizedApp />);
 }

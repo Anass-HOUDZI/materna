@@ -41,10 +41,8 @@ export function DueDateCalculatorForm() {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      lastPeriod: undefined,
       cycleLength: 28,
       isRegular: true,
-      conception: undefined,
     },
   });
 

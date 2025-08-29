@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { AnimatedHeader } from "@/components/layout/AnimatedHeader";
 import PwaStatusIndicator from "@/components/ui/PwaStatusIndicator";
 import ScrollToTop from "@/components/layout/ScrollToTop";
+import ErrorBoundary from "@/utils/error-boundary";
 
 // Lazy load all pages for better performance
 const Index = lazy(() => import("@/pages/Index"));
@@ -45,45 +46,49 @@ const PageLoadingFallback = () => (
 );
 
 const OptimizedApp = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-          <div className="min-h-screen flex w-full flex-col">
-            <AnimatedHeader />
-            <div className="pt-16">
-              <Suspense fallback={<PageLoadingFallback />}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/categorie/:categoryId" element={<CategoryPage />} />
-                  <Route path="/grossesse/calculateur-terme" element={<PregnancyDueDateCalculator />} />
-                  <Route path="/grossesse/tracker-contractions" element={<ContractionTracker />} />
-                  <Route path="/grossesse/calculateur-poids" element={<PregnancyWeightGainCalculator />} />
-                  <Route path="/grossesse/calendrier-semaine" element={<PregnancyWeeklyCalendar />} />
-                  <Route path="/grossesse/tracker-mouvements-bebe" element={<BabyMovementTracker />} />
-                  <Route path="/grossesse/journal-symptomes" element={<PregnancySymptomJournal />} />
-                  <Route path="/grossesse/calculateur-sexe-bebe" element={<SexPredictionCalculator />} />
-                  <Route path="/grossesse/simulateur-budget-bebe" element={<BabyBudgetSimulator />} />
-                  <Route path="/enfant/courbes-croissance" element={<GrowthCurves />} />
-                  <Route path="/enfant/guide-diversification" element={<FoodDiversificationGuide />} />
-                  <Route path="/enfant/developpement-moteur" element={<MotorDevelopmentTracker />} />
-                  <Route path="/enfant/besoins-nutritionnels" element={<ChildNutritionCalculator />} />
-                  <Route path="/sante/guide-allaitement" element={<BreastfeedingGuide />} />
-                  <Route path="/enfant/calculateur-dents" element={<TeethingCalculator />} />
-                  <Route path="/enfant/tracker-pleurs-humeur" element={<CryingMoodTracker />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <div className="min-h-screen flex w-full flex-col">
+              <AnimatedHeader />
+              <div className="pt-16">
+                <ErrorBoundary>
+                  <Suspense fallback={<PageLoadingFallback />}>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/categorie/:categoryId" element={<CategoryPage />} />
+                      <Route path="/grossesse/calculateur-terme" element={<PregnancyDueDateCalculator />} />
+                      <Route path="/grossesse/tracker-contractions" element={<ContractionTracker />} />
+                      <Route path="/grossesse/calculateur-poids" element={<PregnancyWeightGainCalculator />} />
+                      <Route path="/grossesse/calendrier-semaine" element={<PregnancyWeeklyCalendar />} />
+                      <Route path="/grossesse/tracker-mouvements-bebe" element={<BabyMovementTracker />} />
+                      <Route path="/grossesse/journal-symptomes" element={<PregnancySymptomJournal />} />
+                      <Route path="/grossesse/calculateur-sexe-bebe" element={<SexPredictionCalculator />} />
+                      <Route path="/grossesse/simulateur-budget-bebe" element={<BabyBudgetSimulator />} />
+                      <Route path="/enfant/courbes-croissance" element={<GrowthCurves />} />
+                      <Route path="/enfant/guide-diversification" element={<FoodDiversificationGuide />} />
+                      <Route path="/enfant/developpement-moteur" element={<MotorDevelopmentTracker />} />
+                      <Route path="/enfant/besoins-nutritionnels" element={<ChildNutritionCalculator />} />
+                      <Route path="/sante/guide-allaitement" element={<BreastfeedingGuide />} />
+                      <Route path="/enfant/calculateur-dents" element={<TeethingCalculator />} />
+                      <Route path="/enfant/tracker-pleurs-humeur" element={<CryingMoodTracker />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Suspense>
+                </ErrorBoundary>
+              </div>
+              <PwaStatusIndicator />
             </div>
-            <PwaStatusIndicator />
-          </div>
-        </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default OptimizedApp;
